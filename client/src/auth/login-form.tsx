@@ -8,11 +8,11 @@ export default function LoginForm () {
         <div className="flex flex-col gap-2">
             <div className="flex flex-col gap-2 py-2">
                 <div className="flex flex-col gap-2 px-10">
-                    <label className="font-bold text-gray-700 text-xs">Email або логін</label>
+                    <label className="font-bold text-gray-600 text-xs">Email або логін</label>
                     <input className={inputStyle} type="text"/>
                 </div>
                 <div className="flex flex-col gap-2 px-10">
-                    <label className="font-bold text-gray-700 text-xs">Пароль</label>
+                    <label className="font-bold text-gray-600 text-xs">Пароль</label>
                     <input className={inputStyle} type="password"/>
                 </div>
             </div>
