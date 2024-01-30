@@ -7,6 +7,8 @@ import FormComponent from './forms/form-component';
 import { useState } from 'react';
 import formStore from './forms/form-store';
 import { observer } from 'mobx-react';
+import { useNavigate } from 'react-router-dom';
+import FormCloserProvider from './forms/form-closer-provider';
 
 function App() {
   const {form} = formStore;
@@ -14,11 +16,13 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        <Header/>
-        <Routes>
-          {CustomRoutes.map(route => route)}
-        </Routes>
-        {form && <div>{form}</div>}
+        <FormCloserProvider>
+          <Header/>
+          <Routes>
+            {CustomRoutes.map(route => route)}
+          </Routes>
+          {form && <div>{form}</div>}
+        </FormCloserProvider>
       </BrowserRouter>
     </div>
   );

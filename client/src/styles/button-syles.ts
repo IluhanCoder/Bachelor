@@ -1,0 +1,1 @@
+export const submitButtonStyle = "font-semibold text-white bg-blue-600 rounded px-3 py-1 border-[0.25px] border-gray-600 hover:bg-blue-700"
