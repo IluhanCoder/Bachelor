@@ -17,4 +17,8 @@ export default class AuthError extends Error {
     static WrongPassword() {
         return new AuthError("Неправильний пароль", 400);
     }
+
+    static VerificationFailed() {
+        return new AuthError("VerificationFailed", 400);
+    }
 }

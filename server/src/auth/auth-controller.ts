@@ -46,4 +46,26 @@ export default new class AuthController {
             }
         }
     }
+
+    async verifyToken(req: Request, res: Response) {
+        try {
+            const { token } = req.body;
+            const user = await authService.verifyToken(token);
+            return res.status(200).json({
+                status: "success",
+                user
+            });
+        } catch (error) {
+            if (error instanceof AuthError) res.status(error.status).json({
+                message: error.message,
+                status: "bad request"
+            }) 
+            else {
+                res.status(error.status ?? 500).json({
+                    status: "internal server error"
+                })
+                throw error;
+            }
+        }
+    }
 }

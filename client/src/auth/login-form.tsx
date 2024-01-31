@@ -9,6 +9,7 @@ import { FormEvent, useState } from "react";
 import { LoginCredentials } from "./auth-types";
 import { ChangeEvent } from "react";
 import errorStore from "../errors/error-store";
+import formStore from "../forms/form-store";
 
 function LoginForm () {
     const [formData, setFormData] = useState<LoginCredentials>({
@@ -43,8 +44,7 @@ function LoginForm () {
         const result = await authService.login(formData);
 
         if(result?.status === "success") { 
-            localStorage.setItem("token", result?.token);
-            alert("Ви успішно зайшли"); 
+            formStore.dropForm();
         }
     }
 

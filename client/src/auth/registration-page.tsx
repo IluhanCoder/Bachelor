@@ -7,8 +7,11 @@ import authService from "./auth-service";
 import ErrorContainer from "../errors/error-container";
 import { observer } from "mobx-react";
 import errorStore from "../errors/error-store";
+import { useNavigate } from "react-router-dom";
 
 function RegistationPage() {
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState<RegCredantials>({
         name: "",
         surname: "",
@@ -35,9 +38,18 @@ function RegistationPage() {
             return;
         }
 
-        const result = await authService.registrate(formData);
+        try {
+            const result = await authService.registrate(formData);
+            console.log(result)
 
-        if(result?.status === "success") alert("Користувача було успішно зареєстровано");
+            if(result?.status === "success") { 
+                alert("Користувача було успішно зареєстровано");
+                await authService.login(formData);
+                navigate("/");
+            }
+        } catch (error) {
+            throw error;
+        }
     }
 
     return <div className="flex flex-col p-4">

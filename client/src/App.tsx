@@ -9,9 +9,18 @@ import formStore from './forms/form-store';
 import { observer } from 'mobx-react';
 import { useNavigate } from 'react-router-dom';
 import FormCloserProvider from './forms/form-closer-provider';
+import authService from './auth/auth-service';
+import userStore from './user/user-store';
 
 function App() {
   const {form} = formStore;
+
+  const verifyUser = async () => {
+    await authService.checkAuth();
+  }
+  useEffect(() => {
+    verifyUser();
+  }, [])
 
   return (
     <div>
