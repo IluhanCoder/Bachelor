@@ -4,15 +4,19 @@ import { inputStyle } from "../styles/form-styles";
 import RegCredantials from "./auth-types";
 import { ChangeEvent } from "react";
 import authService from "./auth-service";
+import ErrorContainer from "../errors/error-container";
+import { observer } from "mobx-react";
+import errorStore from "../errors/error-store";
 
-export default function RegistationPage() {
+function RegistationPage() {
     const [formData, setFormData] = useState<RegCredantials>({
         name: "",
         surname: "",
         nickname: "",
         email: "",
         organisation: "",
-        password: ""
+        password: "",
+        pswSubmit: ""
     });
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -24,8 +28,16 @@ export default function RegistationPage() {
 
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
-        console.log(formData);
-        await authService.registrate(formData);
+        errorStore.dropErrors();
+
+        if(formData.password !== formData.pswSubmit) {
+            errorStore.pushError("Пароль та підтвердження паролю мають співпадати");
+            return;
+        }
+
+        const result = await authService.registrate(formData);
+
+        if(result?.status === "success") alert("Користувача було успішно зареєстровано");
     }
 
     return <div className="flex flex-col p-4">
@@ -63,8 +75,11 @@ export default function RegistationPage() {
                             </div>
                             <div className="flex flex-col gap-1">
                                 <label className="font-bold text-gray-600 text-xs">Підтвердження паролю</label>
-                                <input className={inputStyle} type="password" onChange={handleChange}/>
+                                <input className={inputStyle} type="password" onChange={handleChange} name="pswSubmit"/>
                             </div>
+                        </div>
+                        <div className="flex justify-center">
+                            <ErrorContainer/>
                         </div>
                         <div className="flex justify-center pt-4">
                             <button type="submit" className={submitButtonStyle} onClick={handleSubmit}>Зареєструватися</button>
@@ -75,3 +90,5 @@ export default function RegistationPage() {
         </div>
     </div>
 }
+
+export default observer(RegistationPage);

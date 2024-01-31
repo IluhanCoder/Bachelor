@@ -4,6 +4,13 @@ type RegCredantials = {
     nickname: string,
     email: string,
     organisation: string
+    password: string,
+    pswSubmit?: string
+}
+
+export type LoginCredentials = {
+    nickname: string | undefined,
+    email: string | undefined,
     password: string
 }
 

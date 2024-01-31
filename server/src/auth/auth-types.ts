@@ -1,4 +1,4 @@
-type RegCredantials = {
+export type RegCredantials = {
     name: string,
     surname: string,
     nickname: string,
@@ -7,4 +7,8 @@ type RegCredantials = {
     password: string
 }
 
-export default RegCredantials
+export type LoginCredentials = {
+    nickname: string | undefined,
+    email: string | undefined,
+    password: string
+}
