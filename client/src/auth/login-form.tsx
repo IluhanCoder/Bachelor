@@ -36,7 +36,7 @@ function LoginForm () {
         event.preventDefault();
         errorStore.dropErrors();
 
-        if(formData.nickname?.length === 0 && formData.password?.length === 0) {
+        if(formData.nickname?.length === 0 || formData.password?.length === 0) {
             errorStore.pushError("Всі поля мають бути заповнені");
             return;
         }

@@ -10,4 +10,12 @@ const $api = axios.create({
 $api.defaults.headers.common["Access-Control-Allow-Methods"] = 'POST, GET, OPTIONS, PUT, DELETE';
 $api.defaults.headers.common["Access-Control-Allow-Headers"] = 'Content-Type, Origin, Authorization';
 
+export function setHeader(token: string) {
+  $api.defaults.headers.common['authorization'] = `bearer ${token}`;
+}
+
+export function dropHeader() {
+  delete $api.defaults.headers.common['authorization'];
+}
+
 export default $api;

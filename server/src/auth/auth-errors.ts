@@ -9,6 +9,10 @@ export default class AuthError extends Error {
     static UserExists() {
         return new AuthError("Користувач з таким Email або логіном вже існує", 400);
     }
+
+    static Unauthorized() {
+        return new AuthError("Unauthorized", 400);
+    }
     
     static UserNotFound() {
         return new AuthError("Користувача не було знайдено", 400);

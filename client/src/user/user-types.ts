@@ -8,3 +8,11 @@ type User = {
 }
 
 export default User
+
+export interface UserResponse {
+    name: string,
+    surname: string,
+    nickname: string,
+    email: string,
+    organisation: string
+}

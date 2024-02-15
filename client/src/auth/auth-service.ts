@@ -1,6 +1,6 @@
 import { LoginCredentials } from './../../../server/src/auth/auth-types';
 import { AxiosError } from "axios";
-import $api from "../axios-setup";
+import $api, { dropHeader, setHeader } from "../axios-setup";
 import RegCredantials from "./auth-types";
 import errorStore from "../errors/error-store";
 import userStore from '../user/user-store';
@@ -37,8 +37,12 @@ export default new class AuthService {
             const token = localStorage.getItem("token");
             if(token) { 
                 const {user} = (await $api.post("/verify", {token})).data;
+                setHeader(token);
                 userStore.setUser(user);
-            } else userStore.dropUser();
+            } else {
+                userStore.dropUser();
+                dropHeader();
+            }
         } catch (error) {
             throw error;
         }
@@ -47,6 +51,7 @@ export default new class AuthService {
     async logout() {
         try {
             localStorage.removeItem("token");
+            dropHeader();
             await this.checkAuth();
         } catch (error) {
             throw error;
