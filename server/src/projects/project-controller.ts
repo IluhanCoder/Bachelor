@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import projectService from "./project-service";
 import { AuthenticatedRequest } from "../auth/auth-types";
+import { ProjectResponse } from "./project-types";
 
 export default new class ProjectController {
     async newProject(req: AuthenticatedRequest, res: Response) {
@@ -41,7 +42,7 @@ export default new class ProjectController {
     async getUserProjects(req: AuthenticatedRequest, res: Response) {
         try {
             const { user } = req;
-            const projects = await projectService.getUserProjects(user._id.toString());
+            const projects: ProjectResponse[] = await projectService.getUserProjects(user._id.toString());
             res.json({
                 status: "success",
                 projects

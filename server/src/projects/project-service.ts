@@ -5,70 +5,54 @@ import Project, { ProjectCredentials } from "./project-types";
 const fullLookUp = [
   {
     $lookup: {
-      from: "users", // Replace with the actual name of the users collection
-      localField: "owner",
-      foreignField: "_id",
-      as: "owner",
-    },
+      from: 'users',
+      localField: 'owner',
+      foreignField: '_id',
+      as: 'ownerInfo'
+    }
   },
   {
-    $unwind: "$owner",
-  },
-  {
-    $unwind: "$participants"
+    $unwind: '$participants'
   },
   {
     $lookup: {
-      from: "users", // Replace with the actual name of the users collection
-      localField: "participants.participant",
-      foreignField: "_id",
-      as: "participantInfo",
-    },
+      from: 'users',
+      localField: 'participants.participant',
+      foreignField: '_id',
+      as: 'participantsInfo'
+    }
   },
   {
-    $project: {
-      name: 1,
-      created: 1,
-      lastModified: 1,
-      owner: {
-        _id: "$owner._id",
-        name: "$owner.name",
-        surname: "$owner.surname",
-        nickname: "$owner.nickname",
-        organisation: "$owner.organisation",
-        email: "$owner.email",
-      },
+    $group: {
+      _id: '$_id',
+      name: { $first: '$name' },
+      created: { $first: '$created' },
+      lastModified: { $first: '$lastModified' },
+      owner: { $first: '$ownerInfo' },
       participants: {
-        _id: "$participantInfo._id",
-        name: "$participantInfo.name",
-        surname: "$participantInfo.surname",
-        nickname: "$participantInfo.nickname",
-        organisation: "$participantInfo.organisation",
-        email: "$participantInfo.email",
-        rights: "$participants.rights",
+        $push: {
+          participant: { $arrayElemAt: ['$participantsInfo', 0] },
+          rights: '$participants.rights'
+        }
       },
-      tasks: [],
-    },
+      tasks: { $first: '$tasks' }
+    }
   },
   {
     $lookup: {
-      from: "tasks", // Replace with the actual name of the tasks collection
-      localField: "_id",
-      foreignField: "projectId",
-      as: "tasks",
-    },
+      from: 'tasks',
+      localField: '_id',
+      foreignField: 'projectId',
+      as: 'tasks'
+    }
   },
   {
     $lookup: {
-      from: "users", // Replace with the actual name of the users collection
-      localField: "tasks.createdBy",
-      foreignField: "_id",
-      as: "taskCreators",
-    },
-  },
-  // Unwind to flatten the taskCreators array
-  {
-    $unwind: "$taskCreators",
+      from: 'users',
+      localField: 'tasks.executors',
+      foreignField: '_id',
+      as: 'executorsInfo'
+    }
   },
   {
     $project: {
@@ -76,38 +60,40 @@ const fullLookUp = [
       name: 1,
       created: 1,
       lastModified: 1,
-      owner: 1,
+      owner: { $arrayElemAt: ['$owner', 0] },
       participants: 1,
       tasks: {
-        _id: "$tasks._id",
-        name: "$tasks.name",
-        desc: "$tasks.desc",
-        isChecked: "$tasks.isChecked",
-        checkedDate: "$tasks.checkedDate",
-        executors: "$tasks.executors",
-        createdBy: {
-          _id: "$taskCreators._id",
-          name: "$taskCreators.name",
-          surname: "$taskCreators.surname",
-          nickname: "$taskCreators.nickname",
-          organisation: "$taskCreators.organisation",
-          email: "$taskCreators.email",
-        },
-      },
-    },
-  },
-  // Group by project id to reshape the result
-  {
-    $group: {
-      _id: "$_id",
-      name: { $first: "$name" },
-      created: { $first: "$created" },
-      lastModified: { $first: "$lastModified" },
-      owner: { $first: "$owner" },
-      participants: { $push: "$participantInfo" },
-      tasks: { $push: "$tasks" },
-    },
-  },
+        $map: {
+          input: '$tasks',
+          as: 'task',
+          in: {
+            _id: '$$task._id',
+            name: '$$task.name',
+            desc: '$$task.desc',
+            projectId: '$$task.projectId',
+            isChecked: '$$task.isChecked',
+            createdBy: '$$task.createdBy',
+            created: '$$task.created',
+            checkedDate: '$$task.checkedDate',
+            executors: {
+              $map: {
+                input: '$executorsInfo',
+                as: 'executor',
+                in: {
+                  _id: '$$executor._id',
+                  name: '$$executor.name',
+                  surname: '$$executor.surname',
+                  nickname: '$$executor.nickname',
+                  organisation: '$$executor.organisation',
+                  email: '$$executor.email'
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 ]
 
 export default new class ProjectService {
@@ -147,17 +133,16 @@ export default new class ProjectService {
     async getUserProjects(userId: string) {
       try {
         const result = await ProjectModel.aggregate([
-          // {
-          //   $match: {
-          //     $or: [
-          //       { owner: new mongoose.Types.ObjectId(userId) },
-          //       { 'participants.participant': new mongoose.Types.ObjectId(userId) },
-          //     ],
-          //   },
-          // },
+          {
+            $match: {
+              $or: [
+                { owner: new mongoose.Types.ObjectId(userId) },
+                { 'participants.participant': new mongoose.Types.ObjectId(userId) },
+              ],
+            },
+          },
           ...fullLookUp
         ])
-        result.map(item => console.log(item));
         return result;
       } catch (error) {
         throw error;

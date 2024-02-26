@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { UserResponse } from "../user/user-type";
-import Task from "../tasks/task-types";
+import TaskResponse from "../tasks/task-types";
 
 export interface Rights {
     create: boolean,
@@ -32,7 +32,7 @@ export interface ProjectResponse {
     created: Date,
     lastModified: Date,
     owner: UserResponse,
-    tasks: Task[],
+    tasks: TaskResponse[],
     participants: ParticipantResponse[]
 }
 
