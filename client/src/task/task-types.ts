@@ -1,3 +1,5 @@
+import { UserResponse } from "../user/user-types"
+
 interface Task {
     name: string,
     desc: string,
@@ -17,4 +19,15 @@ export interface TaskCredentials {
     projectId: string,
     createdBy: string,
     executors?: string[]
+}
+
+export interface TaskResponse {
+    name: string,
+    desc: string,
+    projectId: string,
+    isChecked: boolean,
+    createdBy: UserResponse,
+    created: Date,
+    checkedDate: Date | undefined,
+    executors: UserResponse[]
 }

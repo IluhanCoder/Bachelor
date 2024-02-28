@@ -1,4 +1,5 @@
-import { UserResponse } from "../user/user-types"
+import { TaskResponse } from "../task/task-types"
+import User, { UserResponse } from "../user/user-types"
 
 export interface Rights {
     create: boolean,
@@ -16,7 +17,7 @@ export interface Participant {
 }
 
 export interface ParticipantResponse {
-    participant: string,
+    participant: UserResponse,
     right: Rights
 }
 
@@ -30,7 +31,7 @@ export interface ProjectResponse {
     created: Date,
     lastModified: Date,
     owner: UserResponse,
-    tasks: string[],
+    tasks: TaskResponse[],
     participants: ParticipantResponse[]
 }
 

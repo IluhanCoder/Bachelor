@@ -55,6 +55,14 @@ const fullLookUp = [
     }
   },
   {
+    $lookup: {
+      from: 'users',
+      localField: 'tasks.createdBy',
+      foreignField: '_id',
+      as: 'creatorsInfo'
+    }
+  },
+  {
     $project: {
       _id: 1,
       name: 1,
@@ -72,7 +80,20 @@ const fullLookUp = [
             desc: '$$task.desc',
             projectId: '$$task.projectId',
             isChecked: '$$task.isChecked',
-            createdBy: '$$task.createdBy',
+            createdBy: {
+              $arrayElemAt: [
+                {
+                  $filter: {
+                    input: '$creatorsInfo',
+                    as: 'creator',
+                    cond: {
+                      $eq: ['$$creator._id', '$$task.createdBy']
+                    }
+                  }
+                },
+                0
+              ]
+            },
             created: '$$task.created',
             checkedDate: '$$task.checkedDate',
             executors: {

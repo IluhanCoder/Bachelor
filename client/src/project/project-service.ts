@@ -1,8 +1,9 @@
 import $api from "../axios-setup"
+import { ProjectResponse } from "./project-types";
 
 export default new class ProjectService {
     async getUserProjects() {
-        const result = (await $api.get("/user-projects")).data.projects!;
+        const result: ProjectResponse[] = (await $api.get("/user-projects")).data.projects!;
         return result;
     }
 
