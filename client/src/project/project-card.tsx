@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import DateFormater from "../misc/date-formatter";
 import ParticipantsWindow from "./participants-window";
 import { ProjectResponse } from "./project-types";
@@ -7,7 +8,13 @@ interface LocalParams {
 }
 
 function ProjectCard({project}: LocalParams) {
-    return <div className="bg-white rounded shadow-sm border-1 py-6 px-8 flex flex-col gap-2">
+    const navigate = useNavigate();
+
+    const handleClick = (projectId: string) => {
+        navigate(`/project/${projectId}`);
+    }
+
+    return <button type="button" className="bg-white rounded shadow-sm border-1 py-6 px-8 flex flex-col gap-2 hover:scale-105 transition-transform duration-300 ease-in-out" onClick={() => handleClick(project._id)}>
         <div>
             <div className="font-semibold text-xl">{project.name}</div>
         </div>
@@ -21,7 +28,7 @@ function ProjectCard({project}: LocalParams) {
             <label>Учасники проекту:</label>
             <ParticipantsWindow participants={project.participants} maxDisplay={10}/>
         </div>
-    </div>
+    </button>
 }
 
 export default ProjectCard;

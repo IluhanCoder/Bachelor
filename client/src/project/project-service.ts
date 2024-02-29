@@ -11,4 +11,9 @@ export default new class ProjectService {
         const result = (await $api.post("/project", {name})).data;
         return result;
     }
+
+    async getProjectById(id: string) {
+        const result = (await $api.get(`/project/${id}`)).data;
+        return result;
+    }
 }

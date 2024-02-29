@@ -12,7 +12,10 @@ const fullLookUp = [
     }
   },
   {
-    $unwind: '$participants'
+    $unwind: {
+      path: '$participants',
+      preserveNullAndEmptyArrays: true
+    }
   },
   {
     $lookup: {

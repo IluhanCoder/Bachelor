@@ -27,6 +27,7 @@ export interface ProjectCredentials {
 }
 
 export interface ProjectResponse {
+    _id: string,
     name: string,
     created: Date,
     lastModified: Date,
@@ -36,6 +37,7 @@ export interface ProjectResponse {
 }
 
 interface Project {
+    _id: string,
     name: string,
     created: Date,
     lastModified: Date,
