@@ -1,10 +1,12 @@
 import { Request, Response } from "express";
 import userService from "./user-service";
+import { AuthenticatedRequest } from "../auth/auth-types";
 
 export default new class UserController {
-    async fetchUsers(req: Request, res: Response) {
+    async fetchUsers(req: AuthenticatedRequest, res: Response) {
         try {
-            const result = await userService.fetchUsers();
+            const currentUser = req.user;
+            const result = await userService.fetchUsers(currentUser);
             res.status(200).json({
                 status: "success",
                 users: result

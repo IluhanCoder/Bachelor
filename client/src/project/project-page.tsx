@@ -4,14 +4,13 @@ import { useEffect, useState } from "react";
 import { ProjectResponse } from "./project-types";
 import { submitButtonStyle } from "../styles/button-syles";
 import formStore from "../forms/form-store";
-import UserSearchForm from "../user/user-search-form";
-
-interface LocalParams {
-    projectId: string
-}
+import InviteForm from "../invite/invite-form";
+import inviteService from "../invite/invite-service";
+import { UserResponse } from "../user/user-types";
 
 function ProjectPage () {
     const [project, setProject] = useState<ProjectResponse>();
+    const [invited, setInvited] = useState<UserResponse[]>([]);
 
     const {projectId} = useParams();
 
@@ -21,17 +20,27 @@ function ProjectPage () {
         setProject(result.project);
     }
 
+    const getInvited = async () => {
+        if(projectId === undefined) return;
+        const result = await inviteService.getInvited(projectId);
+        setInvited(result.invited);
+    }
+
     const handleAddUser = () => {
-        formStore.setForm(<UserSearchForm/>);
+        if(project) formStore.setForm(<InviteForm projectId={project?._id}/>);
     }
 
     useEffect(() => {
         getProjectData();
+        getInvited();
     }, [projectId])
 
     return <div>
         {JSON.stringify(project)}
         <div>
+            <div>
+                {invited.map((user: UserResponse) => <div>{user.nickname}</div>)}
+            </div>
             <button type="button" className={submitButtonStyle} onClick={handleAddUser}>
                 запросити користувача
             </button>
