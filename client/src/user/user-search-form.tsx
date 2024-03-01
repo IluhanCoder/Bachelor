@@ -6,10 +6,12 @@ import UsersMapper from "./users-mapper";
 
 function UserSearchForm () {
     const [users, setUsers] = useState<UserResponse[]>([]);
+    const selectedState = useState<UserResponse[]>([]);
+    const [selected, setSelected] = selectedState;
 
     const fetchUsers = async () => {
         const result = await userService.fetchUsers();
-        setUsers(result.users);
+        setUsers([...result.users]);
     }
 
     useEffect(() => {
@@ -17,7 +19,14 @@ function UserSearchForm () {
     }, []);
 
     return <FormComponent formLabel="пошук користувачів">
-        <UsersMapper users={users}/>
+        <div className="flex flex-col gap-2">
+            <UsersMapper users={users} selectedState={selectedState}/>
+            <div className="flex gap-2">
+                {selected.map((user: UserResponse) => <div>{
+                    user.nickname
+                }</div>)}
+            </div>
+        </div>
     </FormComponent>
 }
 
