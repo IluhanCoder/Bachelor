@@ -18,9 +18,15 @@ export default async function authMiddleware (req: AuthenticatedRequest, res: Re
             req.user = user;
             next();
         } catch (error) {
-            res.status(error.status ?? 500).json({
-                status: "internal server error"
-            })
-            throw error;
+            if (error instanceof AuthError) res.status(error.status).json({
+                message: error.message,
+                status: "bad request"
+            }) 
+            else {
+                res.status(error.status ?? 500).json({
+                    status: "internal server error"
+                })
+                throw error;
+            }
         }
 }

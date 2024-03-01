@@ -35,6 +35,7 @@ app.post("/registration", authController.registration);
 app.post("/verify", authController.verifyToken)
 
 app.use(authMiddleware);
+
 app.use(router);
 
 app.listen(port, () => {

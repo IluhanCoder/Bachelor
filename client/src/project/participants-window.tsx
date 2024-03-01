@@ -8,7 +8,6 @@ interface LocalParams {
 }
 
 function ParticipantsWindow({participants, maxDisplay}: LocalParams) {
-    console.log(participants)
     if(Object.keys(participants[0]).length > 0)
         return <div className="flex gap-1">
             {participants.slice(0,maxDisplay).map((participant: ParticipantResponse, index) => 

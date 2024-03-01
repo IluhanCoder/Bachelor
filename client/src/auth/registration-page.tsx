@@ -40,7 +40,6 @@ function RegistationPage() {
 
         try {
             const result = await authService.registrate(formData);
-            console.log(result)
 
             if(result?.status === "success") { 
                 alert("Користувача було успішно зареєстровано");
