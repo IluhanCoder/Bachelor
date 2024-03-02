@@ -9,6 +9,8 @@ import inviteService from "../invite/invite-service";
 import { UserResponse } from "../user/user-types";
 import userStore from "../user/user-store";
 import { observer } from "mobx-react";
+import TasksTale from "../task/tasks-tale";
+import NewTaskForm from "../task/new-task-form";
 
 function ProjectPage () {
     const [project, setProject] = useState<ExtendedProjectResponse>();
@@ -84,6 +86,7 @@ function ProjectPage () {
             <div>
                 {project.participants.map((participant: ParticipantResponse) => {
                     return <div>
+                        <div>учасники:</div>
                         {participant.participant.name}
                         {rights?.editParticipants && 
                         <div>
@@ -101,9 +104,9 @@ function ProjectPage () {
                 </div>
                 {project?.invited.map((user: UserResponse) => <div>
                     <div>{user.nickname}</div>
-                    <div>
+                    {rights?.editParticipants && <div>
                         <button type="button" className={submitButtonStyle} onClick={() => handleCancelInvite(user._id)}>скасувати запрошення</button>
-                    </div>
+                    </div>}
                 </div>)}
             </div>}
             {rights?.editParticipants && <button type="button" className={submitButtonStyle} onClick={handleAddUser}>
@@ -117,6 +120,12 @@ function ProjectPage () {
             <button type="button" className={submitButtonStyle} onClick={handleLeave}>
                 покинути проект
             </button>}
+        <div>
+            <div>Задачі:</div>
+            {project && <div>
+                <TasksTale projectId={project?._id}/>
+            </div>}
+        </div>
     </div>
 }
 

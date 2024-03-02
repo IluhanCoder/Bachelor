@@ -3,6 +3,7 @@ import authController from "./auth/auth-controller";
 import projectController from "./projects/project-controller";
 import userController from "./user/user-controller";
 import inviteController from "./invites/invite-controller";
+import taskController from "./tasks/task-controller";
 
 const router = Router();
 
@@ -18,5 +19,7 @@ router.post("/see-invite/:inviteId", inviteController.seeInvite);
 router.delete("/leave-project/:projectId", projectController.leaveProject);
 router.post("/delete-participant/:projectId", projectController.deleteParticipant);
 router.post("/cancel-invite", inviteController.cancelInvite);
+router.get(`/project-tasks/:projectId`, taskController.getProjectTasks);
+router.post(`/task`, taskController.addTask);
 
 export default router;
