@@ -8,10 +8,11 @@ import inviteService from "./invite-service";
 import formStore from "../forms/form-store";
 
 interface LocalParams {
-    projectId: string
+    projectId: string,
+    callBack?: () => {}
 }
 
-function InviteForm ({projectId}: LocalParams) {
+function InviteForm ({projectId, callBack}: LocalParams) {
     const [users, setUsers] = useState<UserResponse[]>([]);
     const selectedState = useState<UserResponse[]>([]);
     const [selected, setSelected] = selectedState;
@@ -25,6 +26,7 @@ function InviteForm ({projectId}: LocalParams) {
         if(selected.length > 0) {
             try {
                 await inviteService.createInvite(selected, projectId)
+                if(callBack) callBack();
             } catch (error) {
                 throw error;
             }

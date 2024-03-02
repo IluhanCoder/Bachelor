@@ -44,7 +44,7 @@ function ProjectPage () {
 
     const handleAddUser = async () => {
         if(project)
-            await formStore.setForm(<InviteForm projectId={project?._id}/>);
+            await formStore.setForm(<InviteForm projectId={project?._id} callBack={getProjectData}/>);
     }
 
     const handleLeave = async () => {
@@ -57,6 +57,13 @@ function ProjectPage () {
     const handleDeleteParticipant = async(participantId: string) => {
         if(project) {
             await projectService.deleteParticipant(project?._id, participantId);
+            getProjectData();
+        }
+    }
+
+    const handleCancelInvite = async(guestId: string) => {
+        if(project) {
+            await inviteService.deleteInvite(guestId, project?._id);
             getProjectData();
         }
     }
@@ -92,7 +99,12 @@ function ProjectPage () {
                 <div>
                     запрошені користувачі:
                 </div>
-                {project?.invited.map((user: UserResponse) => <div>{user.nickname}</div>)}
+                {project?.invited.map((user: UserResponse) => <div>
+                    <div>{user.nickname}</div>
+                    <div>
+                        <button type="button" className={submitButtonStyle} onClick={() => handleCancelInvite(user._id)}>скасувати запрошення</button>
+                    </div>
+                </div>)}
             </div>}
             {rights?.editParticipants && <button type="button" className={submitButtonStyle} onClick={handleAddUser}>
                 запросити користувача

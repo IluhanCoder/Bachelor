@@ -17,6 +17,6 @@ router.get("/invites-to-user", inviteController.getInvitesToUser);
 router.post("/see-invite/:inviteId", inviteController.seeInvite);
 router.delete("/leave-project/:projectId", projectController.leaveProject);
 router.post("/delete-participant/:projectId", projectController.deleteParticipant);
-router.delete("/invite/:inviteId", inviteController.deleteInvite);
+router.post("/cancel-invite", inviteController.cancelInvite);
 
 export default router;

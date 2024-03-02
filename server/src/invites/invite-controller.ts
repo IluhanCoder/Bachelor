@@ -71,10 +71,10 @@ export default new class InviteController {
         }
     }
 
-    async deleteInvite(req: AuthenticatedRequest, res: Response) {
+    async cancelInvite(req: AuthenticatedRequest, res: Response) {
         try {
-            const { inviteId } = req.params;
-            await inviteService.deleteInvite(inviteId);
+            const { guestId, projectId } = req.body;
+            await inviteService.cancelInvite(guestId, projectId);
             res.status(200).json({status: "success"});
         } catch (error) {
             res.json({

@@ -98,7 +98,10 @@ export default new class InviteService {
       await inviteModel.findByIdAndDelete(inviteId);
     }
 
-    async deleteInvite(inviteId: string) {
-      await inviteModel.findByIdAndDelete(inviteId);
+    async cancelInvite(guestId: string, projectId: string) {
+      await inviteModel.deleteOne({
+        guest: new mongoose.Types.ObjectId(guestId),
+        project: new mongoose.Types.ObjectId(projectId)
+      })
     }
 }
