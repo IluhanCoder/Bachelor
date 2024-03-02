@@ -15,4 +15,8 @@ export default new class InviteService {
     async getInvitesToUser() {
         return (await $api.get(`/invites-to-user`)).data;
     }
+
+    async seeInvite(inviteId: string, accept: boolean) {
+        return (await $api.post(`/see-invite/${inviteId}`, {accept})).data;
+    }
 }

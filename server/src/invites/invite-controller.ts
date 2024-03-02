@@ -55,4 +55,33 @@ export default new class InviteController {
             throw error;
         }
     }
+
+    async seeInvite(req: AuthenticatedRequest, res: Response) {
+        try {
+            const {inviteId} = req.params;
+            const {accept} = req.body;
+            await inviteService.seeInvite(inviteId, accept);
+            res.status(200).json({status: "success"});
+        } catch (error) {
+            res.json({
+                status: "fail",
+                message: "internal server error"
+            }).status(500)
+            throw error;
+        }
+    }
+
+    async deleteInvite(req: AuthenticatedRequest, res: Response) {
+        try {
+            const { inviteId } = req.params;
+            await inviteService.deleteInvite(inviteId);
+            res.status(200).json({status: "success"});
+        } catch (error) {
+            res.json({
+                status: "fail",
+                message: "internal server error"
+            }).status(500)
+            throw error;
+        }
+    }
 }

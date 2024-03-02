@@ -56,4 +56,38 @@ export default new class ProjectController {
             throw error;
         }
     }
+
+    async leaveProject(req: AuthenticatedRequest, res: Response) {
+        try {
+            const { projectId } = req.params;
+            const { user } = req;
+            await projectService.deleteParitcipant(projectId, user._id);
+            res.status(200).json({
+                status: "success"
+            });
+        } catch (error) {
+            res.json({
+                status: "fail",
+                message: "internal server error"
+            }).status(500)
+            throw error;
+        }
+    }
+
+    async deleteParticipant(req: AuthenticatedRequest, res: Response) {
+        try {
+            const { projectId } = req.params;
+            const { userId } = req.body;
+            await projectService.deleteParitcipant(projectId, userId);
+            res.status(200).json({
+                status: "success"
+            })
+        } catch (error) {
+            res.json({
+                status: "fail",
+                message: "internal server error"
+            }).status(500)
+            throw error;
+        }
+    }
 }

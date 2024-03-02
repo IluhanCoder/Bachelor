@@ -18,7 +18,7 @@ export interface Participant {
 
 export interface ParticipantResponse {
     participant: UserResponse,
-    right: Rights
+    rights: Rights
 }
 
 export interface ProjectCredentials {

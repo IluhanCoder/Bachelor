@@ -1,5 +1,6 @@
 import mongoose from "mongoose"
 import inviteModel from "./invite-model"
+import ProjectModel from "../projects/project-model"
 
 export default new class InviteService {
     async createInvite(host: string, guest: string, projectId: string) {
@@ -75,5 +76,29 @@ export default new class InviteService {
               }
         ])
         return result;
+    }
+
+    async seeInvite(inviteId: string, accept: boolean) {
+      const invite = await inviteModel.findById(inviteId);
+      if(accept)
+        await ProjectModel.findByIdAndUpdate(invite.project, {$push: {
+          participants: {
+            participant: invite.guest,
+            rights: {
+              create: true,
+              edit: false,
+              delete: false,
+              check: false,
+              editParticipants: false,
+              addParticipants: false,
+              editProjectData: false
+            }
+          }
+        }})
+      await inviteModel.findByIdAndDelete(inviteId);
+    }
+
+    async deleteInvite(inviteId: string) {
+      await inviteModel.findByIdAndDelete(inviteId);
     }
 }

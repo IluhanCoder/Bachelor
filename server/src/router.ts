@@ -14,5 +14,9 @@ router.post("/invite", inviteController.createInvite);
 router.get("/invited/:projectId", inviteController.getInvited);
 router.get("/user/:userId", userController.getUserById);
 router.get("/invites-to-user", inviteController.getInvitesToUser);
+router.post("/see-invite/:inviteId", inviteController.seeInvite);
+router.delete("/leave-project/:projectId", projectController.leaveProject);
+router.post("/delete-participant/:projectId", projectController.deleteParticipant);
+router.delete("/invite/:inviteId", inviteController.deleteInvite);
 
 export default router;

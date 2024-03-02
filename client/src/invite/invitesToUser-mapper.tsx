@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { InviteToUserResponse } from "./invite-types";
 import inviteService from "./invite-service";
 import userStore from "../user/user-store";
+import { submitButtonStyle } from "../styles/button-syles";
 
 function InvitesToUserMapper () {
     const [invites, setInvites] = useState<InviteToUserResponse[]>([]);
@@ -12,6 +13,11 @@ function InvitesToUserMapper () {
             const result = await inviteService.getInvitesToUser();
             setInvites([...result.invites]);
         }
+    }
+
+    const handleAcceptInvite = async (inviteId: string, accept: boolean) => {
+        await inviteService.seeInvite(inviteId, accept);
+        await getInvites();
     }
 
     useEffect(() => {
@@ -27,6 +33,14 @@ function InvitesToUserMapper () {
                 </div>
                 <div>
                     {invite.project.name}
+                </div>
+                <div>
+                    <button type="button" className={submitButtonStyle} onClick={() => handleAcceptInvite(invite._id, true)}>
+                        прийняти запрошення
+                    </button>
+                    <button type="button" className={submitButtonStyle} onClick={() => handleAcceptInvite(invite._id, false)}>
+                        відхилити запрошення
+                    </button>
                 </div>
             </div>
         })}

@@ -174,4 +174,12 @@ export default new class ProjectService {
         throw error;
       }
     }
+
+    async deleteParitcipant(projectId: string, userId: string) {
+      try {
+        await ProjectModel.findByIdAndUpdate(projectId, {$pull: {participants: {participant: new mongoose.Types.ObjectId(userId)}}});
+      } catch (error) {
+        throw error;
+      }
+    }
 }

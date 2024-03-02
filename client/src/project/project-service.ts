@@ -16,4 +16,14 @@ export default new class ProjectService {
         const result = (await $api.get(`/project/${id}`)).data;
         return result;
     }
+
+    async leaveProject(projectId: string) {
+        const result = (await $api.delete(`/leave-project/${projectId}`)).data;
+        return result;
+    }
+
+    async deleteParticipant(projectId: string, userId: string) {
+        const result = (await $api.post(`delete-participant/${projectId}`, {userId})).data;
+        return result;
+    }
 }
