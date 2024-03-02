@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import ProjectModel from "./project-model";
-import Project, { ProjectCredentials } from "./project-types";
+import Project, { ExtendedProjectResponse, ProjectCredentials } from "./project-types";
+import inviteService from "../invites/invite-service";
 
 const fullLookUp = [
   {
@@ -140,14 +141,15 @@ export default new class ProjectService {
 
     async getProjectById(projectId: string) {
         try {
-            const result = await ProjectModel.aggregate([
+            const result: ExtendedProjectResponse = (await ProjectModel.aggregate([
                 {
                     $match: {
                         _id: new mongoose.Types.ObjectId(projectId)
                     }
                 },
                 ...fullLookUp
-              ])
+              ]))[0]
+            result.invited = await inviteService.getInvited(projectId);
             return result;
         } catch (error) {
             throw error;

@@ -36,6 +36,10 @@ export interface ProjectResponse {
     participants: ParticipantResponse[]
 }
 
+export interface ExtendedProjectResponse extends ProjectResponse {
+    invited: UserResponse[]
+}
+
 interface Project {
     _id: string,
     name: string,

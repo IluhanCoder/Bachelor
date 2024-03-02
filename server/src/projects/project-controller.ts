@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import projectService from "./project-service";
 import { AuthenticatedRequest } from "../auth/auth-types";
 import { ProjectResponse } from "./project-types";
+import inviteService from "../invites/invite-service";
 
 export default new class ProjectController {
     async newProject(req: AuthenticatedRequest, res: Response) {
@@ -25,10 +26,10 @@ export default new class ProjectController {
     async getProjectById(req: Request, res: Response) {
         try {
             const { id } = req.params;
-            const result = await projectService.getProjectById(id);
+            const project = await projectService.getProjectById(id);
             return res.json({
                 status: "success",
-                project: result
+                project
             })
         } catch (error) {
             res.json({

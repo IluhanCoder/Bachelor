@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { UserResponse } from "../user/user-type";
+import User, { UserResponse } from "../user/user-type";
 import TaskResponse from "../tasks/task-types";
 
 export interface Rights {
@@ -34,6 +34,10 @@ export interface ProjectResponse {
     owner: UserResponse,
     tasks: TaskResponse[],
     participants: ParticipantResponse[]
+}
+
+export interface ExtendedProjectResponse extends ProjectResponse {
+    invited?: UserResponse[]
 }
 
 interface Project {
