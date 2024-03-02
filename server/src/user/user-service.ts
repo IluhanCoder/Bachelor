@@ -6,4 +6,9 @@ export default new class UserService {
         const result = await UserModel.find({_id: {$ne: currentUser._id}});
         return result;
     }
+
+    async getUserById(userId: string) {
+        const result = await UserModel.findById(userId);
+        return result;
+    }
 }

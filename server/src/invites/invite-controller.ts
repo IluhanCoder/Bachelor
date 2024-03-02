@@ -38,4 +38,21 @@ export default new class InviteController {
             throw error;
         }
     }
+
+    async getInvitesToUser(req: AuthenticatedRequest, res: Response) {
+        try {
+            const currentUser = req.user;
+            const invites = await inviteService.getInvitesToUser(currentUser._id);
+            res.status(200).json({
+                status: "success",
+                invites
+            })
+        } catch (error) {
+            res.json({
+                status: "fail",
+                message: "internal server error"
+            }).status(500)
+            throw error;
+        }
+    }
 }

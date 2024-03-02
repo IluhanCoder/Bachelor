@@ -12,5 +12,7 @@ router.get("/project/:id", projectController.getProjectById);
 router.get("/users", userController.fetchUsers);
 router.post("/invite", inviteController.createInvite);
 router.get("/invited/:projectId", inviteController.getInvited);
+router.get("/user/:userId", userController.getUserById);
+router.get("/invites-to-user", inviteController.getInvitesToUser);
 
 export default router;

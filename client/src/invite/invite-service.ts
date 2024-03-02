@@ -11,4 +11,8 @@ export default new class InviteService {
     async getInvited(projectId: string) {
         return (await $api.get(`/invited/${projectId}`)).data;
     }
+
+    async getInvitesToUser() {
+        return (await $api.get(`/invites-to-user`)).data;
+    }
 }
