@@ -13,4 +13,10 @@ export default new class UserService {
     async updateUser(userId: string, newData: User) {
         return (await $api.post(`/user-update/${userId}`, {newData})).data;
     }
+
+    async setAvatar(avatar: File) {
+        const formData = new FormData();
+        formData.append("file", avatar);
+        return (await $api.post("/avatar", formData)).data;
+    }
 }

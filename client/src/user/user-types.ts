@@ -6,6 +6,7 @@ type User = {
     email: string,
     organisation: string
     password: string
+    avatar: any
 }
 
 export default User
@@ -16,5 +17,6 @@ export interface UserResponse {
     surname: string,
     nickname: string,
     email: string,
-    organisation: string
+    organisation: string,
+    avatar: any
 }

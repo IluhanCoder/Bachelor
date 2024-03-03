@@ -7,6 +7,7 @@ import userService from "./user-service";
 import { submitButtonStyle } from "../styles/button-syles";
 import formStore from "../forms/form-store";
 import EditProfileForm from "./edit-profile-form";
+import { Buffer } from "buffer";
 
 interface LocalParams {
     userId: string
@@ -18,12 +19,24 @@ function ProfilePage ({userId}: LocalParams) {
 
     const getUserData = async () => {
         const result = await userService.getUserById(userId);
-        setUserData(result.user);
+        setUserData({...result.user});
     }
 
     const handleEditProfile = async () => {
         if(userData) formStore.setForm(<EditProfileForm userData={userData} callback={getUserData}/>)
     }
+    
+    const handleNewAvatar = async (files: FileList | null) => {
+        if(files) {
+            await userService.setAvatar(files[0]);
+        }
+    }
+
+    const convertImage = (image: any) => {
+        console.log(image.data)
+        const base64String = `data:image/jpeg;base64,${Buffer.from(image.data.data).toString('base64')}`;
+        return base64String;
+    };
 
     useEffect(() => {
         getUserData();
@@ -31,6 +44,14 @@ function ProfilePage ({userId}: LocalParams) {
     }, [])
 
     return <div>
+        <div>
+            {JSON.stringify(userData)}
+            <img
+                className="w-48 rounded shadow-md"
+                src={userData?.avatar ? convertImage(userData?.avatar) : ""}
+            />
+            <input type="file" onChange={(e) => handleNewAvatar(e.target.files)}/>
+        </div>
         <div>{userData?.nickname}</div>
         <div>{userData?.name}</div>
         <div>{userData?.surname}</div>
