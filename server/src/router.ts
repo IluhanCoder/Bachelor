@@ -21,5 +21,6 @@ router.post("/delete-participant/:projectId", projectController.deleteParticipan
 router.post("/cancel-invite", inviteController.cancelInvite);
 router.get(`/project-tasks/:projectId`, taskController.getProjectTasks);
 router.post(`/task`, taskController.addTask);
+router.post(`/user-update/:userId`, userController.updateUser);
 
 export default router;

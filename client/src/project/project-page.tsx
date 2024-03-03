@@ -9,7 +9,7 @@ import inviteService from "../invite/invite-service";
 import { UserResponse } from "../user/user-types";
 import userStore from "../user/user-store";
 import { observer } from "mobx-react";
-import TasksTale from "../task/tasks-tale";
+import TasksTile from "../task/tasks-tile";
 import NewTaskForm from "../task/new-task-form";
 
 function ProjectPage () {
@@ -123,7 +123,7 @@ function ProjectPage () {
         <div>
             <div>Задачі:</div>
             {project && <div>
-                <TasksTale projectId={project?._id}/>
+                <TasksTile projectId={project?._id}/>
             </div>}
         </div>
     </div>

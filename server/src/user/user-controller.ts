@@ -52,4 +52,21 @@ export default new class UserController {
             throw error;
         }
     }
+
+    async updateUser (req: AuthenticatedRequest, res: Response) {
+        try {
+            const {userId} = req.params;
+            const {newData} = req.body;
+            await userService.updateUser(userId, newData);
+            res.status(200).json({
+                status: "success"
+            })
+        } catch (error) {
+            res.json({
+                status: "fail",
+                message: "internal server error"
+            }).status(500)
+            throw error;
+        }
+    }
 }

@@ -9,7 +9,7 @@ interface LocalParams {
     projectId: string
 }
 
-function TasksTale ({projectId}: LocalParams) {
+function TasksTile ({projectId}: LocalParams) {
     const [tasks, setTasks] = useState<TaskResponse[]>([]);
 
     const handleNewTask = async() => {
@@ -37,4 +37,4 @@ function TasksTale ({projectId}: LocalParams) {
     </div>
 }
 
-export default TasksTale;
+export default TasksTile;
