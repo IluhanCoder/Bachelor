@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import projectService from "./project-service";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { ExtendedProjectResponse, ParticipantResponse, ProjectResponse, Rights } from "./project-types";
 import { submitButtonStyle } from "../styles/button-syles";
 import formStore from "../forms/form-store";
@@ -12,6 +12,7 @@ import { observer } from "mobx-react";
 import TasksTile from "../task/tasks-tile";
 import NewTaskForm from "../task/new-task-form";
 import BacklogTile from "../backlogs/backlogs-tile";
+import NewBacklogForm from "../backlogs/new-backlog-form";
 
 function ProjectPage () {
     const [project, setProject] = useState<ExtendedProjectResponse>();
@@ -71,6 +72,12 @@ function ProjectPage () {
         }
     }
 
+    const handleCreateBacklog = () => {
+        if(project) {
+            formStore.setForm(<NewBacklogForm projectId={project._id} callBack={getProjectData}/>)
+        }
+    }
+
     useEffect(() => {
         getProjectData();
     }, [projectId])
@@ -122,10 +129,13 @@ function ProjectPage () {
                 покинути проект
             </button>}
         <div>
-            <div>Задачі:</div>
+            <div>Беклоги:</div>
             {project && <div>
                 <BacklogTile projectId={project._id}/>
             </div>}
+            <div>
+                <button onClick={handleCreateBacklog} className={submitButtonStyle}>створити беклог</button>
+            </div>
         </div>
     </div>
 }

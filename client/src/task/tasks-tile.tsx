@@ -13,10 +13,6 @@ interface LocalParams {
 }
 
 function TasksTile ({backLog, callBack, onCheck}: LocalParams) {
-    const handleNewTask = async (task: TaskResponse) => {
-        formStore.setForm(<NewTaskForm backlogId={backLog._id} projectId={task.projectId} callBack={callBack}/>);
-    }
-
     const handleCheck = async (event: ChangeEvent<HTMLInputElement>) => {
         const {id, checked} = event.target;
         if(checked) await taskService.checkTask(id);
@@ -33,9 +29,6 @@ function TasksTile ({backLog, callBack, onCheck}: LocalParams) {
                 <div className={(task.isChecked ? "underline" : "")}>{task.name}</div>
             </div>
         })}
-        {backLog.tasks.length > 0 && <div>
-            <button className={submitButtonStyle} type="button" onClick={() => handleNewTask(backLog.tasks[0])}>створити задачу</button>
-        </div>}
     </div>
 }
 
