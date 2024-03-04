@@ -1,6 +1,7 @@
 import { UserResponse } from "../user/user-types"
 
 interface Task {
+    _id: string,
     name: string,
     desc: string,
     projectId: string,
@@ -22,6 +23,7 @@ export interface TaskCredentials {
 }
 
 export interface TaskResponse {
+    _id: string,
     name: string,
     desc: string,
     projectId: string,
