@@ -5,8 +5,8 @@ export default new class TaskService {
         return (await $api.get(`project-tasks/${projectId}`)).data;
     }
 
-    async newTask (projectId: string, createdBy: string, name: string, desc: string) {
-        return (await $api.post("/task", {task: {projectId, createdBy, name, desc}})).data;
+    async newTask (backlogId: string, createdBy: string, name: string, desc: string) {
+        return (await $api.post("/task", {task: {backlogId, createdBy, name, desc}})).data;
     }
 
     async checkTask(taskId: string) {

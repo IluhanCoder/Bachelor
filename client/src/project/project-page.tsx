@@ -11,6 +11,7 @@ import userStore from "../user/user-store";
 import { observer } from "mobx-react";
 import TasksTile from "../task/tasks-tile";
 import NewTaskForm from "../task/new-task-form";
+import BacklogTile from "../backlogs/backlogs-tile";
 
 function ProjectPage () {
     const [project, setProject] = useState<ExtendedProjectResponse>();
@@ -123,7 +124,7 @@ function ProjectPage () {
         <div>
             <div>Задачі:</div>
             {project && <div>
-                <TasksTile projectId={project?._id}/>
+                <BacklogTile projectId={project._id}/>
             </div>}
         </div>
     </div>

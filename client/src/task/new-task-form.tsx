@@ -8,10 +8,11 @@ import formStore from "../forms/form-store";
 
 interface LocalParams {
     projectId: string,
+    backlogId: string,
     callBack?: () => {}
 }
 
-function NewTaskForm({projectId, callBack}: LocalParams) {
+function NewTaskForm({projectId, backlogId, callBack}: LocalParams) {
     const [formData, setFormData] = useState<TaskCredentials>({
         name: "",
         desc: "",
@@ -21,7 +22,7 @@ function NewTaskForm({projectId, callBack}: LocalParams) {
 
     const handleSubmit = async(event: FormEvent) => {
         event.preventDefault();
-        await taskService.newTask(formData.projectId, formData.createdBy, formData.name, formData.desc);
+        await taskService.newTask(backlogId, formData.createdBy, formData.name, formData.desc);
         if(callBack) callBack();
         formStore.dropForm();
     }
