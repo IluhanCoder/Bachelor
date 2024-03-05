@@ -7,17 +7,15 @@ import taskService from "./task-service";
 import formStore from "../forms/form-store";
 
 interface LocalParams {
-    projectId: string,
     backlogId: string,
-    callBack?: () => {}
+    callBack?: () => void
 }
 
-function NewTaskForm({projectId, backlogId, callBack}: LocalParams) {
-    const [formData, setFormData] = useState<TaskCredentials>({
+function NewTaskForm({backlogId, callBack}: LocalParams) {
+    const [formData, setFormData] = useState<{name: string, desc: string, createdBy: string}>({
         name: "",
         desc: "",
         createdBy: userStore.user?._id ?? "",
-        projectId
     });
 
     const handleSubmit = async(event: FormEvent) => {

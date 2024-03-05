@@ -25,7 +25,7 @@ function BacklogMapper ({projectId}: LocalParams) {
     }
 
     const handleNewTask = async (backlogId: string) => {
-        formStore.setForm(<NewTaskForm backlogId={backlogId} projectId={projectId} callBack={getBacklogs}/>);
+        formStore.setForm(<NewTaskForm backlogId={backlogId} callBack={getBacklogs}/>);
     }
 
     const handleNewSprint = async (backlogId: string) => {

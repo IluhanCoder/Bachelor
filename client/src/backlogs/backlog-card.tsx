@@ -8,6 +8,8 @@ import formStore from "../forms/form-store";
 import PushTaskForm from "../sprint/push-task-form";
 import BacklogTasksMapper from "../task/backlog-tasks-mapper";
 import BacklogSprintsMapper from "../sprint/backlog-sprints-mapper";
+import { submitButtonStyle } from "../styles/button-syles";
+import NewTaskForm from "../task/new-task-form";
 
 interface LocalParams {
     backlog: BacklogResponse
@@ -35,11 +37,18 @@ function BacklogCard({backlog}: LocalParams) {
         getData();
     }
 
+    const handleNewTask = () => {
+        formStore.setForm(<NewTaskForm backlogId={backlog._id} callBack={() => {getData()}}/>)
+    }
+
     useEffect(() => {getData()}, []);
 
     return <div>
         <div>{backlog.name}</div>
         <BacklogTasksMapper tasks={tasks} pushHandler={handlePush}/>
+        <div>
+            <button className={submitButtonStyle} type="button" onClick={handleNewTask}>Створити завдання</button>
+        </div>
         <BacklogSprintsMapper pullHandler={handlePull} sprints={sprints}/>
     </div>
 }
