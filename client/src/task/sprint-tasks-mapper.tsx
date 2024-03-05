@@ -17,7 +17,7 @@ function SprintTasksMapper ({sprintId}: LocalParams) {
 
     useEffect(() => { getTasks() }, []);
 
-    return <TasksMapper tasks={tasks} onCheck={getTasks}/>
+    return <TasksMapper push={false} tasks={tasks} onCheck={getTasks}/>
 }
 
 export default SprintTasksMapper;

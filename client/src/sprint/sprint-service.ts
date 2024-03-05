@@ -8,4 +8,8 @@ export default new class SprintService {
     async getSprints(backlogId: string) {
         return (await $api.get(`/sprints/${backlogId}`)).data;
     }
+
+    async pushTask(taskId: string, sprintId: string) {
+        return (await $api.post(`/sprint-task`,{taskId, sprintId})).data;
+    }
 }

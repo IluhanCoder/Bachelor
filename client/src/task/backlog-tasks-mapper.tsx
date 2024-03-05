@@ -17,7 +17,7 @@ function BacklogTasksMapper ({backlogId}: LocalParams) {
 
     useEffect(() => { getTasks() }, []);
 
-    return <TasksMapper tasks={tasks} onCheck={getTasks}/>
+    return <TasksMapper push tasks={tasks} onCheck={getTasks}/>
 }
 
 export default BacklogTasksMapper;

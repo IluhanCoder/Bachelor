@@ -51,4 +51,10 @@ export default new class SprintService {
     if(result.length > 0) return result[0].tasks;
     else return []
   }
+
+  async pushTask(taskId: string, sprintId: string) {
+    const convertedTaskId = new mongoose.Types.ObjectId(taskId);
+    await backlogModel.findOneAndUpdate({tasks: convertedTaskId}, {$pull: {tasks: convertedTaskId}});
+    await sprintModel.findByIdAndUpdate(sprintId, {$push: {tasks: convertedTaskId}});
+  }
 }

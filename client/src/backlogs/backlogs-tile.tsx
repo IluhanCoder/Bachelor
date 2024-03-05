@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { BacklogResponse } from "./backlog-types";
 import backlogService from "./backlog-service";
 import { TaskResponse } from "../task/task-types";
@@ -12,6 +12,8 @@ import NewSprintForm from "../sprint/new-sprint-form";
 interface LocalParams {
     projectId: string
 }
+
+export const BacklogContext = createContext<BacklogResponse | undefined>(undefined);
 
 function BacklogTile ({projectId}: LocalParams) {
     const [backlogs, setBackLogs] = useState<BacklogResponse[]>([]);
@@ -33,7 +35,7 @@ function BacklogTile ({projectId}: LocalParams) {
         getBacklogs();
     }, []);
 
-    return <div>{backlogs.map((backlog: BacklogResponse) => <div>
+    return <div>{backlogs.map((backlog: BacklogResponse) => <BacklogContext.Provider value={backlog}><div>
         <div>{backlog.name}</div>
         <div>
             <label>спрінти:</label>
@@ -50,7 +52,7 @@ function BacklogTile ({projectId}: LocalParams) {
                 <button className={submitButtonStyle} type="button" onClick={() => handleNewTask(backlog._id)}>створити задачу</button>
             </div>
         </div>
-    </div>)}</div>
+    </div></BacklogContext.Provider>)}</div>
 }
 
 export default BacklogTile;
