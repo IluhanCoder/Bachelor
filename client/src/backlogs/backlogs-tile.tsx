@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { BacklogResponse } from "./backlog-types";
 import backlogService from "./backlog-service";
 import { TaskResponse } from "../task/task-types";
-import TasksTile from "../task/tasks-tile";
+import BacklogTasksMapper from "../task/backlog-tasks-mapper";
 import { submitButtonStyle } from "../styles/button-syles";
 import NewTaskForm from "../task/new-task-form";
 import formStore from "../forms/form-store";
+import SprintsTile from "../sprint/sprints-tile";
+import NewSprintForm from "../sprint/new-sprint-form";
 
 interface LocalParams {
     projectId: string
@@ -16,12 +18,15 @@ function BacklogTile ({projectId}: LocalParams) {
 
     const getBacklogs = async () => {
         const result = await backlogService.getProjectBacklogs(projectId);
-        console.log(result);
         setBackLogs([...result.backlogs]);
     }
 
     const handleNewTask = async (backlogId: string) => {
         formStore.setForm(<NewTaskForm backlogId={backlogId} projectId={projectId} callBack={getBacklogs}/>);
+    }
+
+    const handleNewSprint = async (backlogId: string) => {
+        formStore.setForm(<NewSprintForm backlogId={backlogId} callBack={getBacklogs}/>);
     }
 
     useEffect(() => {
@@ -31,7 +36,16 @@ function BacklogTile ({projectId}: LocalParams) {
     return <div>{backlogs.map((backlog: BacklogResponse) => <div>
         <div>{backlog.name}</div>
         <div>
-            <TasksTile backLog={backlog} callBack={getBacklogs} onCheck={getBacklogs}/>
+            <label>спрінти:</label>
+            <div>
+                <SprintsTile backlogId={backlog._id}/>
+                <div>
+                    <button className={submitButtonStyle} type="button" onClick={() => handleNewSprint(backlog._id)}>створити спрінт</button>
+                </div>
+            </div>
+        </div>
+        <div>
+            <BacklogTasksMapper backlogId={backlog._id}/>
             <div>
                 <button className={submitButtonStyle} type="button" onClick={() => handleNewTask(backlog._id)}>створити задачу</button>
             </div>

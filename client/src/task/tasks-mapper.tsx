@@ -7,12 +7,11 @@ import { submitButtonStyle } from "../styles/button-syles";
 import { BacklogResponse } from "../backlogs/backlog-types";
 
 interface LocalParams {
-    backLog: BacklogResponse,
-    callBack?: () => {},
+    tasks: TaskResponse[],
     onCheck?: () => {}
 }
 
-function TasksTile ({backLog, callBack, onCheck}: LocalParams) {
+function TasksMapper ({tasks, onCheck}: LocalParams) {
     const handleCheck = async (event: ChangeEvent<HTMLInputElement>) => {
         const {id, checked} = event.target;
         if(checked) await taskService.checkTask(id);
@@ -21,7 +20,7 @@ function TasksTile ({backLog, callBack, onCheck}: LocalParams) {
     }
 
     return <div>
-        {backLog.tasks.map((task: TaskResponse) => {
+        {tasks.map((task: TaskResponse) => {
             return <div className="flex gap-2">
                 <div>
                     <input type="checkbox" checked={task.isChecked} onChange={(e) => handleCheck(e)} id={task._id}/>
@@ -32,4 +31,4 @@ function TasksTile ({backLog, callBack, onCheck}: LocalParams) {
     </div>
 }
 
-export default TasksTile;
+export default TasksMapper;

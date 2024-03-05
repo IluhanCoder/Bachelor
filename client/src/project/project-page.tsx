@@ -9,10 +9,11 @@ import inviteService from "../invite/invite-service";
 import { UserResponse } from "../user/user-types";
 import userStore from "../user/user-store";
 import { observer } from "mobx-react";
-import TasksTile from "../task/tasks-tile";
+import BacklogTasksTile from "../task/tasks-mapper";
 import NewTaskForm from "../task/new-task-form";
 import BacklogTile from "../backlogs/backlogs-tile";
 import NewBacklogForm from "../backlogs/new-backlog-form";
+import SprintsTile from "../sprint/sprints-tile";
 
 function ProjectPage () {
     const [project, setProject] = useState<ExtendedProjectResponse>();

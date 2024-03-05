@@ -4,7 +4,7 @@ import { UserResponse } from "../user/user-type";
 interface Task {
     name: string,
     desc: string,
-    projectId: mongoose.Types.ObjectId,
+    backlogId?: mongoose.Types.ObjectId,
     isChecked: boolean,
     createdBy: mongoose.Types.ObjectId,
     created: Date,
@@ -17,7 +17,7 @@ export default Task;
 export interface TaskResponse {
     name: string,
     desc: string,
-    projectId: mongoose.Types.ObjectId,
+    backlogId: mongoose.Types.ObjectId,
     isChecked: boolean,
     createdBy: mongoose.Types.ObjectId,
     created: Date,
@@ -28,7 +28,7 @@ export interface TaskResponse {
 export interface TaskCredentials {
     name: string,
     desc: string,
-    projectId: string,
+    backlogId: string,
     createdBy: string,
     executors?: mongoose.Types.ObjectId[]
 }

@@ -5,7 +5,11 @@ type User = {
     nickname: string,
     email: string,
     organisation: string
-    password: string
+    password: string,
+    avatar: {
+        data: Buffer,
+        contentType: string
+    }
 }
 
 export default User
@@ -15,5 +19,9 @@ export interface UserResponse {
     surname: string,
     nickname: string,
     email: string,
-    organisation: string
+    organisation: string,
+    avatar: {
+        data: Buffer,
+        contentType: string
+    }
 }

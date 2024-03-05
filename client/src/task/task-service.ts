@@ -16,4 +16,12 @@ export default new class TaskService {
     async unCheckTask(taskId: string) {
         return (await $api.patch(`/task-uncheck/${taskId}`)).data;
     }
+
+    async getBacklogTasks(backlogId: string) {
+        return (await $api.get(`/backlog-tasks/${backlogId}`)).data;
+    }
+
+    async getSprintTasks(sprintId: string) {
+        return (await $api.get(`/sprint-tasks/${sprintId}`)).data;
+    }
 }

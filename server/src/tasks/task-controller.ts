@@ -35,4 +35,36 @@ export default new class TaskController {
             throw error;
         }
     }
+
+    async checkTask(req: Request, res: Response) {
+        try {
+            const { taskId } = req.params;
+            await taskService.checkTask(taskId);
+            res.status(200).json({
+                status: "success"
+            })
+        } catch (error) {
+            res.json({
+                status: "fail",
+                message: "internal server error"
+            }).status(500)
+            throw error;
+        }
+    }
+
+    async unCheckTask(req: Request, res: Response) {
+        try {
+            const { taskId } = req.params;
+            await taskService.unCheckTask(taskId);
+            res.status(200).json({
+                status: "success"
+            })
+        } catch (error) {
+            res.json({
+                status: "fail",
+                message: "internal server error"
+            }).status(500)
+            throw error;
+        }
+    }
 }

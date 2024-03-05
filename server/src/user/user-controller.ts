@@ -69,4 +69,17 @@ export default new class UserController {
             throw error;
         }
     }
+
+    async setAvatar(req: AuthenticatedRequest, res: Response) {
+        try {
+          const {user, file} = req;
+          if (req.file) await userService.setAvatar(file, user._id);
+          return res.status(200).json({
+            status: "success"
+          });
+        } catch (error) {
+          console.log(error);
+          return res.status(400).json({ message: "Set avatar error" });
+        }
+      }
 }

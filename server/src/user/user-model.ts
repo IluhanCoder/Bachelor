@@ -32,6 +32,13 @@ const userSchema = new mongoose.Schema({
       required: true,
       unique: false,
     },
+    avatar: {
+      type: {
+        data: Buffer,
+        contentType: String
+      },
+      required: false
+    }
   });
 
   userSchema.methods.verifyPassword = async function(password: string) {
