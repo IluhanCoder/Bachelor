@@ -4,21 +4,18 @@ import taskService from "./task-service";
 import TasksMapper from "./tasks-mapper";
 
 interface LocalParams {
-    backlogId: string
-    onPush?: () => {}
+    tasks: TaskResponse[],
+    pushHandler: (task: TaskResponse) => {}
 }
 
-function BacklogTasksMapper ({backlogId, onPush}: LocalParams) {
-    const [tasks, setTasks] = useState<TaskResponse[]>([]);
-
-    const getTasks = async () => {
-        const result = await taskService.getBacklogTasks(backlogId);
-        setTasks([...result.tasks]);
-    }
-
-    useEffect(() => { getTasks() }, []);
-
-    return <TasksMapper onPush={onPush} push tasks={tasks} onCheck={getTasks}/>
+function BacklogTasksMapper ({tasks, pushHandler}: LocalParams) {
+    return <div>{tasks.map((task: TaskResponse) => <div className="bg-gray-200 m-4">
+            <div>{task.name}</div>
+            <div>
+                <button type="button" onClick={() => pushHandler(task)}>додати до спрінту</button>
+            </div>
+        </div>
+    )}</div>
 }
 
 export default BacklogTasksMapper;

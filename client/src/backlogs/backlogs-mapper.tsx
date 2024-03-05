@@ -6,8 +6,9 @@ import BacklogTasksMapper from "../task/backlog-tasks-mapper";
 import { submitButtonStyle } from "../styles/button-syles";
 import NewTaskForm from "../task/new-task-form";
 import formStore from "../forms/form-store";
-import SprintsTile from "../sprint/sprints-tile";
+import BacklogSprintsMapper from "../sprint/backlog-sprints-mapper";
 import NewSprintForm from "../sprint/new-sprint-form";
+import BacklogCard from "./backlog-card";
 
 interface LocalParams {
     projectId: string
@@ -15,7 +16,7 @@ interface LocalParams {
 
 export const BacklogContext = createContext<BacklogResponse | undefined>(undefined);
 
-function BacklogTile ({projectId}: LocalParams) {
+function BacklogMapper ({projectId}: LocalParams) {
     const [backlogs, setBackLogs] = useState<BacklogResponse[]>([]);
 
     const getBacklogs = async () => {
@@ -35,24 +36,11 @@ function BacklogTile ({projectId}: LocalParams) {
         getBacklogs();
     }, []);
 
-    return <div>{backlogs.map((backlog: BacklogResponse) => <BacklogContext.Provider value={backlog}><div>
-        <div>{backlog.name}</div>
+    return <div>
         <div>
-            <label>спрінти:</label>
-            <div>
-                <SprintsTile onPull={getBacklogs} backlogId={backlog._id}/>
-                <div>
-                    <button className={submitButtonStyle} type="button" onClick={() => handleNewSprint(backlog._id)}>створити спрінт</button>
-                </div>
-            </div>
+            {backlogs.map((backlog: BacklogResponse) => <BacklogCard backlog={backlog}/>)}
         </div>
-        <div>
-            <BacklogTasksMapper onPush={getBacklogs} backlogId={backlog._id}/>
-            <div>
-                <button className={submitButtonStyle} type="button" onClick={() => handleNewTask(backlog._id)}>створити задачу</button>
-            </div>
-        </div>
-    </div></BacklogContext.Provider>)}</div>
+    </div>
 }
 
-export default BacklogTile;
+export default BacklogMapper;

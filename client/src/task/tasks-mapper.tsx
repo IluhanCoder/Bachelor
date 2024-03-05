@@ -6,7 +6,6 @@ import formStore from "../forms/form-store";
 import { submitButtonStyle } from "../styles/button-syles";
 import { BacklogResponse } from "../backlogs/backlog-types";
 import PushTaskForm from "../sprint/push-task-form";
-import { BacklogContext } from "../backlogs/backlogs-tile";
 import { SprintResponse } from "../sprint/sprint-types";
 import sprintService from "../sprint/sprint-service";
 
@@ -20,8 +19,6 @@ interface LocalParams {
 }
 
 function TasksMapper ({tasks, onCheck, push, onPush, sprintId, onPull}: LocalParams) {
-    const currentBackLog = useContext(BacklogContext);
-
     const handleCheck = async (event: ChangeEvent<HTMLInputElement>) => {
         const {id, checked} = event.target;
         if(checked) await taskService.checkTask(id);
@@ -31,14 +28,14 @@ function TasksMapper ({tasks, onCheck, push, onPush, sprintId, onPull}: LocalPar
 
     const [sprints, setSprints] = useState<SprintResponse[]>([]);
 
-    const getSprints = async () => {
-        if(currentBackLog) {
-            const result = await sprintService.getSprints(currentBackLog?._id);
-            setSprints([...result.sprints])
-        }
-    }
+    // const getSprints = async () => {
+    //     if(currentBackLog) {
+    //         const result = await sprintService.getSprints(currentBackLog?._id);
+    //         setSprints([...result.sprints])
+    //     }
+    // }
 
-    useEffect(() => { getSprints() }, []);
+    // useEffect(() => { getSprints() }, []);
 
     const handleSprintPush = (task: TaskResponse) => {
         formStore.setForm(<PushTaskForm sprints={sprints} task={task} callBack={onPush}/>)

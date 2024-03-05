@@ -9,7 +9,7 @@ import formStore from "../forms/form-store";
 interface LocalParams {
     task: TaskResponse,
     sprints: SprintResponse[],
-    callBack?: () => {}
+    callBack?: () => void
 }
 
 function PushTaskForm({task, sprints, callBack}: LocalParams) {

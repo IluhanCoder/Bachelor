@@ -5,29 +5,20 @@ import { TaskResponse } from "../task/task-types";
 import SprintTasksMapper from "../task/sprint-tasks-mapper";
 
 interface LocalParams {
-    backlogId: string,
-    onPull: () => {}
+    sprints: SprintResponse[],
+    pullHandler: (taskId: string, sprintId: string) => {}
 }
 
-function SprintsTile({backlogId, onPull}: LocalParams) {
-    const [sprints, setSprints] = useState<SprintResponse[]>([]);
-
-    const getSprints = async () => {
-        const result = await sprintService.getSprints(backlogId);
-        setSprints([...result.sprints]);
-    }
-
-    useEffect(() => { getSprints() }, []);
-
+function BacklogSprintsMapper({sprints, pullHandler}: LocalParams) {
     return <div>
         {sprints.map((sprint: SprintResponse) => <div>
             <div>{sprint.name}</div>
             <div>
                 <div>завдання спрінту:</div>
-                <SprintTasksMapper onPull={onPull} sprintId={sprint._id}/>
+                <SprintTasksMapper pullHandler={(taskId: string) => pullHandler(taskId, sprint._id)} sprint={sprint}/>
             </div>
         </div>)}
     </div>
 }
 
-export default SprintsTile;
+export default BacklogSprintsMapper;

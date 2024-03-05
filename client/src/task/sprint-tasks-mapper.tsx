@@ -2,23 +2,31 @@ import { useEffect, useState } from "react";
 import { TaskResponse } from "./task-types";
 import taskService from "./task-service";
 import TasksMapper from "./tasks-mapper";
+import { SprintResponse } from "../sprint/sprint-types";
 
 interface LocalParams {
-    sprintId: string,
-    onPull?: () => {}
+    sprint: SprintResponse,
+    pullHandler: (taskId: string) => {}
 }
 
-function SprintTasksMapper ({sprintId, onPull}: LocalParams) {
+function SprintTasksMapper ({sprint, pullHandler}: LocalParams) {
     const [tasks, setTasks] = useState<TaskResponse[]>([]);
 
     const getTasks = async () => {
-        const result = await taskService.getSprintTasks(sprintId);
+        const result = await taskService.getSprintTasks(sprint._id);
         setTasks([...result.tasks]);
     }
 
-    useEffect(() => { getTasks() }, []);
+    useEffect(() => { getTasks() }, [sprint]);
 
-    return <TasksMapper onPull={onPull} sprintId={sprintId} push={false} tasks={tasks} onCheck={getTasks}/>
+    return <div>
+        {tasks.map((task: TaskResponse) => <div className="bg-gray-200 m-4">
+            <div>{task.name}</div>
+            <div>
+                <button type="button" onClick={() => pullHandler(task._id)}>прибрати</button>
+            </div>
+        </div>)}
+    </div>
 }
 
 export default SprintTasksMapper;

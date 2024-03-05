@@ -11,9 +11,9 @@ import userStore from "../user/user-store";
 import { observer } from "mobx-react";
 import BacklogTasksTile from "../task/tasks-mapper";
 import NewTaskForm from "../task/new-task-form";
-import BacklogTile from "../backlogs/backlogs-tile";
 import NewBacklogForm from "../backlogs/new-backlog-form";
-import SprintsTile from "../sprint/sprints-tile";
+import BacklogSprintsMapper from "../sprint/backlog-sprints-mapper";
+import BacklogMapper from "../backlogs/backlogs-mapper";
 
 function ProjectPage () {
     const [project, setProject] = useState<ExtendedProjectResponse>();
@@ -132,7 +132,7 @@ function ProjectPage () {
         <div>
             <div>Беклоги:</div>
             {project && <div>
-                <BacklogTile projectId={project._id}/>
+                <BacklogMapper projectId={project._id}/>
             </div>}
             <div>
                 <button onClick={handleCreateBacklog} className={submitButtonStyle}>створити беклог</button>
