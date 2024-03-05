@@ -5,9 +5,10 @@ import TasksMapper from "./tasks-mapper";
 
 interface LocalParams {
     backlogId: string
+    onPush?: () => {}
 }
 
-function BacklogTasksMapper ({backlogId}: LocalParams) {
+function BacklogTasksMapper ({backlogId, onPush}: LocalParams) {
     const [tasks, setTasks] = useState<TaskResponse[]>([]);
 
     const getTasks = async () => {
@@ -17,7 +18,7 @@ function BacklogTasksMapper ({backlogId}: LocalParams) {
 
     useEffect(() => { getTasks() }, []);
 
-    return <TasksMapper push tasks={tasks} onCheck={getTasks}/>
+    return <TasksMapper onPush={onPush} push tasks={tasks} onCheck={getTasks}/>
 }
 
 export default BacklogTasksMapper;

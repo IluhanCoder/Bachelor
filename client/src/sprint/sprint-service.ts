@@ -12,4 +12,8 @@ export default new class SprintService {
     async pushTask(taskId: string, sprintId: string) {
         return (await $api.post(`/sprint-task`,{taskId, sprintId})).data;
     }
+
+    async pullTask(taskId: string, sprintId: string) {
+        return (await $api.post("/sprint-pull-task",{taskId, sprintId})).data;
+    }
 }

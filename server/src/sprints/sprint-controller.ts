@@ -67,4 +67,20 @@ export default new class SprintController {
             throw error;
         }
     }
+
+    async pullTask(req: Request, res: Response) {
+        try {
+            const {taskId, sprintId} = req.body;
+            await sprintService.pullTask(taskId, sprintId);
+            res.status(200).json({
+                status: "success"
+            })
+        } catch (error) {
+            res.json({
+                status: "fail",
+                message: "internal server error"
+            }).status(500)
+            throw error;
+        }
+    }
 }

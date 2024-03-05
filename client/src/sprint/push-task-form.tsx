@@ -4,13 +4,15 @@ import { TaskResponse } from "../task/task-types";
 import { SprintResponse } from "./sprint-types";
 import sprintService from "./sprint-service";
 import { submitButtonStyle } from "../styles/button-syles";
+import formStore from "../forms/form-store";
 
 interface LocalParams {
     task: TaskResponse,
-    sprints: SprintResponse[]
+    sprints: SprintResponse[],
+    callBack?: () => {}
 }
 
-function PushTaskForm({task, sprints}: LocalParams) {
+function PushTaskForm({task, sprints, callBack}: LocalParams) {
     const [selectedSprintId, setSelectedSprintId] = useState<string | undefined>();
 
     const handleSelect = (sprintId: string) => {
@@ -18,7 +20,11 @@ function PushTaskForm({task, sprints}: LocalParams) {
     }
 
     const handleSubmit = async () => {
-        if(selectedSprintId) await sprintService.pushTask(task._id, selectedSprintId);
+        if(selectedSprintId) { 
+            await sprintService.pushTask(task._id, selectedSprintId);
+            formStore.dropForm();
+            if(callBack) callBack();
+        }
     }
 
     return <FormComponent formLabel={`Завдання "${task.name}"`}>

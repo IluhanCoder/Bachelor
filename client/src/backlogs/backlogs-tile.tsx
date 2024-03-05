@@ -40,14 +40,14 @@ function BacklogTile ({projectId}: LocalParams) {
         <div>
             <label>спрінти:</label>
             <div>
-                <SprintsTile backlogId={backlog._id}/>
+                <SprintsTile onPull={getBacklogs} backlogId={backlog._id}/>
                 <div>
                     <button className={submitButtonStyle} type="button" onClick={() => handleNewSprint(backlog._id)}>створити спрінт</button>
                 </div>
             </div>
         </div>
         <div>
-            <BacklogTasksMapper backlogId={backlog._id}/>
+            <BacklogTasksMapper onPush={getBacklogs} backlogId={backlog._id}/>
             <div>
                 <button className={submitButtonStyle} type="button" onClick={() => handleNewTask(backlog._id)}>створити задачу</button>
             </div>

@@ -6,9 +6,10 @@ import SprintTasksMapper from "../task/sprint-tasks-mapper";
 
 interface LocalParams {
     backlogId: string,
+    onPull: () => {}
 }
 
-function SprintsTile({backlogId}: LocalParams) {
+function SprintsTile({backlogId, onPull}: LocalParams) {
     const [sprints, setSprints] = useState<SprintResponse[]>([]);
 
     const getSprints = async () => {
@@ -23,7 +24,7 @@ function SprintsTile({backlogId}: LocalParams) {
             <div>{sprint.name}</div>
             <div>
                 <div>завдання спрінту:</div>
-                <SprintTasksMapper sprintId={sprint._id}/>
+                <SprintTasksMapper onPull={onPull} sprintId={sprint._id}/>
             </div>
         </div>)}
     </div>

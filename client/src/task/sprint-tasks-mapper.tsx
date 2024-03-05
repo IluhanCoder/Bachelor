@@ -4,10 +4,11 @@ import taskService from "./task-service";
 import TasksMapper from "./tasks-mapper";
 
 interface LocalParams {
-    sprintId: string
+    sprintId: string,
+    onPull?: () => {}
 }
 
-function SprintTasksMapper ({sprintId}: LocalParams) {
+function SprintTasksMapper ({sprintId, onPull}: LocalParams) {
     const [tasks, setTasks] = useState<TaskResponse[]>([]);
 
     const getTasks = async () => {
@@ -17,7 +18,7 @@ function SprintTasksMapper ({sprintId}: LocalParams) {
 
     useEffect(() => { getTasks() }, []);
 
-    return <TasksMapper push={false} tasks={tasks} onCheck={getTasks}/>
+    return <TasksMapper onPull={onPull} sprintId={sprintId} push={false} tasks={tasks} onCheck={getTasks}/>
 }
 
 export default SprintTasksMapper;

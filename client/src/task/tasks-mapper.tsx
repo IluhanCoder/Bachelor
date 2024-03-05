@@ -13,10 +13,13 @@ import sprintService from "../sprint/sprint-service";
 interface LocalParams {
     tasks: TaskResponse[],
     push: boolean,
-    onCheck?: () => {}
+    sprintId?: string,
+    onCheck?: () => {},
+    onPush?: () => {},
+    onPull?: () => {}
 }
 
-function TasksMapper ({tasks, onCheck, push}: LocalParams) {
+function TasksMapper ({tasks, onCheck, push, onPush, sprintId, onPull}: LocalParams) {
     const currentBackLog = useContext(BacklogContext);
 
     const handleCheck = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +41,11 @@ function TasksMapper ({tasks, onCheck, push}: LocalParams) {
     useEffect(() => { getSprints() }, []);
 
     const handleSprintPush = (task: TaskResponse) => {
-        formStore.setForm(<PushTaskForm sprints={sprints} task={task}/>)
+        formStore.setForm(<PushTaskForm sprints={sprints} task={task} callBack={onPush}/>)
+    }
+
+    const handleSprintPull = async (taskId: string) => {
+        if(sprintId && onPull) { await sprintService.pullTask(taskId, sprintId); onPull(); }
     }
 
     return <div>
@@ -49,7 +56,7 @@ function TasksMapper ({tasks, onCheck, push}: LocalParams) {
                 </div>
                 <div className={(task.isChecked ? "underline" : "")}>{task.name}</div>
                 {push && <div><button type="button" onClick={() => handleSprintPush(task)} className={submitButtonStyle}>додати в спрінт</button></div> || 
-                    <div><button type="button" className={submitButtonStyle}>прибрати зі спрінту</button></div>}
+                    <div><button type="button" className={submitButtonStyle} onClick={() => handleSprintPull(task._id)}>прибрати зі спрінту</button></div>}
             </div>
         })}
     </div>

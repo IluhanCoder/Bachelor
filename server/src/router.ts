@@ -37,5 +37,6 @@ router.get("/sprints/:backlogId", sprintController.getBacklogSprints);
 router.get("/backlog-tasks/:backlogId", backlogController.getBacklogTasks);
 router.get("/sprint-tasks/:sprintId", sprintController.getSprintTasks);
 router.post("/sprint-task", sprintController.pushTask);
+router.post("/sprint-pull-task", sprintController.pullTask);
 
 export default router;
