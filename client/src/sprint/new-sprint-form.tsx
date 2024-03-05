@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, FormEventHandler, useState } from "react";
 import FormComponent from "../forms/form-component";
 import { submitButtonStyle } from "../styles/button-syles";
 import formStore from "../forms/form-store";
@@ -6,13 +6,14 @@ import sprintService from "./sprint-service";
 
 interface LocalParams {
     backlogId: string,
-    callBack?: () => {}
+    callBack?: () => void
 }
 
 function NewSprintForm ({callBack, backlogId}: LocalParams) {
     const [formData, setFormData] = useState<{name: string}>({name: ""});
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (event: FormEvent) => {
+        event.preventDefault();
         await sprintService.createSprint(backlogId, formData.name);
         formStore.dropForm();
         if(callBack) callBack();
@@ -26,7 +27,7 @@ function NewSprintForm ({callBack, backlogId}: LocalParams) {
     };  
 
     return <FormComponent formLabel="створення спрінту">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(event: FormEvent) => handleSubmit(event)}>
             <div>
                 <input type="text" name="name" onChange={handleChange}/>
             </div>
