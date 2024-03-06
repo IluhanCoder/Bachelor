@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import TaskModel from "./task-model";
 import backlogModel from "../backlog/backlog-model";
 import TaskStatuses from "./task-statuses";
+import ProjectModel from "../projects/project-model";
 
 export default new class TaskService {
     async addTask(newTask: TaskCredentials) {
@@ -27,58 +28,64 @@ export default new class TaskService {
 
     async getProjectTasks(projectId: string) {
         try {
-            const result = await TaskModel.aggregate([
-                {
-                    $match: {
-                      projectId: new mongoose.Types.ObjectId(projectId)
-                    }
-                  },
-                  {
-                    $lookup: {
-                      from: 'users',
-                      localField: 'executors',
-                      foreignField: '_id',
-                      as: 'executorsInfo'
-                    }
-                  },
-                  {
-                    $lookup: {
-                      from: 'users',
-                      localField: 'createdBy',
-                      foreignField: '_id',
-                      as: 'createdByInfo'
-                    }
-                  },
-                  {
-                    $project: {
-                      _id: 1,
-                      name: 1,
-                      desc: 1,
-                      projectId: 1,
-                      isChecked: 1,
-                      created: 1,
-                      checkedDate: 1,
-                      executors: {
-                        $map: {
-                          input: '$executorsInfo',
-                          as: 'executor',
-                          in: {
-                            _id: '$$executor._id',
-                            name: '$$executor.name',
-                            surname: '$$executor.surname',
-                            nickname: '$$executor.nickname',
-                            organisation: '$$executor.organisation',
-                            email: '$$executor.email'
-                          }
-                        }
-                      },
-                      createdBy: {
-                        $arrayElemAt: ['$createdByInfo', 0]
-                      }
-                    }
+          const result = await backlogModel.aggregate([
+            {
+              $match: {
+                  projectId: new mongoose.Types.ObjectId(projectId)
+              }
+          },
+          {
+              $lookup: {
+                  from: "sprints",
+                  localField: "sprints",
+                  foreignField: "_id",
+                  as: "backlogSprints"
+              }
+          },
+          {
+              $project: {
+                  tasks: {
+                      $concatArrays: [
+                          "$tasks",
+                          { $ifNull: ["$backlogSprints.tasks", []] }
+                      ]
                   }
-            ])
-            return result;
+              }
+          },
+          {
+              $unwind: {
+                  path: "$tasks",
+                  preserveNullAndEmptyArrays: true
+              }
+          },
+          {
+              $lookup: {
+                  from: "tasks",
+                  localField: "tasks",
+                  foreignField: "_id",
+                  as: "taskData"
+              }
+          },
+          {
+              $unwind: {
+                  path: "$taskData",
+                  preserveNullAndEmptyArrays: true
+              }
+          },
+          {
+              $group: {
+                  _id: null,
+                  tasks: { $push: "$taskData" }
+              }
+          },
+          {
+              $project: {
+                  _id: 0,
+                  tasks: 1
+              }
+          }
+        ]);
+            return result[0].tasks;
         } catch (error) {
             throw error;
         }

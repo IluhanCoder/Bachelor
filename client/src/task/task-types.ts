@@ -9,7 +9,8 @@ interface Task {
     createdBy: string,
     created: Date,
     checkedDate: Date | undefined,
-    executors: string[]
+    executors: string[],
+    status: string
 }
 
 export default Task;
@@ -31,5 +32,6 @@ export interface TaskResponse {
     createdBy: UserResponse,
     created: Date,
     checkedDate: Date | undefined,
+    status: string,
     executors: UserResponse[]
 }
