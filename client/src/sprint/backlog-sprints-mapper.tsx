@@ -6,16 +6,17 @@ import SprintTasksMapper from "../task/sprint-tasks-mapper";
 
 interface LocalParams {
     sprints: SprintResponse[],
-    pullHandler: (taskId: string, sprintId: string) => {}
+    pullHandler: (taskId: string, sprintId: string) => {},
+    assignHandler: (task: TaskResponse) => void
 }
 
-function BacklogSprintsMapper({sprints, pullHandler}: LocalParams) {
+function BacklogSprintsMapper({sprints, pullHandler, assignHandler}: LocalParams) {
     return <div>
         {sprints.map((sprint: SprintResponse) => <div>
             <div>{sprint.name}</div>
             <div>
                 <div>завдання спрінту:</div>
-                <SprintTasksMapper pullHandler={(taskId: string) => pullHandler(taskId, sprint._id)} sprint={sprint}/>
+                <SprintTasksMapper assignHandler={assignHandler} pullHandler={(taskId: string) => pullHandler(taskId, sprint._id)} sprint={sprint}/>
             </div>
         </div>)}
     </div>

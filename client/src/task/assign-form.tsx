@@ -8,13 +8,15 @@ import { ParticipantResponse } from "../project/project-types";
 import UsersMapper from "../user/users-mapper";
 import { submitButtonStyle } from "../styles/button-syles";
 import taskService from "./task-service";
+import formStore from "../forms/form-store";
 
 interface LocalParams {
     task: TaskResponse,
-    projectId: string
+    projectId: string,
+    callBack?: () => void
 }
 
-function AssignForm({task, projectId}: LocalParams) {
+function AssignForm({task, projectId, callBack}: LocalParams) {
     const [users, setUsers] = useState<ParticipantResponse[]>([]);
     const [selected, setSelected] = useState<UserResponse[]>([]);
 
@@ -24,10 +26,11 @@ function AssignForm({task, projectId}: LocalParams) {
     }
 
     const handleSubmit = async () => {
-        selected.map((user: UserResponse) => {
-            taskService.assignTask(task._id, user._id);
+        selected.map(async (user: UserResponse) => {
+            await taskService.assignTask(task._id, user._id);
         })
-        
+        formStore.dropForm();
+        if(callBack) callBack();
     }
 
     useEffect(() => {

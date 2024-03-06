@@ -24,7 +24,6 @@ function BacklogCard({backlog}: LocalParams) {
     const getData = async () => {
         const tasksResponse = await taskService.getBacklogTasks(backlog._id);
         const sprintsResponse = await sprintService.getSprints(backlog._id);
-        console.log(tasksResponse);
         setTasks([...tasksResponse.tasks]);
         setSprints([...sprintsResponse.sprints]);
     }
@@ -47,7 +46,7 @@ function BacklogCard({backlog}: LocalParams) {
     ]
 
     const handleAssing = (task: TaskResponse) => {
-        formStore.setForm(<AssignForm task={task} projectId={backlog.projectId}/>)
+        formStore.setForm(<AssignForm task={task} projectId={backlog.projectId} callBack={getData}/>)
     }
 
     useEffect(() => {getData()}, []);
@@ -58,7 +57,7 @@ function BacklogCard({backlog}: LocalParams) {
         <div>
             <button className={submitButtonStyle} type="button" onClick={handleNewTask}>Створити завдання</button>
         </div>
-        <BacklogSprintsMapper pullHandler={handlePull} sprints={sprints}/>
+        <BacklogSprintsMapper pullHandler={handlePull} sprints={sprints} assignHandler={handleAssing}/>
         <div>
             <button className={submitButtonStyle} type="button" onClick={handleNewSprint}>створити спрінт</button>
         </div>

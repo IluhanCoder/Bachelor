@@ -13,7 +13,7 @@ interface LocalParams {
 }
 
 function BacklogTasksMapper ({tasks, pushHandler, assignHandler}: LocalParams) {
-    return <div>{tasks.map((task: TaskResponse) => <div className="bg-gray-200 m-4">
+    return <div>{tasks.map((task: TaskResponse) => task.name && <div className="bg-gray-200 m-4">
             <div>{task.name}</div>
             <div>{task.executors.map((executor: UserResponse) => <div>{executor.nickname}</div>)}</div>
             <div className="flex gap-2">

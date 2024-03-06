@@ -60,20 +60,24 @@ export default new class SprintService {
               from: "users",
               foreignField: "_id",
               localField: "tasks.executors",
-              as: "taskExecutors"
+              as: "executorsData"
+          }
+      },
+      {
+          $addFields: {
+              "tasks.executors": "$executorsData"
           }
       },
       {
           $group: {
               _id: "$_id",
-              name: { $first: "$name" }, // Include other sprint fields if needed
+              name: { $first: "$name" },
               startDate: { $first: "$startDate" },
               endDate: { $first: "$endDate" },
               goal: { $first: "$goal" },
-              tasks: { $push: "$tasks" },
-              taskExecutors: { $push: "$taskExecutors" }
+              tasks: { $push: "$tasks" }
           }
-      },  
+      },
       ]);
     if(result.length > 0) return result[0].tasks;
     else return []
