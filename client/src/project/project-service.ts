@@ -31,4 +31,9 @@ export default new class ProjectService {
         const result = (await $api.get(`/participants/${projectId}`)).data;
         return result;
     }
+
+    async getUserRights(projectId: string) {
+        const result = (await $api.get(`/user-rights/${projectId}`)).data;
+        return result;
+    }   
 }

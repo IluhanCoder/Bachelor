@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import ProjectModel from "./project-model";
-import Project, { ExtendedProjectResponse, ProjectCredentials } from "./project-types";
+import Project, { ExtendedProjectResponse, Participant, ProjectCredentials } from "./project-types";
 import inviteService from "../invites/invite-service";
 
 const fullLookUp = [
@@ -235,6 +235,17 @@ export default new class ProjectService {
         }
         ]);
         return result;
+      } catch (error) {
+        throw error;
+      }
+    }
+
+    async getUserRights (userId: string, projectId: string) {
+      try {
+        const project = await ProjectModel.findById(projectId);
+        const userParticipating = project.participants.find((participant) => participant.participant === new mongoose.Types.ObjectId(userId));
+        if (userParticipating) return userParticipating.rights;
+        else return null;
       } catch (error) {
         throw error;
       }

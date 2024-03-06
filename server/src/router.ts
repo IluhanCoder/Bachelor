@@ -41,5 +41,6 @@ router.post("/sprint-pull-task", sprintController.pullTask);
 router.patch("/status/:taskId", taskController.setStatus);
 router.patch("/assign", taskController.assignTask);
 router.get("/participants/:projectId", projectController.getParticipants);
+router.get("/user-rights/:projectId", projectController.getUserRights);
 
 export default router;

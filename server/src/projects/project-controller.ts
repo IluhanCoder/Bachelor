@@ -107,4 +107,22 @@ export default new class ProjectController {
             throw error;
         }
     }
+
+    async getUserRights(req: AuthenticatedRequest, res: Response) {
+        try {
+            const {projectId} = req.params;
+            const currentUser = req.user;
+            const rights = await projectService.getUserRights(currentUser._id, projectId);
+            res.status(200).json({
+                status: "success",
+                rights
+            })
+        } catch (error) {
+            res.json({
+                status: "fail",
+                message: "internal server error"
+            }).status(500)
+            throw error;
+        }
+    }
 }
