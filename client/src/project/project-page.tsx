@@ -26,6 +26,7 @@ function ProjectPage () {
     const getProjectData = async () => {
         if(projectId === undefined) return;
         const result = await projectService.getProjectById(projectId);
+        console.log(result);
         setProject({...result.project});
     }
 
@@ -94,7 +95,7 @@ function ProjectPage () {
             </div>
             <div>
                 {project.participants.map((participant: ParticipantResponse) => {
-                    return <div>
+                    if(participant.participant) return <div>
                         <div>учасники:</div>
                         {participant.participant.name}
                         {rights?.editParticipants && 
