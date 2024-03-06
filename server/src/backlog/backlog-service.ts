@@ -37,22 +37,27 @@ export default new class BacklogService {
                     from: "users",
                     foreignField: "_id",
                     localField: "tasks.executors",
-                    as: "taskExecutors"
+                    as: "executorsData"
+                }
+            },
+            {
+                $addFields: {
+                    "tasks.executors": "$executorsData"
                 }
             },
             {
                 $group: {
                     _id: "$_id",
-                    name: { $first: "$name" }, // Include other backlog fields if needed
+                    name: { $first: "$name" },
                     created: { $first: "$created" },
                     lastModified: { $first: "$lastModified" },
                     owner: { $first: "$owner" },
-                    participants: { $first: "$participants" }, // Include participants data if needed
-                    tasks: { $push: "$tasks" },
-                    taskExecutors: { $push: "$taskExecutors" }
+                    participants: { $first: "$participants" },
+                    tasks: { $push: "$tasks" }
                 }
             },
         ]);
+        console.log(result[0]);
         if(result.length > 0) return result[0].tasks;
         else return []
     }
