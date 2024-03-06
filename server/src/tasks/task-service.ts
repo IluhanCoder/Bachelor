@@ -2,6 +2,7 @@ import Task, { TaskCredentials } from "./task-types";
 import mongoose from "mongoose";
 import TaskModel from "./task-model";
 import backlogModel from "../backlog/backlog-model";
+import TaskStatuses from "./task-statuses";
 
 export default new class TaskService {
     async addTask(newTask: TaskCredentials) {
@@ -14,7 +15,8 @@ export default new class TaskService {
                 created: new Date(),
                 checkedDate: undefined,
                 backlogId: new mongoose.Types.ObjectId(newTask.backlogId),
-                executors: newTask.executors ?? []
+                executors: newTask.executors ?? [],
+                status: TaskStatuses[0]
             };
             const createdTask = await TaskModel.create(task);
             await backlogModel.findByIdAndUpdate(newTask.backlogId, {"$push": {tasks: createdTask._id}});
@@ -93,6 +95,22 @@ export default new class TaskService {
     async unCheckTask (taskId: string) {
       try {
         await TaskModel.findByIdAndUpdate(taskId, { isChecked: false });
+      } catch (error) {
+        throw error;
+      }
+    }
+
+    async setStatus (taskId: string, index: number) {
+      try {
+        await TaskModel.findByIdAndUpdate(taskId, {status: TaskStatuses[index]});
+      } catch (error) {
+        throw error;
+      }
+    }
+
+    async assignTask (taskId: string, userId: string) {
+      try {
+        await TaskModel.findByIdAndUpdate(taskId, {$push: {executors: userId}});
       } catch (error) {
         throw error;
       }

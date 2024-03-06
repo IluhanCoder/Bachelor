@@ -24,4 +24,12 @@ export default new class TaskService {
     async getSprintTasks(sprintId: string) {
         return (await $api.get(`/sprint-tasks/${sprintId}`)).data;
     }
+
+    async setStatus(taskId: string, status: number) {
+        return (await $api.patch(`/status/${taskId}`, {status})).data;
+    }
+
+    async assignTask(taskId: string, userId: string) {
+        return (await $api.patch("/assign", {taskId, userId})).data;
+    }       
 }

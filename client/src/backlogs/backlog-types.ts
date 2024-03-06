@@ -3,5 +3,6 @@ import { TaskResponse } from "../task/task-types";
 
 export interface BacklogResponse {
     _id: string,
-    name: string
+    name: string,
+    projectId: string
 }

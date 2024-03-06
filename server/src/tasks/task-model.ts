@@ -8,7 +8,8 @@ const taskSchema = new mongoose.Schema({
     createdBy: mongoose.Types.ObjectId,
     created: Date,
     checkedDate: { type: Date, required: false },
-    executors: [mongoose.Types.ObjectId]
+    executors: [mongoose.Types.ObjectId],
+    status: String
 });
 
 const TaskModel = mongoose.model('Task', taskSchema);

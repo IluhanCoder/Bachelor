@@ -11,6 +11,7 @@ import BacklogSprintsMapper from "../sprint/backlog-sprints-mapper";
 import { submitButtonStyle } from "../styles/button-syles";
 import NewTaskForm from "../task/new-task-form";
 import NewSprintForm from "../sprint/new-sprint-form";
+import AssignForm from "../task/assign-form";
 
 interface LocalParams {
     backlog: BacklogResponse
@@ -23,8 +24,7 @@ function BacklogCard({backlog}: LocalParams) {
     const getData = async () => {
         const tasksResponse = await taskService.getBacklogTasks(backlog._id);
         const sprintsResponse = await sprintService.getSprints(backlog._id);
-        console.log("sprints:");
-        console.log(sprintsResponse);
+        console.log(tasksResponse);
         setTasks([...tasksResponse.tasks]);
         setSprints([...sprintsResponse.sprints]);
     }
@@ -46,11 +46,15 @@ function BacklogCard({backlog}: LocalParams) {
         formStore.setForm(<NewSprintForm backlogId={backlog._id} callBack={() => {getData()}}/>)
     ]
 
+    const handleAssing = (task: TaskResponse) => {
+        formStore.setForm(<AssignForm task={task} projectId={backlog.projectId}/>)
+    }
+
     useEffect(() => {getData()}, []);
 
     return <div>
         <div>{backlog.name}</div>
-        <BacklogTasksMapper tasks={tasks} pushHandler={handlePush}/>
+        <BacklogTasksMapper tasks={tasks} pushHandler={handlePush} assignHandler={handleAssing}/>
         <div>
             <button className={submitButtonStyle} type="button" onClick={handleNewTask}>Створити завдання</button>
         </div>

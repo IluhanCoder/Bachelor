@@ -37,17 +37,44 @@ export default new class SprintService {
     async getSprintTasks(sprintId: string) {
       const result = await sprintModel.aggregate([
         {
-            $match: {
-                _id: new mongoose.Types.ObjectId(sprintId)
-            }
-        },
-        {$lookup: {
-            from: "tasks",
-            foreignField: "_id",
-            localField: "tasks",
-            as: "tasks"
-        }
-    }]);
+          $match: {
+              _id: new mongoose.Types.ObjectId(sprintId)
+          }
+      },
+      {
+          $lookup: {
+              from: "tasks",
+              foreignField: "_id",
+              localField: "tasks",
+              as: "tasks"
+          }
+      },
+      {
+          $unwind: {
+              path: "$tasks",
+              preserveNullAndEmptyArrays: true
+          }
+      },
+      {
+          $lookup: {
+              from: "users",
+              foreignField: "_id",
+              localField: "tasks.executors",
+              as: "taskExecutors"
+          }
+      },
+      {
+          $group: {
+              _id: "$_id",
+              name: { $first: "$name" }, // Include other sprint fields if needed
+              startDate: { $first: "$startDate" },
+              endDate: { $first: "$endDate" },
+              goal: { $first: "$goal" },
+              tasks: { $push: "$tasks" },
+              taskExecutors: { $push: "$taskExecutors" }
+          }
+      },  
+      ]);
     if(result.length > 0) return result[0].tasks;
     else return []
   }

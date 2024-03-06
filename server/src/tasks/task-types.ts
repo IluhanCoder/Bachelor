@@ -9,7 +9,8 @@ interface Task {
     createdBy: mongoose.Types.ObjectId,
     created: Date,
     checkedDate: Date | undefined,
-    executors: mongoose.Types.ObjectId[]
+    executors: mongoose.Types.ObjectId[],
+    status: String
 }
 
 export default Task;
@@ -22,7 +23,8 @@ export interface TaskResponse {
     createdBy: mongoose.Types.ObjectId,
     created: Date,
     checkedDate: Date | undefined,
-    executors: UserResponse[]
+    executors: UserResponse[],
+    status: String
 }
 
 export interface TaskCredentials {

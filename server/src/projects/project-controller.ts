@@ -90,4 +90,21 @@ export default new class ProjectController {
             throw error;
         }
     }
+
+    async getParticipants(req: AuthenticatedRequest, res: Response) {
+        try {
+            const {projectId} = req.params;
+            const participants = await projectService.getParicipants(projectId);
+            res.status(200).json({
+                status: "success",
+                participants
+            })
+        } catch (error) {
+            res.json({
+                status: "fail",
+                message: "internal server error"
+            }).status(500)
+            throw error;
+        }
+    }
 }

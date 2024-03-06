@@ -182,4 +182,61 @@ export default new class ProjectService {
         throw error;
       }
     }
+
+    async getParicipants(projectId: string) {
+      try {
+        const result = await ProjectModel.aggregate([
+          {
+            $match: {
+                _id: new mongoose.Types.ObjectId(projectId)
+            }
+        },
+        {
+            $lookup: {
+                from: "users",
+                localField: "participants.participant",
+                foreignField: "_id",
+                as: "participantData"
+            }
+        },
+        {
+            $project: {
+                _id: 0, // Exclude the _id field if not needed
+                participants: {
+                    $map: {
+                        input: "$participants",
+                        as: "participant",
+                        in: {
+                            participant: {
+                                $arrayElemAt: [
+                                    {
+                                        $filter: {
+                                            input: "$participantData",
+                                            as: "user",
+                                            cond: {
+                                                $eq: ["$$user._id", "$$participant.participant"]
+                                            }
+                                        }
+                                    },
+                                    0
+                                ]
+                            },
+                            right: "$$participant.rights"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            $unwind: "$participants"
+        },
+        {
+            $replaceRoot: { newRoot: "$participants" }
+        }
+        ]);
+        return result;
+      } catch (error) {
+        throw error;
+      }
+    }
 }

@@ -26,4 +26,9 @@ export default new class ProjectService {
         const result = (await $api.post(`delete-participant/${projectId}`, {userId})).data;
         return result;
     }
+
+    async getParticipants(projectId: string) {
+        const result = (await $api.get(`/participants/${projectId}`)).data;
+        return result;
+    }
 }
