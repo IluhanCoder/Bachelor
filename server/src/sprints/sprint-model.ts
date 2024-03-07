@@ -14,7 +14,7 @@ const sprintSchema = new mongoose.Schema({
         required: true
     },
     goal: {
-        type: Date,
+        type: String,
         required: false
     },
     tasks: {

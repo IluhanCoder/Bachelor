@@ -5,4 +5,4 @@ export function convertArray(inputArray: TasksAnalyticsResponse[]) {
       name: `${value.day ? `${value.day}/`:""}${value.month + 1}${value.year ? `/${value.year}`:""}`,
       uv: value.amount
     }));
-  }
+}

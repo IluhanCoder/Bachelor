@@ -95,4 +95,12 @@ export default new class SprintService {
     await sprintModel.findByIdAndUpdate(sprintId, {$pull: {tasks: convertedTaskId}});
     await backlogModel.findOneAndUpdate({sprints: sprintId}, {$push:{tasks: convertedTaskId}});
   }
+
+  async editSprint(sprintId: string, name: string, goal: string, startDate: Date, endDate: Date) {
+    await sprintModel.findByIdAndUpdate(sprintId, {name, goal, startDate, endDate});
+  }
+
+  async getSprintById(sprintId: string) {
+    return await sprintModel.findById(sprintId);
+  }
 }

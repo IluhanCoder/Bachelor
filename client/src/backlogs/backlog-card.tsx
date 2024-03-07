@@ -57,7 +57,7 @@ function BacklogCard({backlog}: LocalParams) {
         <div>
             <button className={submitButtonStyle} type="button" onClick={handleNewTask}>Створити завдання</button>
         </div>
-        <BacklogSprintsMapper pullHandler={handlePull} sprints={sprints} assignHandler={handleAssing}/>
+        <BacklogSprintsMapper callBack={getData} pullHandler={handlePull} sprints={sprints} assignHandler={handleAssing}/>
         <div>
             <button className={submitButtonStyle} type="button" onClick={handleNewSprint}>створити спрінт</button>
         </div>

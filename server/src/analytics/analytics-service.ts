@@ -44,6 +44,4 @@ export default new class AnalyticsService {
             }
         return result
     }
-
-
 }

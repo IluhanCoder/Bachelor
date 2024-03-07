@@ -83,4 +83,38 @@ export default new class SprintController {
             throw error;
         }
     }
+
+    async editSprint(req: Request, res: Response) {
+        try {
+            const {sprintId} = req.params;
+            const {name, goal, startDate, endDate} = req.body;
+            await sprintService.editSprint(sprintId, name, goal, new Date(startDate), new Date(endDate));
+            res.status(200).json({
+                status: "success"
+            })
+        } catch (error) {
+            res.json({
+                status: "fail",
+                message: "internal server error"
+            }).status(500)
+            throw error;
+        }
+    }
+
+    async getSprintById(req: Request, res: Response) {
+        try {
+            const {sprintId} = req.params;
+            const sprint = await sprintService.getSprintById(sprintId);
+            res.status(200).json({
+                status: "success",
+                sprint
+            });
+        } catch (error) {
+            res.json({
+                status: "fail",
+                message: "internal server error"
+            }).status(500)
+            throw error;
+        }
+    }
 }

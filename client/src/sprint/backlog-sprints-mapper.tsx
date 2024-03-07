@@ -3,17 +3,28 @@ import { SprintResponse } from "./sprint-types";
 import sprintService from "./sprint-service";
 import { TaskResponse } from "../task/task-types";
 import SprintTasksMapper from "../task/sprint-tasks-mapper";
+import formStore from "../forms/form-store";
+import EditSprintForm from "./edit-sprint-form";
+import { submitButtonStyle } from "../styles/button-syles";
 
 interface LocalParams {
     sprints: SprintResponse[],
     pullHandler: (taskId: string, sprintId: string) => {},
-    assignHandler: (task: TaskResponse) => void
+    assignHandler: (task: TaskResponse) => void,
+    callBack?: () => {}
 }
 
-function BacklogSprintsMapper({sprints, pullHandler, assignHandler}: LocalParams) {
+function BacklogSprintsMapper({sprints, pullHandler, assignHandler, callBack}: LocalParams) {
+    const handleEdit = (sprintId: string) => {
+        formStore.setForm(<EditSprintForm sprintId={sprintId} callBack={callBack}/>);
+    }
+
     return <div>
         {sprints.map((sprint: SprintResponse) => <div>
-            <div>{sprint.name}</div>
+            <div>
+                <div>{sprint.name}</div>
+                <button type="button" onClick={() => handleEdit(sprint._id)} className={submitButtonStyle}>редагувати спрінт</button>
+            </div>
             <div>
                 <div>завдання спрінту:</div>
                 <SprintTasksMapper assignHandler={assignHandler} pullHandler={(taskId: string) => pullHandler(taskId, sprint._id)} sprint={sprint}/>
