@@ -9,6 +9,12 @@ import {
 } from "recharts";
 import { TasksAnalyticsResponse } from "./analytics-types";
 
+import "react-datepicker/dist/react-datepicker.css";
+
+import { registerLocale } from "react-datepicker";
+import {uk} from "date-fns/locale/uk";
+registerLocale("ua", uk);
+
 interface LocalParams {
   name: string;
   data: any[];

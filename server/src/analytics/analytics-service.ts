@@ -34,7 +34,7 @@ export default new class AnalyticsService {
         }
         else
             for(let year = startDate.getFullYear(); year <= endDate.getFullYear(); year++) {
-                for(let month = startDate.getMonth(); month <= ((year === endDate.getFullYear()) ? endDate.getMonth() : 12); month++) {
+                for(let month = ((year === startDate.getFullYear()) ? startDate.getMonth() : 0); month <= ((year === endDate.getFullYear()) ? endDate.getMonth() : 12); month++) {
                     let counter = 0;
                     tasks.map((task: TaskResponse) => {
                         if(task.checkedDate && task.checkedDate.getMonth() === month && task.checkedDate.getFullYear() === year) counter++
