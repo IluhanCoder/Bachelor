@@ -61,6 +61,7 @@ function EditSprintForm({sprintId, callBack}: LocalParams) {
 
     const handleStart = (date: Date) => {
         if(formData) {
+            if(date >= formData.endDate) return;
             const newData: SprintPutRequest = {
                 name: formData?.name,
                 goal: formData?.goal,
@@ -73,6 +74,7 @@ function EditSprintForm({sprintId, callBack}: LocalParams) {
 
     const handleEnd = (date: Date) => {
         if(formData) {
+            if(date <= formData.startDate) return;
             const newData: SprintPutRequest = {
                 name: formData?.name,
                 goal: formData?.goal,

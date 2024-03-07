@@ -19,8 +19,12 @@ function BacklogSprintsMapper({sprints, pullHandler, assignHandler, callBack}: L
         formStore.setForm(<EditSprintForm sprintId={sprintId} callBack={callBack}/>);
     }
 
+    const isTerminated = (sprint: SprintResponse) => {
+        return new Date() > new Date(sprint.endDate);
+    }
+
     return <div>
-        {sprints.map((sprint: SprintResponse) => <div>
+        {sprints.map((sprint: SprintResponse) => <div className={(isTerminated(sprint)) ? "bg-red-200" : ""}>
             <div>
                 <div>{sprint.name}</div>
                 <button type="button" onClick={() => handleEdit(sprint._id)} className={submitButtonStyle}>редагувати спрінт</button>
