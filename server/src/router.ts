@@ -7,6 +7,7 @@ import taskController from "./tasks/task-controller";
 import multer from "multer";
 import backlogController from "./backlog/backlog-controller";
 import sprintController from "./sprints/sprint-controller";
+import analyticsController from "./analytics/analytics-controller";
 
 const router = Router();
 
@@ -42,5 +43,7 @@ router.patch("/status/:taskId", taskController.setStatus);
 router.patch("/assign", taskController.assignTask);
 router.get("/participants/:projectId", projectController.getParticipants);
 router.get("/user-rights/:projectId", projectController.getUserRights);
+router.post("/task-stamps/:projectId", analyticsController.fetchTasksStamps);
+router.post("/analytics/task-amount", analyticsController.taskAmount);
 
 export default router;

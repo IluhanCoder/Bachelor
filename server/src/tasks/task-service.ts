@@ -109,7 +109,11 @@ export default new class TaskService {
 
     async setStatus (taskId: string, index: number) {
       try {
-        await TaskModel.findByIdAndUpdate(taskId, {status: TaskStatuses[index]});
+        const query = {
+          checkedDate: (index === 2) ? new Date() : null,
+          status: TaskStatuses[index]
+        }
+        await TaskModel.findByIdAndUpdate(taskId, query);
       } catch (error) {
         throw error;
       }
@@ -122,4 +126,91 @@ export default new class TaskService {
         throw error;
       }
     }
+
+    async getAllTasks(projectId: string) {
+      const result = await backlogModel.aggregate([
+          {
+            $match: {
+              projectId: new mongoose.Types.ObjectId(projectId),
+            },
+          },
+          {
+            $lookup: {
+              from: 'sprints',
+              localField: 'sprints',
+              foreignField: '_id',
+              as: 'sprintData',
+            },
+          },
+          {
+            $project: {
+              tasks: {
+                $concatArrays: ['$tasks', { $ifNull: ['$sprintData.tasks', []] }],
+              },
+            },
+          },
+          {
+            $unwind: {
+              path: '$tasks',
+              preserveNullAndEmptyArrays: true,
+            },
+          },
+          {
+            $lookup: {
+              from: 'tasks',
+              localField: 'tasks',
+              foreignField: '_id',
+              as: 'taskData',
+            },
+          },
+          {
+            $unwind: {
+              path: '$taskData',
+              preserveNullAndEmptyArrays: true,
+            },
+          },
+          {
+            $lookup: {
+              from: 'users',
+              localField: 'taskData.executors',
+              foreignField: '_id',
+              as: 'executorsData',
+            },
+          },
+          {
+            $lookup: {
+              from: 'users',
+              localField: 'taskData.createdBy',
+              foreignField: '_id',
+              as: 'createdByData',
+            },
+          },
+          {
+            $group: {
+              _id: null,
+              tasks: {
+                $push: {
+                  _id: '$taskData._id',
+                  name: '$taskData.name',
+                  desc: '$taskData.desc',
+                  projectId: '$taskData.projectId',
+                  isChecked: '$taskData.isChecked',
+                  created: '$taskData.created',
+                  checkedDate: '$taskData.checkedDate',
+                  executors: '$executorsData',
+                  createdBy: '$createdByData',
+                },
+              },
+            },
+          },
+          {
+            $project: {
+              _id: 0,
+              tasks: 1,
+            },
+          },
+        ]);
+
+      return result[0].tasks;
+  }
 }

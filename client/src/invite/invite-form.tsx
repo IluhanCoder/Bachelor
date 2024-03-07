@@ -6,26 +6,29 @@ import UsersMapper from "../user/users-mapper";
 import { submitButtonStyle } from "../styles/button-syles";
 import inviteService from "./invite-service";
 import formStore from "../forms/form-store";
+import userStore from "../user/user-store";
+import { ParticipantResponse, ProjectResponse } from "../project/project-types";
 
 interface LocalParams {
-    projectId: string,
+    project: ProjectResponse,
     callBack?: () => {}
 }
 
-function InviteForm ({projectId, callBack}: LocalParams) {
+function InviteForm ({project, callBack}: LocalParams) {
     const [users, setUsers] = useState<UserResponse[]>([]);
     const selectedState = useState<UserResponse[]>([]);
     const [selected, setSelected] = selectedState;
 
     const fetchUsers = async () => {
         const result = await userService.fetchUsers();
-        setUsers([...result.users]);
+        const filteredResult = result.users.filter((user: UserResponse) => user !== userStore.user && !project.participants.map((participant: ParticipantResponse) => participant.participant._id).includes(user._id));
+        setUsers([...filteredResult]);
     }
 
     const handleInvite = async () => {
         if(selected.length > 0) {
             try {
-                await inviteService.createInvite(selected, projectId)
+                await inviteService.createInvite(selected, project._id)
                 if(callBack) callBack();
             } catch (error) {
                 throw error;

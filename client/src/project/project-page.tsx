@@ -50,7 +50,7 @@ function ProjectPage () {
 
     const handleAddUser = async () => {
         if(project)
-            await formStore.setForm(<InviteForm projectId={project?._id} callBack={getProjectData}/>);
+            await formStore.setForm(<InviteForm project={project} callBack={getProjectData}/>);
     }
 
     const handleLeave = async () => {
@@ -119,7 +119,7 @@ function ProjectPage () {
                     </div>}
                 </div>)}
             </div>}
-            {rights?.editParticipants && <button type="button" className={submitButtonStyle} onClick={handleAddUser}>
+            {rights?.addParticipants && <button type="button" className={submitButtonStyle} onClick={handleAddUser}>
                 запросити користувача
             </button>}
         </div>}
