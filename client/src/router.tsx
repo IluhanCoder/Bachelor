@@ -6,7 +6,7 @@ import ProjectPage from "./project/project-page";
 import MyProfilePage from "./user/my-profile-page";
 import UserProfilePage from "./user/user-profile-page";
 import BoardWindow from "./task/board-window";
-import AnalyticsPage from "./analyticsService/analytics-page";
+import AnalyticsPage from "./analytics/analytics-page";
 
 const CustomRoutes = [
   <Route path="/" element={<div>hello</div>} key="root"/>,
