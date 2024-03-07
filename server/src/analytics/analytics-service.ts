@@ -17,8 +17,8 @@ export default new class AnalyticsService {
         return lastDayOfMonth.getDate();
     }
 
-    async taskAmount(projectId: string, startDate: Date, endDate: Date, daily: boolean) {
-        const tasks = await taskService.getAllTasks(projectId);
+    async taskAmount(projectId: string, startDate: Date, endDate: Date, daily: boolean, userId: string | undefined) {
+        const tasks = (userId) ? await TaskModel.find({executors: userId}) : await taskService.getAllTasks(projectId);
         const result = [];
         if(daily) {
             const endMonth = (endDate.getMonth() === 0) ? 12 : endDate.getMonth()
@@ -44,4 +44,6 @@ export default new class AnalyticsService {
             }
         return result
     }
+
+
 }

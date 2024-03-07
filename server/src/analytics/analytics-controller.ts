@@ -22,8 +22,8 @@ export default new class AnalyticsController {
 
     async taskAmount(req: Request, res: Response) {
         try {
-            const {projectId, startDate, endDate, isDaily} = req.body;
-            const result = await analyticsService.taskAmount(projectId, new Date(startDate), new Date(endDate), isDaily);
+            const {projectId, startDate, endDate, isDaily, userId} = req.body;
+            const result = await analyticsService.taskAmount(projectId, new Date(startDate), new Date(endDate), isDaily, userId);
             res.status(200).json({
                 status: "success",
                 result
