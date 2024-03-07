@@ -28,7 +28,7 @@ export default new class AnalyticsService {
                     tasks.map((task: TaskResponse) => {
                         if(task.checkedDate && task.checkedDate.getMonth() === month && task.checkedDate.getDate() === day) counter++
                     })
-                    result.push({month, day, amont: counter});
+                    result.push({month, day, amount: counter});
                 }
             }
         }
@@ -39,7 +39,7 @@ export default new class AnalyticsService {
                     tasks.map((task: TaskResponse) => {
                         if(task.checkedDate && task.checkedDate.getMonth() === month && task.checkedDate.getFullYear() === year) counter++
                     })
-                    result.push({month, year, amont: counter});
+                    result.push({month, year, amount: counter});
                 }
             }
         return result
