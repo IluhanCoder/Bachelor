@@ -44,9 +44,9 @@ router.patch("/status/:taskId", taskController.setStatus);
 router.patch("/assign", taskController.assignTask);
 router.get("/participants/:projectId", projectController.getParticipants);
 router.get("/user-rights/:projectId", projectController.getUserRights);
-router.post("/task-stamps/:projectId", analyticsController.fetchTasksStamps);
 router.post("/analytics/task-amount", analyticsController.taskAmount);
 router.get("/sprint/:sprintId", sprintController.getSprintById);
 router.put("/sprint/:sprintId", sprintController.editSprint);
+router.post("/task-ratio", analyticsController.taskRatio);
 
 export default router;

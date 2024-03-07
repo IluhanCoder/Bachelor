@@ -2,15 +2,14 @@ import { Request, Response } from "express";
 import analyticsService from "./analytics-service";
 
 export default new class AnalyticsController {
-    async fetchTasksStamps(req: Request, res: Response) {
+    async taskAmount(req: Request, res: Response) {
         try {
-            const {projectId} = req.params;
-            const {startDate, endDate} = req.body;
-            const result = await analyticsService.fetchTasksStamps(projectId);
+            const {projectId, startDate, endDate, isDaily, userId} = req.body;
+            const result = await analyticsService.taskAmount(projectId, new Date(startDate), new Date(endDate), isDaily, userId);
             res.status(200).json({
                 status: "success",
                 result
-            });
+            })
         } catch (error) {
             res.json({
                 status: "fail",
@@ -20,14 +19,14 @@ export default new class AnalyticsController {
         }
     }
 
-    async taskAmount(req: Request, res: Response) {
+    async taskRatio(req: Request, res: Response) {
         try {
-            const {projectId, startDate, endDate, isDaily, userId} = req.body;
-            const result = await analyticsService.taskAmount(projectId, new Date(startDate), new Date(endDate), isDaily, userId);
+            const {projectId, startDate, endDate, daily, userId} = req.body;
+            const result = await analyticsService.taskRatio(projectId, new Date(startDate), new Date(endDate), daily, userId);
             res.status(200).json({
                 status: "success",
                 result
-            })
+            });
         } catch (error) {
             res.json({
                 status: "fail",

@@ -8,4 +8,8 @@ export default new class AnalyticsService {
     async taskAmount(projectId: string, startDate: Date, endDate: Date, isDaily: boolean, userId: string | undefined) {
         return (await $api.post("/analytics/task-amount", {projectId, startDate, endDate, isDaily, userId})).data;
     }
+
+    async taskRatio(projectId: string, startDate: Date, endDate: Date, daily: boolean, userId: string | undefined) {
+        return (await $api.post("/task-ratio", {projectId, startDate, endDate, daily, userId})).data;
+    }
 }
