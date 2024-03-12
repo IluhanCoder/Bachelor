@@ -16,6 +16,7 @@ function AnalyticsPage () {
     const [taskAmountData, setTasksAmountData] = useState<TasksAnalyticsResponse[]>([]);
     const [tasksRatioData, setTasksRatioData] = useState<TasksAnalyticsResponse[]>([]);
     const [createdTaskData, setCreatedTaskData] = useState<TasksAnalyticsResponse[]>([]);
+    const [prediction, setPrediction] = useState<TasksAnalyticsResponse[]>([]);
 
     const [isCurrentUser, setIsCurrentUser] = useState<boolean>(false);
     const [isDaily, setIsDaily] = useState<boolean>(false);
@@ -43,7 +44,6 @@ function AnalyticsPage () {
     const getTasksRatioData = async () => {
         if(projectId && userStore.user?._id) {
             const result = await analyticsService.taskRatio(projectId, startDate, endDate, isDaily, (isCurrentUser) ? userStore.user?._id : undefined);
-            console.log(result);
             setTasksRatioData([...result.result]);
         }
     }
@@ -51,12 +51,18 @@ function AnalyticsPage () {
     const getCreatedTaskData = async () => {
         if(projectId && userStore.user?._id) {
             const result = await analyticsService.createdTaskAmount(projectId, startDate, endDate, isDaily, (isCurrentUser) ? userStore.user?._id : undefined);
-            console.log(result);
             setCreatedTaskData([...result.result]);
         }
     }
 
-    useEffect(() => { getTasksAmoutAnalytics(); getTasksRatioData(); getCreatedTaskData() }, [userStore.user?._id, isDaily, isCurrentUser, startDate, endDate]);
+    const getPrediction = async () => {
+        if(projectId && userStore.user?._id) {
+            const result = await analyticsService.predictRatio(projectId, (isCurrentUser) ? userStore.user?._id : undefined);
+            setPrediction([...result.result]);
+        }
+    }
+
+    useEffect(() => { getTasksAmoutAnalytics(); getTasksRatioData(); getCreatedTaskData(); getPrediction() }, [userStore.user?._id, isDaily, isCurrentUser, startDate, endDate]);
 
     return <div>
         <DatePicker startDate={startDate} endDate={endDate} handleStart={handleStart} handleEnd={handleEnd}/>
@@ -67,6 +73,7 @@ function AnalyticsPage () {
         <AnalyticsGraph data={convertArray(createdTaskData)} name="test"/>
         <AnalyticsGraph data={convertArray(taskAmountData)} name="test"/>
         <AnalyticsGraph data={convertArray(tasksRatioData)} name="test"/>
+        <AnalyticsGraph data={convertArray(prediction)} name="test"/>
     </div>
 }
 

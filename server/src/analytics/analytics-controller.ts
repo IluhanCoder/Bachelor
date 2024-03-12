@@ -52,4 +52,21 @@ export default new class AnalyticsController {
             throw error;
         }
     }
+    
+    async predictRatio(req: Request, res: Response) {
+        try {
+            const {projectId, userId} = req.body;
+            const result = await analyticsService.predictRatio(projectId, userId);
+            res.status(200).json({
+                status: "success",
+                result
+            });
+        } catch (error) {
+            res.json({
+                status: "fail",
+                message: "internal server error"
+            }).status(500);
+            throw error;
+        }
+    }
 }

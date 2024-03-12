@@ -4,6 +4,7 @@ import taskService from "../tasks/task-service";
 import backlogModel from '../backlog/backlog-model';
 import { TaskResponse } from '../tasks/task-types';
 import { UserResponse } from '../user/user-type';
+import { SimpleLinearRegression } from "ml-regression-simple-linear";
 
 export default new class AnalyticsService {
     getMaxDaysInMonth(year, month) {
@@ -83,5 +84,25 @@ export default new class AnalyticsService {
             const result = allTasks.map((task: {month: number, year: number, amount: number}, index: number) => doneTasks[index].amount = (task.amount > 0) ? doneTasks[index].amount / task.amount * 100 : 0)
         }
         return doneTasks;
+    }
+
+    async predictRatio(projectId: string, userId: string | undefined) {
+        const tasks = await this.taskRatio(projectId, new Date(2024, 0, 1), new Date(2025, 0, 1), false, userId);
+        const months = tasks.map(entry => entry.month);
+        const ratios = tasks.map(entry => entry.amount);
+
+        // Fit linear regression model
+        const regression = new SimpleLinearRegression(months, ratios);
+
+        // Predict ratios for each month of the future year
+        const predictedRatios = [];
+        for (let month = 1; month <= 12; month++) {
+            const predictedRatio = regression.predict(month);
+            predictedRatios.push({ year: 2024, month, amount: predictedRatio });
+        }
+
+        console.log(predictedRatios);
+
+        return predictedRatios;
     }
 }

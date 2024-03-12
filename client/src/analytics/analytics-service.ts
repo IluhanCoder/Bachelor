@@ -16,4 +16,8 @@ export default new class AnalyticsService {
     async createdTaskAmount(projectId: string, startDate: Date, endDate: Date, daily: boolean, userId: string | undefined) {
         return (await $api.post("analytics/created-task-amount", {projectId, startDate, endDate, daily, userId})).data;
     }
+
+    async predictRatio(projectId: string, userId: string | undefined) {
+        return (await $api.post("/analytics/predict-ratio", {projectId, userId})).data;
+    }
 }
