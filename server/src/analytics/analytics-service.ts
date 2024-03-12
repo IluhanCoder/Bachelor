@@ -16,15 +16,15 @@ export default new class AnalyticsService {
         return tasks;
     }
 
-    mapTasks(tasks: TaskResponse[], startDate: Date, endDate: Date, condition: (task: TaskResponse) => boolean, daily: boolean) {
+    mapTasks(tasks: TaskResponse[], startDate: Date, endDate: Date, condition: (task: TaskResponse, month: number, dayOrYear: number) => boolean, daily: boolean) {
         const result = [];
         if(daily) {
             const endMonth = (endDate.getMonth() === 0) ? 12 : endDate.getMonth()
             for(let month = startDate.getMonth(); month <= endMonth; month++) {
-                for(let day = 1; day <= ((month === endMonth) ? endDate.getDate() : this.getMaxDaysInMonth(endDate.getFullYear(), month)); day++) {
+                for(let day = (month === startDate.getMonth()) ? startDate.getDate() : 1; day <= ((month === endMonth) ? endDate.getDate() : this.getMaxDaysInMonth(endDate.getFullYear(), month)); day++) {
                     let counter = 0;
                     tasks.map((task: TaskResponse) => {
-                        if(task.checkedDate && task.checkedDate.getMonth() === month && task.checkedDate.getDate() === day && condition(task)) counter++
+                        if(condition(task, month, day)) { counter++ }
                     })
                     result.push({month, day, amount: counter});
                 }
@@ -35,7 +35,8 @@ export default new class AnalyticsService {
                 for(let month = ((year === startDate.getFullYear()) ? startDate.getMonth() : 0); month <= ((year === endDate.getFullYear()) ? endDate.getMonth() : 12); month++) {
                     let counter = 0;
                     tasks.map((task: TaskResponse) => {
-                        if(task.checkedDate && task.checkedDate.getMonth() === month && task.checkedDate.getFullYear() === year && condition(task)) counter++
+                        const conditionResult = condition(task, month, year);
+                        if(conditionResult) counter++
                     })
                     result.push({month, year, amount: counter});
                 }
@@ -43,20 +44,38 @@ export default new class AnalyticsService {
         return result
     }
 
-    async taskAmount(projectId: string, startDate: Date, endDate: Date, daily: boolean, userId: string | undefined) {
+    checkedTaskCondition = (task: TaskResponse, month: number, dayOrYear: number, daily: boolean) => {
+        if(daily) return task.checkedDate && task.checkedDate.getDate() === dayOrYear && task.checkedDate.getMonth() === month
+        else return task.checkedDate && task.checkedDate.getMonth() === month && task.checkedDate.getFullYear() === dayOrYear;
+    }
+
+    checkedTaskTraceCondition = (task: TaskResponse, month: number, dayOrYear: number, daily: boolean) => {
+        if(daily) return task.checkedDate && task.checkedDate <= new Date(task.checkedDate.getFullYear(), month, dayOrYear, 23);
+        else return task.checkedDate && task.checkedDate <= new Date(dayOrYear,month,1);
+    }
+
+    createdTaskTraceCondition = (task: TaskResponse, month: number, dayOrYear: number, daily: boolean) => {
+        if(daily) return task.created && task.created <= new Date(task.created.getFullYear(), month, dayOrYear);
+        else return task.created && task.created <= new Date(dayOrYear,month,1);
+    }
+
+    async checkedTaskAmount(projectId: string, startDate: Date, endDate: Date, daily: boolean, userId: string | undefined) {
         const tasks = await this.fetchTasks(userId, projectId);
-        const result = this.mapTasks(tasks, startDate, endDate, (task: TaskResponse) => true, daily);
+        const result = this.mapTasks(tasks, startDate, endDate, (task: TaskResponse, month: number, dayOrYear: number) => this.checkedTaskCondition(task, month, dayOrYear, daily), daily);
         return result;
     }
 
+
+
     async taskRatio(projectId: string, startDate: Date, endDate: Date, daily: boolean, userId: string | undefined) {
         const tasks = await this.fetchTasks(userId, projectId);
-        const allTasks = this.mapTasks(tasks, startDate, endDate, (task: TaskResponse) => true, daily);
-        const doneTasks = this.mapTasks(tasks, startDate, endDate, (task: TaskResponse) => task.status === "done", daily);
+        const allTasks = this.mapTasks(tasks, startDate, endDate, (task: TaskResponse, month: number, dayOrYear: number) => this.createdTaskTraceCondition(task, month, dayOrYear, daily), daily);
+        const doneTasks = this.mapTasks(tasks, startDate, endDate, (task: TaskResponse, month: number, dayOrYear: number) => this.checkedTaskTraceCondition(task, month, dayOrYear, daily), daily);
         if(daily) {
-            return allTasks.map((task: {month: number, day: number, amount: number}, index: number) => doneTasks[index].amount / task.amount * 100)
+            const result = allTasks.map((task: {month: number, day: number, amount: number}, index: number) => doneTasks[index].amount = (task.amount > 0) ? doneTasks[index].amount = doneTasks[index].amount / task.amount * 100 : 0)
         } else {
-            return allTasks.map((task: {month: number, year: number, amount: number}, index: number) => doneTasks[index].amount / task.amount * 100)
+            const result = allTasks.map((task: {month: number, year: number, amount: number}, index: number) => doneTasks[index].amount = (task.amount > 0) ? doneTasks[index].amount / task.amount * 100 : 0)
         }
+        return doneTasks;
     }
 }

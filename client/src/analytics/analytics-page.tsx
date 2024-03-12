@@ -47,12 +47,13 @@ function AnalyticsPage () {
         }
     }
 
-    useEffect(() => { getTasksAmoutAnalytics(); getTasksRatioData(); }, [userStore.user?._id, isDaily, startDate, endDate]);
+    useEffect(() => { getTasksAmoutAnalytics(); getTasksRatioData(); }, [userStore.user?._id, isDaily, isCurrentUser, startDate, endDate]);
 
     return <div>
         <DatePicker startDate={startDate} endDate={endDate} handleStart={handleStart} handleEnd={handleEnd}/>
         <div>
             <input type="checkBox" checked={isDaily} onChange={() => setIsDaily(!isDaily)}/>
+            <input type="checkBox" checked={isCurrentUser} onChange={() => setIsCurrentUser(!isCurrentUser)}/>
         </div>
         <AnalyticsGraph data={convertArray(taskAmountData)} name="test"/>
         <AnalyticsGraph data={convertArray(tasksRatioData)} name="test"/>

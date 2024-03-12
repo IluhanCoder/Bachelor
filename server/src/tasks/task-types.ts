@@ -8,7 +8,7 @@ interface Task {
     isChecked: boolean,
     createdBy: mongoose.Types.ObjectId,
     created: Date,
-    checkedDate: Date | undefined,
+    checkedDate: Date | null,
     executors: mongoose.Types.ObjectId[],
     status: String
 }
@@ -22,9 +22,9 @@ export interface TaskResponse {
     isChecked: boolean,
     createdBy: mongoose.Types.ObjectId,
     created: Date,
-    checkedDate: Date | undefined,
+    checkedDate: Date | null,
     executors: UserResponse[],
-    status: String
+    status: string
 }
 
 export interface TaskCredentials {

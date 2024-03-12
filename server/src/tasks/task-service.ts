@@ -199,6 +199,7 @@ export default new class TaskService {
                   checkedDate: '$taskData.checkedDate',
                   executors: '$executorsData',
                   createdBy: '$createdByData',
+                  status: "$taskData.status"
                 },
               },
             },
@@ -210,7 +211,6 @@ export default new class TaskService {
             },
           },
         ]);
-
       return result[0].tasks;
   }
 }
