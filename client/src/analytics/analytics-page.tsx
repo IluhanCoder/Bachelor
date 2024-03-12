@@ -15,6 +15,7 @@ function AnalyticsPage () {
 
     const [taskAmountData, setTasksAmountData] = useState<TasksAnalyticsResponse[]>([]);
     const [tasksRatioData, setTasksRatioData] = useState<TasksAnalyticsResponse[]>([]);
+    const [createdTaskData, setCreatedTaskData] = useState<TasksAnalyticsResponse[]>([]);
 
     const [isCurrentUser, setIsCurrentUser] = useState<boolean>(false);
     const [isDaily, setIsDaily] = useState<boolean>(false);
@@ -47,7 +48,15 @@ function AnalyticsPage () {
         }
     }
 
-    useEffect(() => { getTasksAmoutAnalytics(); getTasksRatioData(); }, [userStore.user?._id, isDaily, isCurrentUser, startDate, endDate]);
+    const getCreatedTaskData = async () => {
+        if(projectId && userStore.user?._id) {
+            const result = await analyticsService.createdTaskAmount(projectId, startDate, endDate, isDaily, (isCurrentUser) ? userStore.user?._id : undefined);
+            console.log(result);
+            setCreatedTaskData([...result.result]);
+        }
+    }
+
+    useEffect(() => { getTasksAmoutAnalytics(); getTasksRatioData(); getCreatedTaskData() }, [userStore.user?._id, isDaily, isCurrentUser, startDate, endDate]);
 
     return <div>
         <DatePicker startDate={startDate} endDate={endDate} handleStart={handleStart} handleEnd={handleEnd}/>
@@ -55,6 +64,7 @@ function AnalyticsPage () {
             <input type="checkBox" checked={isDaily} onChange={() => setIsDaily(!isDaily)}/>
             <input type="checkBox" checked={isCurrentUser} onChange={() => setIsCurrentUser(!isCurrentUser)}/>
         </div>
+        <AnalyticsGraph data={convertArray(createdTaskData)} name="test"/>
         <AnalyticsGraph data={convertArray(taskAmountData)} name="test"/>
         <AnalyticsGraph data={convertArray(tasksRatioData)} name="test"/>
     </div>

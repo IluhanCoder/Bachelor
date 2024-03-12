@@ -10,6 +10,10 @@ export default new class AnalyticsService {
     }
 
     async taskRatio(projectId: string, startDate: Date, endDate: Date, daily: boolean, userId: string | undefined) {
-        return (await $api.post("/task-ratio", {projectId, startDate, endDate, daily, userId})).data;
+        return (await $api.post("/analytics/task-ratio", {projectId, startDate, endDate, daily, userId})).data;
+    }
+
+    async createdTaskAmount(projectId: string, startDate: Date, endDate: Date, daily: boolean, userId: string | undefined) {
+        return (await $api.post("analytics/created-task-amount", {projectId, startDate, endDate, daily, userId})).data;
     }
 }

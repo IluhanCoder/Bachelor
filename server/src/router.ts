@@ -47,6 +47,7 @@ router.get("/user-rights/:projectId", projectController.getUserRights);
 router.post("/analytics/task-amount", analyticsController.taskAmount);
 router.get("/sprint/:sprintId", sprintController.getSprintById);
 router.put("/sprint/:sprintId", sprintController.editSprint);
-router.post("/task-ratio", analyticsController.taskRatio);
+router.post("/analytics/task-ratio", analyticsController.taskRatio);
+router.post("/analytics/created-task-amount", analyticsController.createdTaskAmount)
 
 export default router;

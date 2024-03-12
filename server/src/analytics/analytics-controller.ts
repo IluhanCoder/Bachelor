@@ -35,4 +35,21 @@ export default new class AnalyticsController {
             throw error;
         }
     }
+
+    async createdTaskAmount(req: Request, res: Response) {
+        try {
+            const {projectId, startDate, endDate, daily, userId} = req.body;
+            const result = await analyticsService.createdTaskAmount(projectId, new Date(startDate), new Date(endDate), daily, userId);
+            res.status(200).json({
+                status: "success",
+                result
+            });
+        } catch (error) {
+            res.json({
+                status: "fail",
+                message: "internal server error"
+            }).status(500);
+            throw error;
+        }
+    }
 }

@@ -55,8 +55,8 @@ export default new class AnalyticsService {
     }
 
     createdTaskTraceCondition = (task: TaskResponse, month: number, dayOrYear: number, daily: boolean) => {
-        if(daily) return task.created && task.created <= new Date(task.created.getFullYear(), month, dayOrYear);
-        else return task.created && task.created <= new Date(dayOrYear,month,1);
+        if(daily) return task.created && task.created <= new Date(task.created.getFullYear(), month, dayOrYear, 23, 59);
+        else return task.created && task.created <= new Date(dayOrYear,month,this.getMaxDaysInMonth(dayOrYear, month));
     }
 
     async checkedTaskAmount(projectId: string, startDate: Date, endDate: Date, daily: boolean, userId: string | undefined) {
@@ -65,8 +65,12 @@ export default new class AnalyticsService {
         return result;
     }
 
-
-
+    async createdTaskAmount(projectId: string, startDate: Date, endDate: Date, daily: boolean, userId: string | undefined) {
+        const tasks = await this.fetchTasks(userId, projectId);
+        const result = this.mapTasks(tasks, startDate, endDate, (task: TaskResponse, month: number, dayOrYear: number) => this.createdTaskTraceCondition(task, month, dayOrYear, daily), daily);
+        return result;
+    }
+ 
     async taskRatio(projectId: string, startDate: Date, endDate: Date, daily: boolean, userId: string | undefined) {
         const tasks = await this.fetchTasks(userId, projectId);
         const allTasks = this.mapTasks(tasks, startDate, endDate, (task: TaskResponse, month: number, dayOrYear: number) => this.createdTaskTraceCondition(task, month, dayOrYear, daily), daily);
