@@ -3,6 +3,7 @@ import TaskModel from "../tasks/task-model";
 import taskService from "../tasks/task-service";
 import backlogModel from '../backlog/backlog-model';
 import { TaskResponse } from '../tasks/task-types';
+import { UserResponse } from '../user/user-type';
 
 export default new class AnalyticsService {
     getMaxDaysInMonth(year, month) {
@@ -12,8 +13,9 @@ export default new class AnalyticsService {
     }
 
     async fetchTasks (userId: string | undefined, projectId: string) {
-        const tasks = (userId) ? await TaskModel.find({projectId: new mongoose.Types.ObjectId(projectId), executors: userId}) : await taskService.getAllTasks(projectId);
-        return tasks;
+        const tasks: any[] = await taskService.getAllTasks(projectId);
+        const filteredTasks = (userId) ? tasks.filter((task: TaskResponse) => task.executors.find((executor: UserResponse) => executor._id.toString() === userId)) : tasks;
+        return filteredTasks;
     }
 
     mapTasks(tasks: TaskResponse[], startDate: Date, endDate: Date, condition: (task: TaskResponse, month: number, dayOrYear: number) => boolean, daily: boolean) {

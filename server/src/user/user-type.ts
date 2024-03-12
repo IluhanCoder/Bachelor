@@ -15,6 +15,7 @@ type User = {
 export default User
 
 export interface UserResponse {
+    _id: string,
     name: string,
     surname: string,
     nickname: string,
