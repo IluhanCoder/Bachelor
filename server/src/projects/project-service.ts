@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import ProjectModel from "./project-model";
-import Project, { ExtendedProjectResponse, Participant, ProjectCredentials } from "./project-types";
+import Project, { ExtendedProjectResponse, Participant, ParticipantResponse, ProjectCredentials, Rights } from "./project-types";
 import inviteService from "../invites/invite-service";
 
 const fullLookUp = [
@@ -246,6 +246,51 @@ export default new class ProjectService {
         const userParticipating = project.participants.find((participant: any) => (new mongoose.Types.ObjectId(userId)).equals(participant.participant));
         if (userParticipating) return userParticipating.rights;
         else return null;
+      } catch (error) {
+        throw error;
+      }
+    }
+
+    async getRights (projectId: string) {
+      try {
+        const rights = await ProjectModel.aggregate([
+          {
+            $match: {
+              _id: new mongoose.Types.ObjectId(projectId) // Replace "your_project_id" with the actual project ID
+            }
+          },
+          {
+            $unwind: "$participants"
+          },
+          {
+            $lookup: {
+              from: "users",
+              localField: "participants.participant",
+              foreignField: "_id",
+              as: "participants.user"
+            }
+          },
+          {
+            $unwind: "$participants.user"
+          },
+          {
+            $project: {
+              _id: 0,
+              participant: "$participants.user",
+              rights: "$participants.rights"
+            }
+          }
+        ]);
+        return rights;
+      } catch (error) {
+        throw error;
+      }
+    }
+
+    async setRights (projectId: string, newParticipants: Participant[]) {
+      try {
+        const convertedNewParticipants = newParticipants.map((participant: Participant) => { return {participant: new mongoose.Types.ObjectId(participant.participant), rights: participant.rights}});
+        await ProjectModel.findByIdAndUpdate(projectId, {participants: convertedNewParticipants});
       } catch (error) {
         throw error;
       }

@@ -125,4 +125,38 @@ export default new class ProjectController {
             throw error;
         }
     }
+
+    async getRights(req: AuthenticatedRequest, res: Response) {
+        try {
+            const {projectId} = req.params;
+            const rights = await projectService.getRights(projectId);
+            res.status(200).json({
+                status: "success",
+                rights
+            })
+        } catch (error) {
+            res.json({
+                status: "fail",
+                message: "internal server error"
+            }).status(500)
+            throw error;
+        }
+    }
+
+    async setRights(req: AuthenticatedRequest, res: Response) {
+        try {
+            const {projectId} = req.params;
+            const {rights} = req.body;
+            await projectService.setRights(projectId, rights);
+            res.status(200).json({
+                status: "success",
+            })
+        } catch (error) {
+            res.json({
+                status: "fail",
+                message: "internal server error"
+            }).status(500)
+            throw error;
+        }
+    }
 }

@@ -7,6 +7,7 @@ import MyProfilePage from "./user/my-profile-page";
 import UserProfilePage from "./user/user-profile-page";
 import BoardWindow from "./task/board-window";
 import AnalyticsPage from "./analytics/analytics-page";
+import EditRightsPage from "./project/edit-rights-page";
 
 const CustomRoutes = [
   <Route path="/" element={<div>hello</div>} key="root"/>,
@@ -16,7 +17,8 @@ const CustomRoutes = [
   <Route path="/profile" element={<MyProfilePage/>} key="my-profile"/>,
   <Route path="/profile/:userId" element={<UserProfilePage/>}/>,
   <Route path="/board/:projectId" element={<BoardWindow/>}/>,
-  <Route path="/analytics/:projectId" element={<AnalyticsPage/>}/>
+  <Route path="/analytics/:projectId" element={<AnalyticsPage/>}/>,
+  <Route path="/rights/:projectId" element={<EditRightsPage/>}/>
 ]
 
 export default CustomRoutes;

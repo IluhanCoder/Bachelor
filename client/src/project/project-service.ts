@@ -1,5 +1,5 @@
 import $api from "../axios-setup"
-import { ProjectResponse } from "./project-types";
+import { Participant, ParticipantResponse, ProjectResponse, Rights } from "./project-types";
 
 export default new class ProjectService {
     async getUserProjects() {
@@ -36,4 +36,15 @@ export default new class ProjectService {
         const result = (await $api.get(`/user-rights/${projectId}`)).data;
         return result;
     }   
+
+    async getRights(projectId: string) {
+        const result = (await $api.get(`/rights/${projectId}`)).data;
+        return result;
+    }
+
+    async setRights(projectId: string, newRights: Participant[]) {
+        console.log(newRights);
+        const result = (await $api.patch(`/rights/${projectId}`,{rights: newRights})).data;
+        return result;
+    }
 }
