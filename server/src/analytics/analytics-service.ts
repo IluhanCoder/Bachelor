@@ -87,7 +87,7 @@ export default new class AnalyticsService {
     }
 
     async predictRatio(projectId: string, userId: string | undefined) {
-        const tasks = await this.taskRatio(projectId, new Date(2024, 0, 1), new Date(2025, 0, 1), false, userId);
+        const tasks = await this.taskRatio(projectId, new Date(2024, 0, 0), new Date(2025, 0, 0), false, userId);
         const months = tasks.map(entry => entry.month);
         const ratios = tasks.map(entry => entry.amount);
 
@@ -96,12 +96,10 @@ export default new class AnalyticsService {
 
         // Predict ratios for each month of the future year
         const predictedRatios = [];
-        for (let month = 1; month <= 12; month++) {
+        for (let month = 0; month <= 11; month++) {
             const predictedRatio = regression.predict(month);
             predictedRatios.push({ year: 2024, month, amount: predictedRatio });
         }
-
-        console.log(predictedRatios);
 
         return predictedRatios;
     }
