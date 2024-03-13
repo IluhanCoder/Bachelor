@@ -29,22 +29,24 @@ function EditProfileForm ({userData, callback}: LocalParams) {
     }
 
     return <FormComponent formLabel="Редагування профіля">
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label>нікнейм:</label>
+        <form className="flex gap-4 flex-col" onSubmit={handleSubmit}>
+            <div className="flex flex-col gap-2 py-2">
+            <div className="flex flex-col gap-2 px-10">
+                <label className="font-bold text-gray-600 text-xs">нікнейм:</label>
                 <input defaultValue={formData.nickname} type="text" className={inputStyle} onChange={handleChange} name="nickname"/>
             </div>
-            <div>
-                <label>ім'я:</label>
+            <div className="flex flex-col gap-2 px-10">
+                <label className="font-bold text-gray-600 text-xs">ім'я:</label>
                 <input defaultValue={formData.name} type="text" className={inputStyle} onChange={handleChange} name="name"/>
             </div>
-            <div>
-                <label>прізвище:</label>
+            <div className="flex flex-col gap-2 px-10">
+                <label className="font-bold text-gray-600 text-xs">прізвище:</label>
                 <input defaultValue={formData.surname} type="text" className={inputStyle} onChange={handleChange} name="surname"/>
             </div>
-            <div>
-                <label>організація:</label>
+            <div className="flex flex-col gap-2 px-10">
+                <label className="font-bold text-gray-600 text-xs">організація:</label>
                 <input defaultValue={formData.organisation} type="text" className={inputStyle} onChange={handleChange} name="organisation"/>
+            </div>
             </div>
             <button type="submit" className={submitButtonStyle}>підтвердити зміни</button>
         </form>
