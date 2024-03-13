@@ -159,4 +159,21 @@ export default new class ProjectController {
             throw error;
         }
     }
+
+    async changeOwner(req: AuthenticatedRequest, res: Response) {
+        try {
+            const {projectId} = req.params;
+            const {oldOwnerId, newOwnerId} = req.body;
+            await projectService.changeOwner(projectId, oldOwnerId, newOwnerId);
+            res.status(200).json({
+                status: "success",
+            })
+        } catch (error) {
+            res.json({
+                status: "fail",
+                message: "internal server error"
+            }).status(500)
+            throw error;
+        }
+    }
 }

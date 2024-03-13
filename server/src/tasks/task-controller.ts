@@ -100,4 +100,20 @@ export default new class TaskController {
             throw error;
         }
     }
+
+    async deleteTask(req: Request, res: Response) {
+        try {
+            const {taskId} = req.params;
+            await taskService.deleteTask(taskId);
+            res.status(200).json({
+                status: "success"
+            });
+        } catch (error) {
+            res.json({
+                status: "fail",
+                message: "internal server error"
+            }).status(500)
+            throw error;
+        }
+    }
 }

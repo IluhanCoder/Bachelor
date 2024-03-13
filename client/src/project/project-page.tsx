@@ -14,6 +14,8 @@ import NewTaskForm from "../task/new-task-form";
 import NewBacklogForm from "../backlogs/new-backlog-form";
 import BacklogSprintsMapper from "../sprint/backlog-sprints-mapper";
 import BacklogMapper from "../backlogs/backlogs-mapper";
+import taskService from "../task/task-service";
+import NewOwnerForm from "./new-owner-form";
 
 function ProjectPage () {
     const [project, setProject] = useState<ExtendedProjectResponse>();
@@ -80,6 +82,12 @@ function ProjectPage () {
         }
     }
 
+    const handleChangeOwner = () => {
+        if(project) {
+            formStore.setForm(<NewOwnerForm project={project} callBack={getProjectData}/>);
+        }
+    }
+
     useEffect(() => {
         getProjectData();
     }, [projectId])
@@ -93,11 +101,14 @@ function ProjectPage () {
             <div>
                 {project?.name}
             </div>
+            {project.owner._id === userStore.user?._id && <div>
+                <button className={submitButtonStyle} type="button" onClick={handleChangeOwner}>змінити власника проекту</button>
+            </div>}
             <div>
                 {project.participants.map((participant: ParticipantResponse) => {
                     if(participant.participant) return <div>
                         <div>учасники:</div>
-                        {participant.participant.name}
+                        {participant.participant.nickname}
                         {rights?.editParticipants && 
                         <div>
                             <button type="button" className={submitButtonStyle} 

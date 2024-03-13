@@ -295,4 +295,22 @@ export default new class ProjectService {
         throw error;
       }
     }
+
+    async changeOwner (projectId: string, oldOwnerId: string, newOwnerId: string) {
+      try {
+        await ProjectModel.findByIdAndUpdate(projectId, {owner: new mongoose.Types.ObjectId(newOwnerId), $pull: { participants: {participant: new mongoose.Types.ObjectId(newOwnerId) }}} );
+        const newParticipant: Participant = {participant: new mongoose.Types.ObjectId(oldOwnerId), rights: {
+          create: true,
+          edit: true,
+          delete: true,
+          check: true,
+          editParticipants: true,
+          addParticipants: true,
+          editProjectData: true
+        }}
+        await ProjectModel.findByIdAndUpdate(projectId, { $push: {participants: newParticipant}});
+      } catch (error) {
+        throw error;
+      }
+    }
 }

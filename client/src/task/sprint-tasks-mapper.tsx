@@ -9,9 +9,10 @@ interface LocalParams {
     sprint: SprintResponse,
     pullHandler: (taskId: string) => {},
     assignHandler: (task: TaskResponse) => void,
+    deleteHandler: (taskId: string) => void
 }
 
-function SprintTasksMapper ({sprint, pullHandler, assignHandler}: LocalParams) {
+function SprintTasksMapper ({sprint, pullHandler, assignHandler, deleteHandler}: LocalParams) {
     const [tasks, setTasks] = useState<TaskResponse[]>([]);
 
     const getTasks = async () => {
@@ -28,6 +29,7 @@ function SprintTasksMapper ({sprint, pullHandler, assignHandler}: LocalParams) {
             <div className="flex gap-2">
                 <button type="button" onClick={() => pullHandler(task._id)}>прибрати</button>
                 <button type="button" onClick={() => assignHandler(task)}>назначити</button>
+                <button type="button" onClick={() => deleteHandler(task._id)}>видалити</button>
             </div>
         </div>
     )}</div>

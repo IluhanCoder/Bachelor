@@ -37,6 +37,11 @@ function BacklogCard({backlog}: LocalParams) {
         getData();
     }
 
+    const handleDeleteTask = async (taskId: string) => {
+        await taskService.deleteTask(taskId);
+        getData();
+    }
+
     const handleNewTask = () => {
         formStore.setForm(<NewTaskForm backlogId={backlog._id} callBack={() => {getData()}}/>)
     }
@@ -53,11 +58,11 @@ function BacklogCard({backlog}: LocalParams) {
 
     return <div>
         <div>{backlog.name}</div>
-        <BacklogTasksMapper tasks={tasks} pushHandler={handlePush} assignHandler={handleAssing}/>
+        <BacklogTasksMapper deleteHandler={handleDeleteTask} tasks={tasks} pushHandler={handlePush} assignHandler={handleAssing}/>
         <div>
             <button className={submitButtonStyle} type="button" onClick={handleNewTask}>Створити завдання</button>
         </div>
-        <BacklogSprintsMapper callBack={getData} pullHandler={handlePull} sprints={sprints} assignHandler={handleAssing}/>
+        <BacklogSprintsMapper deleteHandler={handleDeleteTask} callBack={getData} pullHandler={handlePull} sprints={sprints} assignHandler={handleAssing}/>
         <div>
             <button className={submitButtonStyle} type="button" onClick={handleNewSprint}>створити спрінт</button>
         </div>

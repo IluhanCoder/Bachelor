@@ -32,4 +32,8 @@ export default new class TaskService {
     async assignTask(taskId: string, userId: string) {
         return (await $api.patch("/assign", {taskId, userId})).data;
     }       
+
+    async deleteTask(taskId: string) {
+        return (await $api.delete(`/task/${taskId}`)).data;
+    }
 }

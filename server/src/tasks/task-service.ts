@@ -213,4 +213,8 @@ export default new class TaskService {
         ]);
       return result[0].tasks;
   }
+
+  async deleteTask(taskId: string) {
+    await TaskModel.findByIdAndDelete(taskId);
+  }
 }

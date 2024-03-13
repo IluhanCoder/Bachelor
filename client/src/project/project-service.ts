@@ -43,8 +43,12 @@ export default new class ProjectService {
     }
 
     async setRights(projectId: string, newRights: Participant[]) {
-        console.log(newRights);
         const result = (await $api.patch(`/rights/${projectId}`,{rights: newRights})).data;
+        return result;
+    }
+
+    async changeOwner(projectId: string, newOwnerId: string, oldOwnerId: string) {
+        const result = (await $api.post(`/owner/${projectId}`, {newOwnerId, oldOwnerId})).data;
         return result;
     }
 }

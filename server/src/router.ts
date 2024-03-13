@@ -52,5 +52,7 @@ router.post("/analytics/created-task-amount", analyticsController.createdTaskAmo
 router.post("/analytics/predict-ratio", analyticsController.predictRatio);
 router.get("/rights/:projectId", projectController.getRights);
 router.patch("/rights/:projectId", projectController.setRights);
+router.delete("/task/:taskId", taskController.deleteTask);
+router.post("/owner/:projectId", projectController.changeOwner);
 
 export default router;
