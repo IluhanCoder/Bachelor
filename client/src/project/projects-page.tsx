@@ -27,14 +27,15 @@ function ProjectsPage () {
 
     useEffect(() => {fetchProjects()}, [user]);
 
-    return <div className="bg-gray-100 flex flex-col gap-2 p-4">
-        <div className="py-2 px-6 font-bold text-xl text-gray-700">
+    return <div className="bg-gray-100 flex flex-col gap-2 p-4 h-full">
+        <div className="py-2 px-6 font-bold text-xl text-gray-700 text-center">
             Проекти
         </div>
-        <div className="grid grid-cols-2 gap-6">
+        {projects.length > 0 && <div className="grow overflow-auto">
+            <div className="grid grid-cols-2 gap-6">
             {projects.map((project: ProjectResponse) => {
                 return <ProjectCard project={project}/>
-            })}</div>
+            })}</div></div> || <div className="grow text-center pt-48 text-2xl font-bold text-gray-600">проекти відсутні</div>}
         <div className="flex justify-center">
             <button type="button" className={submitButtonStyle} onClick={handleNewProject}>створити новий проект</button>
         </div>

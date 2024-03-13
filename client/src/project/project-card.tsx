@@ -14,7 +14,7 @@ function ProjectCard({project}: LocalParams) {
         navigate(`/project/${projectId}`);
     }
 
-    return <button type="button" className="bg-white rounded shadow-sm border-1 py-6 px-8 flex flex-col gap-2 hover:scale-105 transition-transform duration-300 ease-in-out" onClick={() => handleClick(project._id)}>
+    return <button type="button" className="bg-white h-fit rounded shadow-sm border-1 py-6 px-8 flex flex-col gap-2 hover:scale-105 transition-transform duration-300 ease-in-out" onClick={() => handleClick(project._id)}>
         <div>
             <div className="font-semibold text-xl">{project.name}</div>
         </div>

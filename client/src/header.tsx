@@ -26,24 +26,30 @@ function Header() {
     };
 
     if(pathname !== "/registration") return <div className="flex justify-between gap-2 border border-gray-300 px-8 py-2">
-        <div className="text-2xl flex gap-1">
-            <VscRemote className="mt-1"/>
-            Log Manager
+        <div className="flex gap-14">
+            <div className="text-2xl flex gap-1">
+                <VscRemote className="mt-1"/>
+                Log Manager
+            </div>
+            <div className="mt-1 flex text-gray-600 gap-3">
+                <Link to="/projects">Проекти</Link>
+                <Link to="/profile">Профіль</Link>
+            </div>
         </div>
         <div className="text-gray-600">
             {userStore.user && 
             <div className="flex gap-4">
                 <Link to="/profile" className="flex gap-2">
-                    <Avatar src={convertImage(userStore.user.avatar.data)} name={userStore.user.nickname} round size="30"/>
+                    <Avatar src={userStore.user.avatar ? convertImage(userStore.user.avatar.data) : ""} name={userStore.user.nickname} round size="30"/>
                     <div className="mt-1">{userStore.user.nickname}</div>
                 </Link>
                 <div className="pt-1">
                     <button className={smallLightButtonStyle} type="button" onClick={handleLogout}>вийти</button>
                 </div>
             </div>
-            || <button className={smallLightButtonStyle} type="button" onClick={handleLoginButtonClick}>
+            || <div className="pt-1"><button className={smallLightButtonStyle} type="button" onClick={handleLoginButtonClick}>
                 увійти
-            </button>}
+            </button></div>}
         </div>
     </div>
     else return <></>

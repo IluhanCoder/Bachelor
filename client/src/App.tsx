@@ -23,13 +23,15 @@ function App() {
   }, [])
 
   return (
-    <div className='w-full'>
+    <div className='h-full flex flex-col'>
       <BrowserRouter>
         <FormCloserProvider>
           <Header/>
-          <Routes>
-            {CustomRoutes.map(route => route)}
-          </Routes>
+          <div className='grow'>
+            <Routes>
+              {CustomRoutes.map(route => route)}
+            </Routes>
+          </div>
           {form && <div>{form}</div>}
         </FormCloserProvider>
       </BrowserRouter>
