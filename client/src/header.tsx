@@ -4,6 +4,10 @@ import LoginForm from "./auth/login-form";
 import { observer } from "mobx-react";
 import userStore from "./user/user-store";
 import authService from "./auth/auth-service";
+import { VscRemote } from "react-icons/vsc";
+import { lightButtonStyle, smallLightButtonStyle } from "./styles/button-syles";
+import Avatar from "react-avatar";
+import { Buffer } from "buffer";
 
 function Header() {
     const handleLoginButtonClick = () => {
@@ -16,16 +20,28 @@ function Header() {
         await authService.logout();
     }
 
-    if(pathname !== "/registration") return <div>
-        <div>
+    const convertImage = (image: any) => {
+        const base64String = `data:image/jpeg;base64,${Buffer.from(image.data).toString('base64')}`;
+        return base64String;
+    };
+
+    if(pathname !== "/registration") return <div className="flex justify-between gap-2 border border-gray-300 px-8 py-2">
+        <div className="text-2xl flex gap-1">
+            <VscRemote className="mt-1"/>
+            Log Manager
+        </div>
+        <div className="text-gray-600">
             {userStore.user && 
-            <div>
-                <div>вітаємо, {userStore.user.nickname}</div>
-                <div>
-                    <button type="button" onClick={handleLogout}>вийти</button>
+            <div className="flex gap-4">
+                <Link to="/profile" className="flex gap-2">
+                    <Avatar src={convertImage(userStore.user.avatar.data)} name={userStore.user.nickname} round size="30"/>
+                    <div className="mt-1">{userStore.user.nickname}</div>
+                </Link>
+                <div className="pt-1">
+                    <button className={smallLightButtonStyle} type="button" onClick={handleLogout}>вийти</button>
                 </div>
             </div>
-            || <button type="button" onClick={handleLoginButtonClick}>
+            || <button className={smallLightButtonStyle} type="button" onClick={handleLoginButtonClick}>
                 увійти
             </button>}
         </div>

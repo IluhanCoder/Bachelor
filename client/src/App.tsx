@@ -23,7 +23,7 @@ function App() {
   }, [])
 
   return (
-    <div>
+    <div className='w-full'>
       <BrowserRouter>
         <FormCloserProvider>
           <Header/>

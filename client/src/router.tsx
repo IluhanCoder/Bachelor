@@ -8,9 +8,10 @@ import UserProfilePage from "./user/user-profile-page";
 import BoardWindow from "./task/board-window";
 import AnalyticsPage from "./analytics/analytics-page";
 import EditRightsPage from "./project/edit-rights-page";
+import WelcomePage from "./misc/welcome-page";
 
 const CustomRoutes = [
-  <Route path="/" element={<div>hello</div>} key="root"/>,
+  <Route path="/" element={<WelcomePage/>} key="root"/>,
   <Route path="/registration" element={<RegistationPage/>} key="registration"/>,
   <Route path="/projects" element={<ProjectsPage/>} key="projects"/>,
   <Route path="/project/:projectId" element={<ProjectPage/>} key="project"/>,

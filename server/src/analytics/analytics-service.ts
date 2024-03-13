@@ -5,6 +5,7 @@ import backlogModel from '../backlog/backlog-model';
 import { TaskResponse } from '../tasks/task-types';
 import { UserResponse } from '../user/user-type';
 import { SimpleLinearRegression } from "ml-regression-simple-linear";
+import sprintService from '../sprints/sprint-service';
 
 export default new class AnalyticsService {
     getMaxDaysInMonth(year, month) {

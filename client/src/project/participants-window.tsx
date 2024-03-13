@@ -2,14 +2,14 @@ import Avatar from "react-avatar";
 import { UserResponse } from "../user/user-types";
 import { ParticipantResponse } from "./project-types";
 import { Buffer } from "buffer";
+import { observer } from "mobx-react";
 
 interface LocalParams {
     participants: ParticipantResponse[],
     maxDisplay?: number 
 }
 
-const convertImage = (image: any) => {
-    console.log(image.data)
+export const convertImage = (image: any) => {
     const base64String = `data:image/jpeg;base64,${image.data}`;
     return base64String;
 };
@@ -26,4 +26,4 @@ function ParticipantsWindow({participants, maxDisplay}: LocalParams) {
     </div>
 }
 
-export default ParticipantsWindow;
+export default observer(ParticipantsWindow);
