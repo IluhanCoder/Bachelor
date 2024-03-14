@@ -7,11 +7,12 @@ import ProjectCard from "./project-card";
 import { submitButtonStyle } from "../styles/button-syles";
 import formStore from "../forms/form-store";
 import NewProjectForm from "./new-project-form";
+import LoadingScreen from "../misc/loading-screen";
 
 function ProjectsPage () {
     const user = userStore.user;
 
-    const [projects, setProjects] = useState<ProjectResponse[]>([]);
+    const [projects, setProjects] = useState<ProjectResponse[] | null>(null);
 
     const fetchProjects = async () => {
         if(!user) {
@@ -27,7 +28,7 @@ function ProjectsPage () {
 
     useEffect(() => {fetchProjects()}, [user]);
 
-    return <div className="bg-gray-100 flex flex-col gap-2 p-4 h-full">
+    if(projects) return <div className="bg-gray-100 flex flex-col gap-2 p-4 h-full">
         <div className="py-2 px-6 font-bold text-xl text-gray-700 text-center">
             Проекти
         </div>
@@ -40,6 +41,7 @@ function ProjectsPage () {
             <button type="button" className={submitButtonStyle} onClick={handleNewProject}>створити новий проект</button>
         </div>
     </div>
+    else return <LoadingScreen/>
 }
 
 export default observer(ProjectsPage);

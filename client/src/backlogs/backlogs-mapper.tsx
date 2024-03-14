@@ -9,6 +9,7 @@ import formStore from "../forms/form-store";
 import BacklogSprintsMapper from "../sprint/backlog-sprints-mapper";
 import NewSprintForm from "../sprint/new-sprint-form";
 import BacklogCard from "./backlog-card";
+import LoadingScreen from "../misc/loading-screen";
 
 interface LocalParams {
     projectId: string
@@ -17,7 +18,7 @@ interface LocalParams {
 export const BacklogContext = createContext<BacklogResponse | undefined>(undefined);
 
 function BacklogMapper ({projectId}: LocalParams) {
-    const [backlogs, setBackLogs] = useState<BacklogResponse[]>([]);
+    const [backlogs, setBackLogs] = useState<BacklogResponse[] | null>(null);
 
     const getBacklogs = async () => {
         const result = await backlogService.getProjectBacklogs(projectId);
@@ -36,9 +37,10 @@ function BacklogMapper ({projectId}: LocalParams) {
         getBacklogs();
     }, []);
 
-    return <div className="flex flex-col">
+    if(backlogs) return <div className="flex flex-col">
         {backlogs.map((backlog: BacklogResponse) => <BacklogCard backlog={backlog}/>)}
     </div>
+    else return <LoadingScreen/>
 }
 
 export default BacklogMapper;

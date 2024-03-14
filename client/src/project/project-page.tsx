@@ -18,9 +18,10 @@ import taskService from "../task/task-service";
 import NewOwnerForm from "./new-owner-form";
 import Avatar from "react-avatar";
 import { convertImage } from "./participants-window";
+import LoadingScreen from "../misc/loading-screen";
 
 function ProjectPage () {
-    const [project, setProject] = useState<ExtendedProjectResponse>();
+    const [project, setProject] = useState<ExtendedProjectResponse | null>(null);
     const [rights, setRights] = useState<Rights>();
 
     const navigate = useNavigate();
@@ -98,7 +99,7 @@ function ProjectPage () {
         getUserRights();
     }, [project]);
 
-    return <div>
+    if(project) return <div>
         {project && <div className="flex flex-col">
         <div className="flex justify-center p-4">
                         <div className="grow text-center text-3xl">{project?.name}</div>
@@ -172,6 +173,7 @@ function ProjectPage () {
         </div></div>}
         
     </div>
+    else return <LoadingScreen/>
 }
 
 export default observer(ProjectPage);
