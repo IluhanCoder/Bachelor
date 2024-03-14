@@ -99,64 +99,78 @@ function ProjectPage () {
     }, [project]);
 
     return <div>
-        {project && <div className="flex flex-col p-4">
-            <div className="flex justify-center">
-                <div className="grow text-center text-2xl">{project?.name}</div>
-                <div className="flex gap-2">{project.owner._id === userStore.user?._id && <div>
-                <button className={redButtonSyle + " text-xs mt-1"} type="button" onClick={handleChangeOwner}>змінити власника проекту</button>
-            </div>}
-            {project?.owner._id === userStore.user?._id && 
-            <button type="button" className={redButtonSyle + " text-xs mt-1"}>
-                видалити проект
-            </button> || 
-            <button type="button" className={redButtonSyle + " text-xs mt-1"} onClick={handleLeave}>
-                покинути проект
-            </button>}</div>
-            </div>
-            <div className="flex flex-col">
-                <div className="text-gray-600">
-                    Учасники:
-                </div>
-                <div className="flex ">
-                    <div className="grow flex gap-2 flex-wrap">{project.participants.map((participant: ParticipantResponse) => {
-                        if(participant.participant) return <div className="flex gap-2 rounded p-4">
-                            <Avatar round size="30" src={convertImage(participant.participant.avatar)}/>
-                            <div className="text-xl">{participant.participant.nickname}</div>
-                            {rights?.editParticipants && 
-                            <div>
-                                <button type="button" className={redButtonSyle + " text-xs"} 
-                                    onClick={() => handleDeleteParticipant(participant.participant._id)}>
-                                    видалити
-                                </button>
-                            </div>}
+        {project && <div className="flex flex-col">
+        <div className="flex justify-center p-4">
+                        <div className="grow text-center text-3xl">{project?.name}</div>
+                        <div className="flex gap-2">{project.owner._id === userStore.user?._id && <div>
+                        <button className={redButtonSyle + " text-xs mt-1"} type="button" onClick={handleChangeOwner}>змінити власника проекту</button>
+                    </div>}
+                    {project?.owner._id === userStore.user?._id && 
+                    <button type="button" className={redButtonSyle + " text-xs mt-1"}>
+                        видалити проект
+                    </button> || 
+                    <button type="button" className={redButtonSyle + " text-xs mt-1"} onClick={handleLeave}>
+                        покинути проект
+                    </button>}</div>
+                    </div>
+            <div className="flex ">
+            
+            <div className="flex flex-col grow ">
+                    <div>
+                        <div>Беклоги:</div>
+                        {project && <div>
+                            <BacklogMapper projectId={project._id}/>
+                        </div>}
+                        <div>
+                            <button onClick={handleCreateBacklog} className={submitButtonStyle}>створити беклог</button>
                         </div>
-                    })}</div>
-                    <div>{rights?.addParticipants && <button type="button" className={grayButtonStyle + " text-xs"} onClick={handleAddUser}>
-                        запросити користувача
+                    </div>
+            </div>
+        
+            <div className="p-4 flex flex-col gap-4">
+                <div className="flex flex-col gb-gray-50 border">
+                    <div className="text-center text-gray-600 font-bold pt-2">
+                        Учасники:
+                    </div>
+                    <div className="flex ">
+                        <div className="grow flex gap-2 py-3 px-6 flex-col">{project.participants.map((participant: ParticipantResponse) => {
+                            if(participant.participant) return <div className="flex justify-between gap-3">
+                                <div className="flex gap-2">
+                                    <Avatar round size="30" name={participant.participant.nickname} src={convertImage(participant.participant.avatar)}/>
+                                    <div className="text-xl">{participant.participant.nickname}</div>
+                                </div>
+                                {rights?.editParticipants && 
+                                <div>
+                                    <button type="button" className={redButtonSyle + " text-xs"} 
+                                        onClick={() => handleDeleteParticipant(participant.participant._id)}>
+                                        видалити
+                                    </button>
+                                </div>}
+                            </div>
+                        })}</div>
+                    </div>
+                    <div className="flex justify-center px-2 pb-4">{rights?.addParticipants && <button type="button" className={grayButtonStyle + " text-xs"} onClick={handleAddUser}>
+                        додати учасника
                     </button>}</div>
                 </div>
-            </div>
-            {project.invited.length > 0 && <div>
-                <div>
-                    запрошені користувачі:
-                </div>
-                {project?.invited.map((user: UserResponse) => <div>
-                    <div>{user.nickname}</div>
-                    {rights?.editParticipants && <div>
-                        <button type="button" className={submitButtonStyle} onClick={() => handleCancelInvite(user._id)}>скасувати запрошення</button>
+                {project.invited.length > 0 && <div className="flex flex-col gb-gray-50 border">
+                        <div className="text-center text-gray-600 pt-2">
+                            Запрошені користувачі:
+                        </div>
+                        <div className="flex ">
+                        <div className="grow flex gap-2 py-3 px-6 flex-col">{project?.invited.map((user: UserResponse) => <div className="flex justify-between gap-3">
+                            <div className="flex gap-2">
+                                <Avatar round size="30" name={user.nickname} src={convertImage((user.avatar) ? user.avatar : "")}/>
+                                <div className="text-xl">{user.nickname}</div>
+                            </div>
+                            {rights?.editParticipants && <div>
+                                <button type="button" className={redButtonSyle + " text-xs"}  onClick={() => handleCancelInvite(user._id)}>скасувати</button>
+                            </div>}
+                        </div>)}</div></div>
                     </div>}
-                </div>)}
-            </div>}
-        </div>}
-        <div>
-            <div>Беклоги:</div>
-            {project && <div>
-                <BacklogMapper projectId={project._id}/>
-            </div>}
-            <div>
-                <button onClick={handleCreateBacklog} className={submitButtonStyle}>створити беклог</button>
             </div>
-        </div>
+        </div></div>}
+        
     </div>
 }
 

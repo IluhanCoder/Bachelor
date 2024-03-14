@@ -16,7 +16,7 @@ export const convertImage = (image: any) => {
 
 function ParticipantsWindow({participants, maxDisplay}: LocalParams) {
     if(Object.keys(participants[0]).length > 0)
-        return <div className="flex gap-1">
+        return <div className="flex gap-1 pl-1">
             {participants.slice(0,maxDisplay).map((participant: ParticipantResponse, index) => 
                 <Avatar name={participant.participant?.nickname} round size="30" textMarginRatio={.15} src={participant.participant.avatar ? convertImage(participant.participant.avatar) : ""}/>)}
             {(maxDisplay && participants.length > maxDisplay) && <div className="mt-2 text-gray-600 font-semibold">та ще {participants.length - maxDisplay} ...</div>}
