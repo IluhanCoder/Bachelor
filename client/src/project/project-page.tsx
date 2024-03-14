@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import projectService from "./project-service";
 import { ChangeEvent, useEffect, useState } from "react";
 import { ExtendedProjectResponse, ParticipantResponse, ProjectResponse, Rights } from "./project-types";
-import { submitButtonStyle } from "../styles/button-syles";
+import { grayButtonStyle, redButtonSyle, submitButtonStyle } from "../styles/button-syles";
 import formStore from "../forms/form-store";
 import InviteForm from "../invite/invite-form";
 import inviteService from "../invite/invite-service";
@@ -16,6 +16,8 @@ import BacklogSprintsMapper from "../sprint/backlog-sprints-mapper";
 import BacklogMapper from "../backlogs/backlogs-mapper";
 import taskService from "../task/task-service";
 import NewOwnerForm from "./new-owner-form";
+import Avatar from "react-avatar";
+import { convertImage } from "./participants-window";
 
 function ProjectPage () {
     const [project, setProject] = useState<ExtendedProjectResponse>();
@@ -97,27 +99,42 @@ function ProjectPage () {
     }, [project]);
 
     return <div>
-        {project && <div>
-            <div>
-                {project?.name}
-            </div>
-            {project.owner._id === userStore.user?._id && <div>
-                <button className={submitButtonStyle} type="button" onClick={handleChangeOwner}>змінити власника проекту</button>
+        {project && <div className="flex flex-col p-4">
+            <div className="flex justify-center">
+                <div className="grow text-center text-2xl">{project?.name}</div>
+                <div className="flex gap-2">{project.owner._id === userStore.user?._id && <div>
+                <button className={redButtonSyle + " text-xs mt-1"} type="button" onClick={handleChangeOwner}>змінити власника проекту</button>
             </div>}
-            <div>
-                {project.participants.map((participant: ParticipantResponse) => {
-                    if(participant.participant) return <div>
-                        <div>учасники:</div>
-                        {participant.participant.nickname}
-                        {rights?.editParticipants && 
-                        <div>
-                            <button type="button" className={submitButtonStyle} 
-                                onClick={() => handleDeleteParticipant(participant.participant._id)}>
-                                видалити користувача
-                            </button>
-                        </div>}
-                    </div>
-                })}
+            {project?.owner._id === userStore.user?._id && 
+            <button type="button" className={redButtonSyle + " text-xs mt-1"}>
+                видалити проект
+            </button> || 
+            <button type="button" className={redButtonSyle + " text-xs mt-1"} onClick={handleLeave}>
+                покинути проект
+            </button>}</div>
+            </div>
+            <div className="flex flex-col">
+                <div className="text-gray-600">
+                    Учасники:
+                </div>
+                <div className="flex ">
+                    <div className="grow flex gap-2 flex-wrap">{project.participants.map((participant: ParticipantResponse) => {
+                        if(participant.participant) return <div className="flex gap-2 rounded p-4">
+                            <Avatar round size="30" src={convertImage(participant.participant.avatar)}/>
+                            <div className="text-xl">{participant.participant.nickname}</div>
+                            {rights?.editParticipants && 
+                            <div>
+                                <button type="button" className={redButtonSyle + " text-xs"} 
+                                    onClick={() => handleDeleteParticipant(participant.participant._id)}>
+                                    видалити
+                                </button>
+                            </div>}
+                        </div>
+                    })}</div>
+                    <div>{rights?.addParticipants && <button type="button" className={grayButtonStyle + " text-xs"} onClick={handleAddUser}>
+                        запросити користувача
+                    </button>}</div>
+                </div>
             </div>
             {project.invited.length > 0 && <div>
                 <div>
@@ -130,17 +147,7 @@ function ProjectPage () {
                     </div>}
                 </div>)}
             </div>}
-            {rights?.addParticipants && <button type="button" className={submitButtonStyle} onClick={handleAddUser}>
-                запросити користувача
-            </button>}
         </div>}
-        {project?.owner._id === userStore.user?._id && 
-            <button type="button" className={submitButtonStyle}>
-                видалити проект
-            </button> || 
-            <button type="button" className={submitButtonStyle} onClick={handleLeave}>
-                покинути проект
-            </button>}
         <div>
             <div>Беклоги:</div>
             {project && <div>
