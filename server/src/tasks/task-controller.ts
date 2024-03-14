@@ -116,4 +116,21 @@ export default new class TaskController {
             throw error;
         }
     }
+
+    async getTaskById(req: Request, res: Response) {
+        try {
+            const {taskId} = req.params;
+            const task = await taskService.getTaskById(taskId);
+            res.status(200).json({
+                status: "success",
+                task
+            });
+        } catch (error) {
+            res.json({
+                status: "fail",
+                message: "internal server error"
+            }).status(500)
+            throw error;
+        }
+    }
 }

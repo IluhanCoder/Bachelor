@@ -217,4 +217,42 @@ export default new class TaskService {
   async deleteTask(taskId: string) {
     await TaskModel.findByIdAndDelete(taskId);
   }
+
+  async getTaskById(taskId: string) {
+    const result = await TaskModel.aggregate([
+      {
+        $match: {
+          _id: new mongoose.Types.ObjectId(taskId)
+        }
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "executors",
+          foreignField: "_id",
+          as: "executorsData"
+        }
+      },
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+          desc: 1,
+          // Other fields you want to include from the task
+          executors: {
+            $map: {
+              input: "$executorsData",
+              as: "executor",
+              in: {
+                _id: "$$executor._id",
+                name: "$$executor.name",
+                // Other fields you want to include from the user
+              }
+            }
+          }
+        }
+      }
+    ])
+    return result[0];
+  }
 }

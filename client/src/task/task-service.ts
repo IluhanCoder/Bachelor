@@ -36,4 +36,8 @@ export default new class TaskService {
     async deleteTask(taskId: string) {
         return (await $api.delete(`/task/${taskId}`)).data;
     }
+
+    async getTaskById(taskId: string) {
+        return (await $api.get(`/task/${taskId}`)).data;
+    }
 }
