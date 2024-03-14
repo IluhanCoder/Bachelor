@@ -34,3 +34,8 @@ export interface TaskCredentials {
     createdBy: string,
     executors?: mongoose.Types.ObjectId[]
 }
+
+export interface UpdateTaskCredentials {
+    name: string,
+    desc: string
+}

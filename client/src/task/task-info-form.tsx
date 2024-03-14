@@ -1,10 +1,11 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import FormComponent from "../forms/form-component"
 import { TaskResponse } from "./task-types";
 import taskService from "./task-service";
 import { inputStyle } from "../styles/form-styles";
 import ErrorContainer from "../errors/error-container";
 import { submitButtonStyle } from "../styles/button-syles";
+import formStore from "../forms/form-store";
 
 interface LocalParams {
     taskId: string,
@@ -31,8 +32,13 @@ function TaskInfoForm({taskId, callBack}: LocalParams) {
             });
     };   
 
-    const handleSubmit = async () => {
-
+    const handleSubmit = async (event: FormEvent) => {
+        event.preventDefault();
+        if(formData) { 
+            await taskService.updateTask(formData._id, formData); 
+            formStore.dropForm();
+            if(callBack) callBack();
+        }
     }
 
     return <FormComponent formLabel="Інформація про завдання">
@@ -51,7 +57,7 @@ function TaskInfoForm({taskId, callBack}: LocalParams) {
                 <ErrorContainer/>
             </div>
             <div className="flex w-full mt-4 justify-between gap-10">
-                <div>
+                <div className="flex justify-center">
                     <button type="submit" className={submitButtonStyle}>Зберегти зміни</button>
                 </div>
             </div>

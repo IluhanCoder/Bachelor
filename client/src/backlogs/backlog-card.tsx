@@ -12,6 +12,7 @@ import { submitButtonStyle } from "../styles/button-syles";
 import NewTaskForm from "../task/new-task-form";
 import NewSprintForm from "../sprint/new-sprint-form";
 import AssignForm from "../task/assign-form";
+import TaskInfoForm from "../task/task-info-form";
 
 interface LocalParams {
     backlog: BacklogResponse
@@ -54,13 +55,17 @@ function BacklogCard({backlog}: LocalParams) {
         formStore.setForm(<AssignForm task={task} projectId={backlog.projectId} callBack={getData}/>)
     }
 
+    const detailsHandler = (taskId: string) => {
+        formStore.setForm(<TaskInfoForm callBack={() => getData()} taskId={taskId}/>)
+    }
+
     useEffect(() => {getData()}, []);
 
     return <div className="border border-1 rounded">
         <div className="text-2xl px-4 py-2">{backlog.name}</div>
         <div className="flex flex-col px-6 pb-4 gap-2">
             <div className="font-bold text-gray-600">Завдання беклогу:</div>
-            <BacklogTasksMapper deleteHandler={handleDeleteTask} tasks={tasks} pushHandler={handlePush} assignHandler={handleAssing}/>
+            <BacklogTasksMapper detailsHandler={detailsHandler} deleteHandler={handleDeleteTask} tasks={tasks} pushHandler={handlePush} assignHandler={handleAssing}/>
             <div className="flex pb-4 px-6 justify-center">
                 <button className={submitButtonStyle} type="button" onClick={handleNewTask}>Створити завдання</button>
             </div>

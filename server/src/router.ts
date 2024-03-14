@@ -55,5 +55,6 @@ router.patch("/rights/:projectId", projectController.setRights);
 router.delete("/task/:taskId", taskController.deleteTask);
 router.post("/owner/:projectId", projectController.changeOwner);
 router.get("/task/:taskId", taskController.getTaskById);
+router.put("/task/:taskId", taskController.updateTask);
 
 export default router;

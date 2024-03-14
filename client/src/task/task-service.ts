@@ -1,4 +1,5 @@
 import $api from "../axios-setup"
+import Task, { TaskResponse } from "./task-types";
 
 export default new class TaskService {
     async getProjectTasks(projectId: string) {
@@ -39,5 +40,9 @@ export default new class TaskService {
 
     async getTaskById(taskId: string) {
         return (await $api.get(`/task/${taskId}`)).data;
+    }
+
+    async updateTask(taskId: string, task: TaskResponse) {
+        return (await $api.put(`/task/${taskId}`, {task}));
     }
 }

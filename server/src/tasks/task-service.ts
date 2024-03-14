@@ -1,4 +1,4 @@
-import Task, { TaskCredentials } from "./task-types";
+import Task, { TaskCredentials, UpdateTaskCredentials } from "./task-types";
 import mongoose from "mongoose";
 import TaskModel from "./task-model";
 import backlogModel from "../backlog/backlog-model";
@@ -254,5 +254,9 @@ export default new class TaskService {
       }
     ])
     return result[0];
+  }
+
+  async updateTask(taskId: string, newData: UpdateTaskCredentials) {
+    await TaskModel.findByIdAndUpdate(taskId, newData);
   }
 }
