@@ -115,16 +115,16 @@ function ProjectPage () {
                     </div>
             <div className="flex ">
             
-            <div className="flex flex-col grow ">
-                    <div>
-                        <div>Беклоги:</div>
-                        {project && <div>
-                            <BacklogMapper projectId={project._id}/>
-                        </div>}
-                        <div>
-                            <button onClick={handleCreateBacklog} className={submitButtonStyle}>створити беклог</button>
-                        </div>
+            <div className="flex flex-col grow px-6 py-2">
+                <div className="flex flex-col gap-2">
+                    <div className="font-bold">Беклоги:</div>
+                    {project && <div>
+                        <BacklogMapper projectId={project._id}/>
+                    </div>}                        
+                    <div className="flex justify-center">
+                         <button onClick={handleCreateBacklog} className={submitButtonStyle + " text-base"}>створити беклог</button>
                     </div>
+                </div>
             </div>
         
             <div className="p-4 flex flex-col gap-4">

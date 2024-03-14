@@ -5,7 +5,7 @@ import { TaskResponse } from "../task/task-types";
 import SprintTasksMapper from "../task/sprint-tasks-mapper";
 import formStore from "../forms/form-store";
 import EditSprintForm from "./edit-sprint-form";
-import { submitButtonStyle } from "../styles/button-syles";
+import { lightButtonStyle, submitButtonStyle } from "../styles/button-syles";
 
 interface LocalParams {
     sprints: SprintResponse[],
@@ -24,11 +24,11 @@ function BacklogSprintsMapper({sprints, pullHandler, assignHandler, callBack, de
         return new Date() > new Date(sprint.endDate);
     }
 
-    return <div>
-        {sprints.map((sprint: SprintResponse) => <div className={(isTerminated(sprint)) ? "bg-red-200" : ""}>
-            <div>
-                <div>{sprint.name}</div>
-                <button type="button" onClick={() => handleEdit(sprint._id)} className={submitButtonStyle}>редагувати спрінт</button>
+    return <div className="flex flex-col gap-2">
+        {sprints.map((sprint: SprintResponse) => <div className={`flex rounded border px-6 py-3 flex-col ${(isTerminated(sprint)) ? "border-red-500 border-2" : "border"}`}>
+            <div className="flex justify-between">
+                <div className="text-xl">{sprint.name}</div>
+                <button type="button" onClick={() => handleEdit(sprint._id)} className={lightButtonStyle}>редагувати спрінт</button>
             </div>
             <div>
                 <div>завдання спрінту:</div>

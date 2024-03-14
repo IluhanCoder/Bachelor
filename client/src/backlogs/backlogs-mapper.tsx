@@ -36,10 +36,8 @@ function BacklogMapper ({projectId}: LocalParams) {
         getBacklogs();
     }, []);
 
-    return <div>
-        <div>
-            {backlogs.map((backlog: BacklogResponse) => <BacklogCard backlog={backlog}/>)}
-        </div>
+    return <div className="flex flex-col">
+        {backlogs.map((backlog: BacklogResponse) => <BacklogCard backlog={backlog}/>)}
     </div>
 }
 

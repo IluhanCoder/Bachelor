@@ -56,15 +56,21 @@ function BacklogCard({backlog}: LocalParams) {
 
     useEffect(() => {getData()}, []);
 
-    return <div>
-        <div>{backlog.name}</div>
-        <BacklogTasksMapper deleteHandler={handleDeleteTask} tasks={tasks} pushHandler={handlePush} assignHandler={handleAssing}/>
-        <div>
-            <button className={submitButtonStyle} type="button" onClick={handleNewTask}>Створити завдання</button>
+    return <div className="border border-1 rounded">
+        <div className="text-2xl px-4 py-2">{backlog.name}</div>
+        <div className="flex flex-col px-6 pb-4 gap-2">
+            <div className="font-bold text-gray-600">Завдання беклогу:</div>
+            <BacklogTasksMapper deleteHandler={handleDeleteTask} tasks={tasks} pushHandler={handlePush} assignHandler={handleAssing}/>
+            <div className="flex pb-4 px-6 justify-center">
+                <button className={submitButtonStyle} type="button" onClick={handleNewTask}>Створити завдання</button>
+            </div>
         </div>
-        <BacklogSprintsMapper deleteHandler={handleDeleteTask} callBack={getData} pullHandler={handlePull} sprints={sprints} assignHandler={handleAssing}/>
-        <div>
-            <button className={submitButtonStyle} type="button" onClick={handleNewSprint}>створити спрінт</button>
+        <div className="flex flex-col px-6 pb-4 gap-2">
+            <div className="font-bold text-gray-600">Спрінти:</div>
+            <BacklogSprintsMapper deleteHandler={handleDeleteTask} callBack={getData} pullHandler={handlePull} sprints={sprints} assignHandler={handleAssing}/>
+            <div className="flex pb-4 px-6 justify-center">
+                <button className={submitButtonStyle} type="button" onClick={handleNewSprint}>Створити спрінт</button>
+            </div>
         </div>
     </div>
 }
