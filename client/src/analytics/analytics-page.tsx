@@ -9,6 +9,8 @@ import { observer } from "mobx-react";
 import AnalyticsGraph from "./graph";
 import { convertArray } from "./analytics-helper";
 import DatePicker from "./date-picker";
+import { Link } from "react-router-dom";
+import { lightButtonStyle } from "../styles/button-syles";
 
 function AnalyticsPage () {
     const {projectId} = useParams();
@@ -64,16 +66,49 @@ function AnalyticsPage () {
 
     useEffect(() => { getTasksAmoutAnalytics(); getTasksRatioData(); getCreatedTaskData(); getPrediction() }, [userStore.user?._id, isDaily, isCurrentUser, startDate, endDate]);
 
-    return <div>
-        <DatePicker startDate={startDate} endDate={endDate} handleStart={handleStart} handleEnd={handleEnd}/>
-        <div>
-            <input type="checkBox" checked={isDaily} onChange={() => setIsDaily(!isDaily)}/>
-            <input type="checkBox" checked={isCurrentUser} onChange={() => setIsCurrentUser(!isCurrentUser)}/>
+    return <div className="flex flex-col p-4 gap-2">
+        <div className="py-2">
+            <Link to={`/project/${projectId}`} className={lightButtonStyle}>Назад до проекту</Link>
         </div>
-        <AnalyticsGraph data={convertArray(createdTaskData)} name="test"/>
-        <AnalyticsGraph data={convertArray(taskAmountData)} name="test"/>
-        <AnalyticsGraph data={convertArray(tasksRatioData)} name="test"/>
-        <AnalyticsGraph data={convertArray(prediction)} name="test"/>
+        <div className="flex justify-center">
+            <div className="flex flex-col gap-1">
+                <div className="flex gap-2">
+                    <input type="checkBox" checked={isDaily} onChange={() => setIsDaily(!isDaily)}/>
+                    <label>щоденна статистика</label>
+                </div>
+                <div className="flex gap-2">
+                    <input type="checkBox" checked={isCurrentUser} onChange={() => setIsCurrentUser(!isCurrentUser)}/>
+                    <label>тільки задачі, призначені вам</label>
+                </div>
+            </div>
+        </div>
+        <div className="flex justify-center">
+            <DatePicker className="flex gap-4" startDate={startDate} endDate={endDate} handleStart={handleStart} handleEnd={handleEnd}/>
+        </div>
+        <div className="flex justify-center mt-2">
+            <div className="flex flex-col gap-2">
+                <div className="text-2xl flex justify-center">Кількість створених завдань</div>
+                <AnalyticsGraph data={convertArray(createdTaskData)} name="кількість"/>
+            </div>
+        </div>
+        <div className="flex justify-center">
+            <div className="flex flex-col gap-2">
+                <div className="text-2xl flex justify-center">Виконання задач</div>
+                <AnalyticsGraph data={convertArray(taskAmountData)} name="кількість"/>
+            </div>
+        </div>
+        <div className="flex justify-center">
+            <div className="flex flex-col gap-2">
+                <div className="text-2xl flex justify-center">Співвідношення виконанних і невиконанних задач</div>
+                <AnalyticsGraph data={convertArray(tasksRatioData)} name="%"/>
+            </div>
+        </div>
+        <div className="flex justify-center">
+            <div className="flex flex-col gap-2">
+                <div className="text-2xl flex justify-center">Прогноз ефективності (лінійна регресія)</div>
+                <AnalyticsGraph data={convertArray(prediction)} name="%"/>
+            </div>
+        </div>
     </div>
 }
 

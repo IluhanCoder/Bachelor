@@ -9,6 +9,8 @@ import projectService from "../project/project-service";
 import { VscTriangleLeft, VscTriangleRight } from "react-icons/vsc";
 import formStore from "../forms/form-store";
 import TaskInfoForm from "./task-info-form";
+import { Link } from "react-router-dom";
+import { lightButtonStyle } from "../styles/button-syles";
 
 
 function BoardWindow() {
@@ -51,14 +53,13 @@ function BoardWindow() {
 
     useEffect(() => { getData(); getUserRights(); }, [projectId]);
 
-    return <div>
-        <div>
-            <input type="checkbox" checked={isFiltered} onChange={() => setIsFiltered(!isFiltered)}/>
-            <label>тільки завдання, назначені вам</label>
+    return <div className="flex flex-col gap-3 p-4">
+        <div className="py-2">
+            <Link to={`/project/${projectId}`} className={lightButtonStyle}>Назад до проекту</Link>
         </div>
         <div className="w-full grid grid-cols-3 gap-4">
             <div className="bg-gray-100 rounded p-4 flex flex-col gap-2">
-                <div className="text-gray-600">Треба зробити:</div>
+                <div className="text-gray-600 font-bold">Треба виконати:</div>
                 {tasks.map((task: Task) => {
                     if((!isFiltered || currentUserIsExecutorOrOwner(task)) &&  task.status === "toDo") return <div className="grid grid-cols-3 bg-white rounded py-2 px-4 border">
                         <div></div>
@@ -70,7 +71,7 @@ function BoardWindow() {
                 })}
             </div>
             <div className="bg-gray-100 rounded p-4 flex flex-col gap-2">
-                <div className="text-gray-600">В процесі:</div>
+                <div className="text-gray-600 font-bold">В процесі:</div>
                 {tasks.map((task) => {
                     if((!isFiltered || currentUserIsExecutorOrOwner(task)) && task.status === "inProgress") return <div className="grid grid-cols-3 bg-white rounded py-2 px-4 border">
                         {(currentUserIsExecutorOrOwner(task) || rights?.check) && <div>
@@ -84,7 +85,7 @@ function BoardWindow() {
                 })}
             </div>
             <div className="bg-gray-100 rounded p-4 flex flex-col gap-2">
-                <div className="text-gray-600">Виконано:</div>
+                <div className="text-gray-600 font-bold">Виконано:</div>
                 {tasks.map((task: Task) => {
                     if((!isFiltered || currentUserIsExecutorOrOwner(task)) && task.status === "done") return <div className="grid grid-cols-3 bg-white rounded py-2 px-4 border">
                         {(currentUserIsExecutorOrOwner(task) || rights?.check) && <div>
@@ -94,6 +95,10 @@ function BoardWindow() {
                     </div>
                 })}
             </div>
+        </div>
+        <div className="flex gap-2 justify-end pr-4">
+            <input type="checkbox" checked={isFiltered} onChange={() => setIsFiltered(!isFiltered)}/>
+            <label>тільки завдання, назначені вам</label>
         </div>
     </div>
 }
