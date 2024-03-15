@@ -58,5 +58,6 @@ router.post("/owner/:projectId", projectController.changeOwner);
 router.get("/task/:taskId", taskController.getTaskById);
 router.put("/task/:taskId", taskController.updateTask);
 router.get("/owner/:projectId", projectController.getOwnerId);
+router.delete("/sprint/:sprintId", sprintController.deleteSprint);
 
 export default router;

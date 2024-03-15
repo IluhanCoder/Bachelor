@@ -25,4 +25,8 @@ export default new class SprintService {
     async getSprintById(sprintId: string) {
         return (await $api.get(`/sprint/${sprintId}`)).data;
     }
+
+    async deleteSprint(sprintId: string) {
+        return (await $api.delete(`/sprint/${sprintId}`)).data;
+    }
 }

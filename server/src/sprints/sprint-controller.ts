@@ -117,4 +117,20 @@ export default new class SprintController {
             throw error;
         }
     }
+    
+    async deleteSprint(req: Request, res: Response) {
+        try {
+            const {sprintId} = req.params;
+            await sprintService.deleteSprint(sprintId);
+            res.status(200).json({
+                status: "success"
+            });
+        } catch (error) {
+            res.json({
+                status: "fail",
+                message: "internal server error"
+            }).status(500)
+            throw error;
+        }
+    }
 }
