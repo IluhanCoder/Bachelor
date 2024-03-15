@@ -24,7 +24,7 @@ function BacklogTasksMapper ({tasks, pushHandler, assignHandler, deleteHandler, 
                 <TaskStatusDisplayer className="mt-1" status={task.status}/>
             </div>
             <div className="flex gap-2">
-            <button type="button" className={lightButtonStyle} onClick={() => detailsHandler(task._id)}>деталі</button>
+                <button type="button" className={lightButtonStyle} onClick={() => detailsHandler(task._id)}>деталі</button>
                 <button type="button" className={lightButtonStyle} onClick={() => pushHandler(task)}>додати до спрінту</button>
                 <button type="button" className={redButtonSyle} onClick={() => deleteHandler(task._id)}>видалити</button>
             </div>

@@ -27,12 +27,14 @@ function PushTaskForm({task, sprints, callBack}: LocalParams) {
         }
     }
 
-    return <FormComponent formLabel={`Завдання "${task.name}"`}>
-        <div>{
-            sprints.map((sprint: SprintResponse) => <button className={sprint._id === selectedSprintId ? "bg-blue-500" : "bg-white-100"} type="button" onClick={() => handleSelect(sprint._id)}>{sprint.name}</button>)
-            }</div>
-        <div>
-            <button type="button" className={submitButtonStyle} disabled={!selectedSprintId} onClick={handleSubmit}>додати</button>
+    return <FormComponent formLabel={`Додати "${task.name}" до спрінту`}>
+        <div className="flex flex-col gap-2">
+            <div className="grid grid-cols-4 gap-2">{
+                sprints.map((sprint: SprintResponse) => <button className={(sprint._id === selectedSprintId ? "text-blue-500 " : "text-black ") + "bg-gray-100 rounded px-2 py-1"} type="button" onClick={() => handleSelect(sprint._id)}>{sprint.name}</button>)
+                }</div>
+            <div className="flex justify-center">
+                <button type="button" className={submitButtonStyle} disabled={!selectedSprintId} onClick={handleSubmit}>додати</button>
+            </div>
         </div>
     </FormComponent>
 }

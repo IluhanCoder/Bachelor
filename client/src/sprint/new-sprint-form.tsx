@@ -3,6 +3,7 @@ import FormComponent from "../forms/form-component";
 import { submitButtonStyle } from "../styles/button-syles";
 import formStore from "../forms/form-store";
 import sprintService from "./sprint-service";
+import { inputStyle } from "../styles/form-styles";
 
 interface LocalParams {
     backlogId: string,
@@ -27,11 +28,16 @@ function NewSprintForm ({callBack, backlogId}: LocalParams) {
     };  
 
     return <FormComponent formLabel="створення спрінту">
-        <form onSubmit={(event: FormEvent) => handleSubmit(event)}>
-            <div>
-                <input type="text" name="name" onChange={handleChange}/>
+        <form onSubmit={(event: FormEvent) => handleSubmit(event)} className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 py-2">
+                <div className="flex flex-col gap-2">
+                    <label className="font-bold text-gray-600 text-xs">Назва спрінту:</label>
+                    <input className={inputStyle + " w-96"} type="text" name="name" onChange={handleChange}/>
+                </div>
             </div>
-            <button type="submit" className={submitButtonStyle}>створити</button>
+            <div className="flex justify-center">
+                <button type="submit" className={submitButtonStyle}>створити</button>
+            </div>
         </form>
     </FormComponent>
 }

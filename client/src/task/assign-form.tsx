@@ -9,6 +9,7 @@ import UsersMapper from "../user/users-mapper";
 import { submitButtonStyle } from "../styles/button-syles";
 import taskService from "./task-service";
 import formStore from "../forms/form-store";
+import LoadingScreen from "../misc/loading-screen";
 
 interface LocalParams {
     task: TaskResponse,
@@ -17,7 +18,7 @@ interface LocalParams {
 }
 
 function AssignForm({task, projectId, callBack}: LocalParams) {
-    const [users, setUsers] = useState<ParticipantResponse[]>([]);
+    const [users, setUsers] = useState<ParticipantResponse[] | null>(null);
     const [selected, setSelected] = useState<UserResponse[]>([]);
 
     const getUsers = async () => {
@@ -38,11 +39,16 @@ function AssignForm({task, projectId, callBack}: LocalParams) {
     }, [])
  
     return <FormComponent formLabel="Назначити задачу">
-        <div>
-            <UsersMapper users={users.map((participant: ParticipantResponse) => participant.participant)} selectedState={[selected, setSelected]}/>
-            <div>{selected.map((user: UserResponse) => <div>{user.nickname}</div>)}</div>
+        {users && <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1">
+                <UsersMapper task={task} users={users.map((participant: ParticipantResponse) => participant.participant)} selectedState={[selected, setSelected]}/>
+            </div>
+            <div className="flex flex-col gap-1">
+                <div className="flex">Обрані користувачі:</div>
+                <div>{selected.length > 0 && selected.map((user: UserResponse) => <div>{user.nickname}</div> || <div className="text-xs text-gray-600">жодного користувача не обрано</div>)}</div>
+            </div>
             <button type="button" className={submitButtonStyle} onClick={handleSubmit}>назначити</button>
-        </div>
+        </div> || <div className="w-96"><LoadingScreen/></div>}
     </FormComponent>
 }
 

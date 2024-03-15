@@ -5,13 +5,14 @@ interface LocalParams {
     startDate: Date,
     endDate: Date
     handleStart: (date: Date) => void,
-    handleEnd: (date: Date) => void
+    handleEnd: (date: Date) => void,
+    className?: string
 }
 
-function DatePicker ({handleStart, startDate, endDate, handleEnd}: LocalParams) {
-    return <div>
-        <div className="flex gap-2">
-              <label>Від:</label>
+function DatePicker ({handleStart, startDate, endDate, handleEnd, className}: LocalParams) {
+    return <div className={className}>
+          <div className="flex gap-2">
+              <label className="mt-1">Від:</label>
               <ReactDatePicker
                 dateFormat="dd/MM/yyyy"
                 className={inputStyle}
@@ -21,7 +22,7 @@ function DatePicker ({handleStart, startDate, endDate, handleEnd}: LocalParams) 
               />
             </div>
             <div className="flex gap-2">
-              <label>До:</label>
+              <label className="mt-1">До:</label>
               <ReactDatePicker
                 dateFormat="dd/MM/yyyy"
                 className={inputStyle}

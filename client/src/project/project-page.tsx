@@ -19,6 +19,8 @@ import NewOwnerForm from "./new-owner-form";
 import Avatar from "react-avatar";
 import { convertImage } from "./participants-window";
 import LoadingScreen from "../misc/loading-screen";
+import { Link } from "react-router-dom";
+import { VscGraphLine, VscTable } from "react-icons/vsc";
 
 function ProjectPage () {
     const [project, setProject] = useState<ExtendedProjectResponse | null>(null);
@@ -129,6 +131,31 @@ function ProjectPage () {
             </div>
         
             <div className="p-4 flex flex-col gap-4">
+                <div className="flex w-full">
+                    <Link to={`/analytics/${project._id}`} className="flex gap-2 py-1 px-2 bg-gray-100 text-gray-600 font-semibold rounded w-full justify-center">
+                        <VscGraphLine strokeWidth={1.25} className="mt-1.5"/>
+                        <div>аналітика проекту</div>
+                    </Link>
+                </div>
+                <div className="flex w-full">
+                    <Link to={`/board/${project._id}`} className="flex gap-2 py-1 px-2 bg-gray-100 text-gray-600 font-semibold rounded w-full justify-center">
+                        <VscTable size={24} strokeWidth={0.6} className="mt-0.5"/>
+                        <div>дошка задач</div>
+                    </Link>
+                </div>
+                <div className="flex flex-col gb-gray-50 border">
+                    <div className="text-center text-gray-600 font-bold pt-2">
+                        Власник проекту:
+                    </div>
+                    <div className="flex gap-2 px-6 py-4 justify-center gap-4">
+                        <div className="">
+                            <Avatar round size="40" name={project.owner.nickname} src={(project.owner.avatar) ? convertImage(project.owner.avatar) : ""}/>
+                        </div>
+                        <div className="text-2xl">
+                            {project.owner.nickname}
+                        </div>
+                    </div>
+                </div>
                 <div className="flex flex-col gb-gray-50 border">
                     <div className="text-center text-gray-600 font-bold pt-2">
                         Учасники:
@@ -137,7 +164,7 @@ function ProjectPage () {
                         <div className="grow flex gap-2 py-3 px-6 flex-col">{project.participants.map((participant: ParticipantResponse) => {
                             if(participant.participant) return <div className="flex justify-between gap-3">
                                 <div className="flex gap-2">
-                                    <Avatar round size="30" name={participant.participant.nickname} src={convertImage(participant.participant.avatar)}/>
+                                    <Avatar round size="30" name={participant.participant.nickname} src={(participant.participant.avatar) ? convertImage(participant.participant.avatar) : ""}/>
                                     <div className="text-xl">{participant.participant.nickname}</div>
                                 </div>
                                 {rights?.editParticipants && 
