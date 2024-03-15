@@ -51,4 +51,9 @@ export default new class ProjectService {
         const result = (await $api.post(`/owner/${projectId}`, {newOwnerId, oldOwnerId})).data;
         return result;
     }
+
+    async getOwnerId(projectId: string) {
+        const result = (await $api.get(`/owner/${projectId}`)).data;
+        return result;
+    }
 }

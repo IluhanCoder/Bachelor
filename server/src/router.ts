@@ -9,6 +9,7 @@ import backlogController from "./backlog/backlog-controller";
 import sprintController from "./sprints/sprint-controller";
 import analyticsController from "./analytics/analytics-controller";
 import sprintService from "./sprints/sprint-service";
+import projectService from "./projects/project-service";
 
 const router = Router();
 
@@ -56,5 +57,6 @@ router.delete("/task/:taskId", taskController.deleteTask);
 router.post("/owner/:projectId", projectController.changeOwner);
 router.get("/task/:taskId", taskController.getTaskById);
 router.put("/task/:taskId", taskController.updateTask);
+router.get("/owner/:projectId", projectController.getOwnerId);
 
 export default router;

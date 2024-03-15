@@ -176,4 +176,21 @@ export default new class ProjectController {
             throw error;
         }
     }
+
+    async getOwnerId(req: AuthenticatedRequest, res: Response) {
+        try {
+            const {projectId} = req.params;
+            const ownerId = await projectService.getOwnerId(projectId);
+            res.status(200).json({
+                status: "success",
+                ownerId
+            })
+        } catch (error) {
+            res.json({
+                status: "fail",
+                message: "internal server error"
+            }).status(500)
+            throw error;
+        }
+    }
 }

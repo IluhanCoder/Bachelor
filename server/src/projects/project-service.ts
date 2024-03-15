@@ -313,4 +313,12 @@ export default new class ProjectService {
         throw error;
       }
     }
+
+    async getOwnerId (projectId) {
+      try {
+        return (await ProjectModel.findById(projectId)).owner;
+      } catch (error) {
+        throw error;
+      }
+    }
 }
