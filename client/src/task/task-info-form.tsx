@@ -17,6 +17,7 @@ function TaskInfoForm({taskId, callBack}: LocalParams) {
 
     const getTask = async () => {
         const result = await taskService.getTaskById(taskId);
+        console.log(result);
         setFormData(result.task);
     }
 
@@ -24,7 +25,7 @@ function TaskInfoForm({taskId, callBack}: LocalParams) {
         getTask()
     }, []);
 
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (event: any) => {
         if(formData)
             setFormData({
             ...formData,
@@ -45,21 +46,49 @@ function TaskInfoForm({taskId, callBack}: LocalParams) {
         <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-2 py-2">
                 <div className="flex flex-col gap-2 px-10">
-                    <label className="font-bold text-gray-600 text-xs">Задача</label>
+                    <label className="font-bold text-gray-600 text-xs w-96">Задача</label>
                     <input defaultValue={formData?.name} className={inputStyle} type="text" onChange={handleChange} name="name"/>
                 </div>
                 <div className="flex flex-col gap-2 px-10">
                     <label className="font-bold text-gray-600 text-xs">Опис</label>
                     <input defaultValue={formData?.desc} className={inputStyle} type="text" onChange={handleChange} name="desc"/>
                 </div>
+                <div className="flex flex-col gap-2 px-10">
+                    <label className="font-bold text-gray-600 text-xs">Вимоги</label>
+                    <textarea defaultValue={formData?.requirements} className={inputStyle} onChange={handleChange} name="requirements"/>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                    <div>
+                        <div>Статус</div>
+                        <select value={formData?.status} onChange={handleChange} name="status">
+                            <option value="toDo">треба виконати</option>
+                            <option value="inProgress" className="text-blue-600">в процесі</option>
+                            <option value="done" className="text-green-600">виконано</option>
+                        </select>
+                    </div>
+                    <div>
+                        <div>Складність</div>
+                        <select value={formData?.difficulty} onChange={handleChange} name="difficulty">
+                            <option value="low">низька</option>
+                            <option value="mid" className="text-blue-600">середня</option>
+                            <option value="hight" className="text-green-600">висока</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <div>Пріоритет</div>
+                    <select value={formData?.priority} onChange={handleChange} name="priority">
+                        <option value="low">низький</option>
+                        <option value="mid" className="text-blue-600">середній</option>
+                        <option value="hight" className="text-green-600">високий</option>
+                    </select>
+                </div>
             </div>
             <div className="flex justify-center">
                 <ErrorContainer/>
             </div>
-            <div className="flex w-full mt-4 justify-between gap-10">
-                <div className="flex justify-center">
-                    <button type="submit" className={submitButtonStyle}>Зберегти зміни</button>
-                </div>
+            <div className="flex w-full mt-4 justify-center">
+                <button type="submit" className={submitButtonStyle}>Зберегти зміни</button>
             </div>
         </form>
     </FormComponent>

@@ -9,7 +9,10 @@ const taskSchema = new mongoose.Schema({
     created: Date,
     checkedDate: { type: Date, required: false },
     executors: [mongoose.Types.ObjectId],
-    status: String
+    status: String,
+    difficulty: String,
+    priority: String,
+    requirements: String,
 });
 
 const TaskModel = mongoose.model('Task', taskSchema);

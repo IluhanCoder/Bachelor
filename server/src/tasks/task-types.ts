@@ -10,7 +10,10 @@ interface Task {
     created: Date,
     checkedDate: Date | null,
     executors: mongoose.Types.ObjectId[],
-    status: String
+    status: string,
+    difficulty: string,
+    priority: string,
+    requirements: string,
 }
 
 export default Task;
@@ -24,7 +27,10 @@ export interface TaskResponse {
     created: Date,
     checkedDate: Date | null,
     executors: UserResponse[],
-    status: string
+    status: string,
+    difficulty: string,
+    priority: string,
+    requirements: string,
 }
 
 export interface TaskCredentials {
@@ -32,10 +38,14 @@ export interface TaskCredentials {
     desc: string,
     backlogId: string,
     createdBy: string,
-    executors?: mongoose.Types.ObjectId[]
+    executors?: mongoose.Types.ObjectId[],
+    requirements: string
 }
 
 export interface UpdateTaskCredentials {
     name: string,
-    desc: string
+    desc: string,
+    difficulty: string,
+    priority: string,
+    requirements: string
 }

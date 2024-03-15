@@ -17,7 +17,7 @@ interface LocalParams {
 }
 
 function BacklogTasksMapper ({tasks, pushHandler, assignHandler, deleteHandler, detailsHandler}: LocalParams) {
-    return <div className="flex flex-col gap-1">{tasks.map((task: TaskResponse) => task.name && <div className="rounded py-2 pl-10 pr-4 gap-6 border-2 flex justify-between">
+    if(tasks[0] && tasks[0].name) return <div className="flex flex-col gap-1">{tasks.map((task: TaskResponse) => task.name && <div className="rounded py-2 pl-10 pr-4 gap-6 border-2 flex justify-between">
             <div className="text-xl font-bold mt-0.5">{task.name}</div>
             {task.executors.length > 0 && <div className="flex gap-2 mt-1">
                 <div>призначено:</div>
@@ -31,6 +31,7 @@ function BacklogTasksMapper ({tasks, pushHandler, assignHandler, deleteHandler, 
             </div>
         </div>
     )}</div>
+    else return <div className="flex justify-center font-bold pb-10">Задачі відсутні</div>
 }
 
 export default BacklogTasksMapper;

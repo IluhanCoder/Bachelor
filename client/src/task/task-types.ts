@@ -10,7 +10,10 @@ interface Task {
     created: Date,
     checkedDate: Date | undefined,
     executors: string[],
-    status: string
+    status: string,
+    difficulty: string,
+    priority: string,
+    requirements: string,
 }
 
 export default Task;
@@ -18,9 +21,10 @@ export default Task;
 export interface TaskCredentials {
     name: string,
     desc: string,
-    projectId: string,
+    projectId?: string,
     createdBy: string,
-    executors?: string[]
+    executors?: string[],
+    requirements: string
 }
 
 export interface TaskResponse {
@@ -33,5 +37,8 @@ export interface TaskResponse {
     created: Date,
     checkedDate: Date | undefined,
     status: string,
-    executors: UserResponse[]
+    executors: UserResponse[],
+    difficulty: string,
+    priority: string,
+    requirements: string
 }

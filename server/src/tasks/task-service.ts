@@ -2,7 +2,7 @@ import Task, { TaskCredentials, UpdateTaskCredentials } from "./task-types";
 import mongoose from "mongoose";
 import TaskModel from "./task-model";
 import backlogModel from "../backlog/backlog-model";
-import TaskStatuses from "./task-statuses";
+import TaskStatuses, { TaskDifficulties, TaskPriorities } from "./task-statuses";
 import ProjectModel from "../projects/project-model";
 
 export default new class TaskService {
@@ -17,7 +17,10 @@ export default new class TaskService {
                 checkedDate: undefined,
                 backlogId: new mongoose.Types.ObjectId(newTask.backlogId),
                 executors: newTask.executors ?? [],
-                status: TaskStatuses[0]
+                status: TaskStatuses[0],
+                difficulty: TaskDifficulties[1],
+                priority: TaskPriorities[1],
+                requirements: newTask.requirements
             };
             const createdTask = await TaskModel.create(task);
             await backlogModel.findByIdAndUpdate(newTask.backlogId, {"$push": {tasks: createdTask._id}});
@@ -238,6 +241,10 @@ export default new class TaskService {
           _id: 1,
           name: 1,
           desc: 1,
+          requirements: 1,
+          priority: 1,
+          status: 1,
+          difficulty: 1,
           // Other fields you want to include from the task
           executors: {
             $map: {

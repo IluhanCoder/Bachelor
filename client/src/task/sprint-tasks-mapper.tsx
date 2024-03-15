@@ -18,13 +18,12 @@ function SprintTasksMapper ({sprint, pullHandler, assignHandler, deleteHandler}:
 
     const getTasks = async () => {
         const result = await taskService.getSprintTasks(sprint._id);
-        console.log(result);
         setTasks([...result.tasks]);
     }
 
     useEffect(() => { getTasks() }, [sprint]);
 
-    return <div>{tasks.map((task: TaskResponse) => task.name && <div className="rounded py-2 pl-10 pr-4 gap-6 border-2 flex justify-between">
+    if(tasks[0] && tasks[0].name) return <div>{tasks.map((task: TaskResponse) => task.name && <div className="rounded py-2 pl-10 pr-4 gap-6 border-2 flex justify-between">
             <div className="text-xl font-bold mt-0.5">{task.name}</div>
             {task.executors.length > 0 && <div className="flex gap-2 mt-1">
                 <div>призначено:</div>
@@ -37,6 +36,7 @@ function SprintTasksMapper ({sprint, pullHandler, assignHandler, deleteHandler}:
             </div>
         </div>
     )}</div>
+    else return <div className="flex justify-center font-bold pb-10">Задачі відсутні</div>
 }
 
 export default SprintTasksMapper;
