@@ -57,7 +57,7 @@ function BacklogCard({backlog}: LocalParams) {
     }
 
     const detailsHandler = (taskId: string) => {
-        formStore.setForm(<TaskInfoForm callBack={() => getData()} taskId={taskId}/>)
+        formStore.setForm(<TaskInfoForm projectId={backlog.projectId} callBack={() => getData()} taskId={taskId}/>)
     }
 
     useEffect(() => {getData()}, []);
@@ -73,7 +73,7 @@ function BacklogCard({backlog}: LocalParams) {
         </div> || <LoadingScreen/>}
         {sprints && <div className="flex flex-col px-6 pb-4 gap-2">
             <div className="font-bold text-gray-600">Спрінти:</div>
-            <BacklogSprintsMapper deleteHandler={handleDeleteTask} callBack={getData} pullHandler={handlePull} sprints={sprints} assignHandler={handleAssing}/>
+            <BacklogSprintsMapper detailsHandler={detailsHandler} deleteHandler={handleDeleteTask} callBack={getData} pullHandler={handlePull} sprints={sprints} assignHandler={handleAssing}/>
             <div className="flex pb-4 px-6 justify-center">
                 <button className={submitButtonStyle} type="button" onClick={handleNewSprint}>Створити спрінт</button>
             </div>

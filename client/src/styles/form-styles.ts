@@ -6,5 +6,7 @@ export const inputStyle = "border-2 border-gray-200 rounded-sm px-2 py-1 focus:b
 
 export const linkStyle = "text-blue-600 visited:text-blue-800"
 
+export const selectStyle = "bg-gray-100 text-xs font-semibold rounded px-4 py-1"
+
 const formStyle = "bg-white rounded gap-2 p-6 flex flex-col shadow-md border-[0.25px] border-gray-300";
 export default formStyle;

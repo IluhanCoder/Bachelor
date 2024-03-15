@@ -47,5 +47,7 @@ export interface UpdateTaskCredentials {
     desc: string,
     difficulty: string,
     priority: string,
-    requirements: string
+    requirements: string,
+    status: string,
+    checkedDate: Date
 }

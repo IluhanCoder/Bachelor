@@ -245,6 +245,8 @@ export default new class TaskService {
           priority: 1,
           status: 1,
           difficulty: 1,
+          created: 1,
+          checkedDate: 1,
           // Other fields you want to include from the task
           executors: {
             $map: {
@@ -252,7 +254,7 @@ export default new class TaskService {
               as: "executor",
               in: {
                 _id: "$$executor._id",
-                name: "$$executor.name",
+                nickname: "$$executor.nickname",
                 // Other fields you want to include from the user
               }
             }
@@ -264,6 +266,8 @@ export default new class TaskService {
   }
 
   async updateTask(taskId: string, newData: UpdateTaskCredentials) {
+    if(newData.status === "done") newData.checkedDate = new Date();
+    else newData.checkedDate = null;
     await TaskModel.findByIdAndUpdate(taskId, newData);
   }
 }
