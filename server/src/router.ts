@@ -59,5 +59,6 @@ router.get("/task/:taskId", taskController.getTaskById);
 router.put("/task/:taskId", taskController.updateTask);
 router.get("/owner/:projectId", projectController.getOwnerId);
 router.delete("/sprint/:sprintId", sprintController.deleteSprint);
+router.delete("/project/:projectId", projectController.deleteProject);
 
 export default router;

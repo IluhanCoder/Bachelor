@@ -56,4 +56,9 @@ export default new class ProjectService {
         const result = (await $api.get(`/owner/${projectId}`)).data;
         return result;
     }
+
+    async deleteProject(projectId: string) {
+        const result = (await $api.delete(`/project/${projectId}`)).data;
+        return result;
+    }
 }

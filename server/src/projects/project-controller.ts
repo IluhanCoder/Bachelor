@@ -193,4 +193,20 @@ export default new class ProjectController {
             throw error;
         }
     }
+
+    async deleteProject(req: AuthenticatedRequest, res: Response) {
+        try {
+            const {projectId} = req.params;
+            await projectService.deleteProject(projectId);
+            res.status(200).json({
+                status: "success"
+            })
+        } catch (error) {
+            res.json({
+                status: "fail",
+                message: "internal server error"
+            }).status(500)
+            throw error;
+        }
+    }
 }

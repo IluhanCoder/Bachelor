@@ -93,6 +93,13 @@ function ProjectPage () {
         }
     }
 
+    const handleProjectDelete = async () => {
+        if(projectId) {
+            await projectService.deleteProject(projectId);
+            navigate("/projects");
+        }
+    }
+
     useEffect(() => {
         getProjectData();
     }, [projectId])
@@ -109,7 +116,7 @@ function ProjectPage () {
                         <button className={redButtonSyle + " text-xs mt-1"} type="button" onClick={handleChangeOwner}>змінити власника проекту</button>
                     </div>}
                     {project?.owner._id === userStore.user?._id && 
-                    <button type="button" className={redButtonSyle + " text-xs mt-1"}>
+                    <button type="button" className={redButtonSyle + " text-xs mt-1"} onClick={handleProjectDelete}>
                         видалити проект
                     </button> || 
                     <button type="button" className={redButtonSyle + " text-xs mt-1"} onClick={handleLeave}>

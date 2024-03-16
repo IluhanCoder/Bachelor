@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import ProjectModel from "./project-model";
 import Project, { ExtendedProjectResponse, Participant, ParticipantResponse, ProjectCredentials, Rights } from "./project-types";
 import inviteService from "../invites/invite-service";
+import backlogModel from "../backlog/backlog-model";
 
 const fullLookUp = [
   {
@@ -321,4 +322,13 @@ export default new class ProjectService {
         throw error;
       }
     }
+
+    async deleteProject (projectId) {
+      try {
+        await backlogModel.deleteMany({projectId: new mongoose.Types.ObjectId(projectId)});
+        await ProjectModel.findByIdAndDelete(projectId);
+      } catch (error) {
+        throw error;
+      }
+    } 
 }

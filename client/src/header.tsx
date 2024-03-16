@@ -1,4 +1,4 @@
-import { Link, useLinkClickHandler, useLocation } from "react-router-dom";
+import { Link, useLinkClickHandler, useLocation, useNavigate } from "react-router-dom";
 import formStore from "./forms/form-store";
 import LoginForm from "./auth/login-form";
 import { observer } from "mobx-react";
@@ -10,6 +10,8 @@ import Avatar from "react-avatar";
 import { Buffer } from "buffer";
 
 function Header() {
+    const navigate = useNavigate();
+
     const handleLoginButtonClick = () => {
         formStore.setForm(<LoginForm/>);
     }
@@ -18,6 +20,7 @@ function Header() {
 
     const handleLogout = async () => {
         await authService.logout();
+        navigate("/");
     }
 
     const convertImage = (image: any) => {
