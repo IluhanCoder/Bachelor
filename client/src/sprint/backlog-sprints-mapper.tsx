@@ -6,6 +6,7 @@ import SprintTasksMapper from "../task/sprint-tasks-mapper";
 import formStore from "../forms/form-store";
 import EditSprintForm from "./edit-sprint-form";
 import { lightButtonStyle, redButtonSyle, submitButtonStyle } from "../styles/button-syles";
+import { Rights } from "../project/project-types";
 
 interface LocalParams {
     sprints: SprintResponse[],
@@ -13,10 +14,11 @@ interface LocalParams {
     assignHandler: (task: TaskResponse) => void,
     deleteHandler: (taskId: string) => void,
     detailsHandler: (taskId: string) => void,
-    callBack?: () => {}
+    callBack?: () => {},
+    rights: Rights
 }
 
-function BacklogSprintsMapper({sprints, pullHandler, assignHandler, callBack, deleteHandler, detailsHandler}: LocalParams) {
+function BacklogSprintsMapper({sprints, pullHandler, assignHandler, callBack, deleteHandler, detailsHandler, rights}: LocalParams) {
     const handleEdit = (sprintId: string) => {
         formStore.setForm(<EditSprintForm sprintId={sprintId} callBack={callBack}/>);
     }
@@ -31,19 +33,19 @@ function BacklogSprintsMapper({sprints, pullHandler, assignHandler, callBack, de
     }
 
     return <div className="flex flex-col gap-2">
-        {sprints.map((sprint: SprintResponse) => <div className={`flex rounded border px-6 py-3 flex-col ${(isTerminated(sprint)) ? "border-red-500 border-2" : "border"}`}>
+        {sprints.length > 0 && sprints.map((sprint: SprintResponse) => <div className={`flex rounded border px-6 py-3 flex-col ${(isTerminated(sprint)) ? "border-red-500 border-2" : "border"}`}>
             <div className="flex justify-between">
                 <div className="text-xl">{sprint.name}</div>
                 <div className="flex gap-2">
-                    <button type="button" onClick={() => handleEdit(sprint._id)} className={lightButtonStyle}>редагувати спрінт</button>
-                    <button type="button" onClick={() => handleDelete(sprint._id)} className={redButtonSyle}>видалити спрінт</button>
+                    {rights.edit && <button type="button" onClick={() => handleEdit(sprint._id)} className={lightButtonStyle}>редагувати спрінт</button>}
+                    {rights.delete && <button type="button" onClick={() => handleDelete(sprint._id)} className={redButtonSyle}>видалити спрінт</button>}
                 </div>
             </div>
             <div>
-                <div>завдання спрінту:</div>
-                <SprintTasksMapper detailsHandler={detailsHandler} assignHandler={assignHandler} deleteHandler={deleteHandler} pullHandler={(taskId: string) => pullHandler(taskId, sprint._id)} sprint={sprint}/>
+                <div>задачі спрінту:</div>
+                <SprintTasksMapper rights={rights} detailsHandler={detailsHandler} assignHandler={assignHandler} deleteHandler={deleteHandler} pullHandler={(taskId: string) => pullHandler(taskId, sprint._id)} sprint={sprint}/>
             </div>
-        </div>)}
+        </div>) || <div className="flex justify-center p-8 text-xl font-bold text-gray-600">спрінти відсутні</div> }
     </div>
 }
 

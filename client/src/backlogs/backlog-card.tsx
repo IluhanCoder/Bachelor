@@ -14,12 +14,14 @@ import NewSprintForm from "../sprint/new-sprint-form";
 import AssignForm from "../task/assign-form";
 import TaskInfoForm from "../task/task-info-form";
 import LoadingScreen from "../misc/loading-screen";
+import { Rights } from "../project/project-types";
 
 interface LocalParams {
-    backlog: BacklogResponse
+    backlog: BacklogResponse,
+    rights: Rights
 }
 
-function BacklogCard({backlog}: LocalParams) {
+function BacklogCard({backlog, rights}: LocalParams) {
     const [tasks, setTasks] = useState<TaskResponse[] | null>(null);
     const [sprints, setSprints] = useState<SprintResponse[] | null>(null);
 
@@ -57,7 +59,7 @@ function BacklogCard({backlog}: LocalParams) {
     }
 
     const detailsHandler = (taskId: string) => {
-        formStore.setForm(<TaskInfoForm projectId={backlog.projectId} callBack={() => getData()} taskId={taskId}/>)
+        formStore.setForm(<TaskInfoForm rights={rights} projectId={backlog.projectId} callBack={() => getData()} taskId={taskId}/>)
     }
 
     useEffect(() => {getData()}, []);
@@ -65,18 +67,18 @@ function BacklogCard({backlog}: LocalParams) {
     return <div className="border border-1 rounded">
         <div className="text-2xl px-4 py-2">{backlog.name}</div>
         {tasks && <div className="flex flex-col px-6 pb-4 gap-2">
-            <div className="font-bold text-gray-600">Завдання беклогу:</div>
-            <BacklogTasksMapper detailsHandler={detailsHandler} deleteHandler={handleDeleteTask} tasks={tasks} pushHandler={handlePush} assignHandler={handleAssing}/>
-            <div className="flex pb-4 px-6 justify-center">
-                <button className={submitButtonStyle} type="button" onClick={handleNewTask}>Створити завдання</button>
-            </div>
+            <div className="font-bold text-gray-600">Задачі беклогу:</div>
+            <BacklogTasksMapper rights={rights} detailsHandler={detailsHandler} deleteHandler={handleDeleteTask} tasks={tasks} pushHandler={handlePush} assignHandler={handleAssing}/>
+            {rights.create && <div className="flex pb-4 px-6 justify-center">
+                <button className={submitButtonStyle} type="button" onClick={handleNewTask}>Створити задачу</button>
+            </div>}
         </div> || <LoadingScreen/>}
         {sprints && <div className="flex flex-col px-6 pb-4 gap-2">
             <div className="font-bold text-gray-600">Спрінти:</div>
-            <BacklogSprintsMapper detailsHandler={detailsHandler} deleteHandler={handleDeleteTask} callBack={getData} pullHandler={handlePull} sprints={sprints} assignHandler={handleAssing}/>
-            <div className="flex pb-4 px-6 justify-center">
+            <BacklogSprintsMapper rights={rights} detailsHandler={detailsHandler} deleteHandler={handleDeleteTask} callBack={getData} pullHandler={handlePull} sprints={sprints} assignHandler={handleAssing}/>
+            {rights.create && <div className="flex pb-4 px-6 justify-center">
                 <button className={submitButtonStyle} type="button" onClick={handleNewSprint}>Створити спрінт</button>
-            </div>
+            </div>}
         </div> || <LoadingScreen/>}
     </div>
 }

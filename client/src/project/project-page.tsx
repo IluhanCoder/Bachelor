@@ -121,12 +121,12 @@ function ProjectPage () {
             <div className="flex flex-col grow px-6 py-2">
                 <div className="flex flex-col gap-2">
                     <div className="font-bold">Беклоги:</div>
-                    {project && <div>
-                        <BacklogMapper projectId={project._id}/>
+                    {project && rights && <div>
+                        <BacklogMapper rights={rights} projectId={project._id}/>
                     </div>}                        
-                    <div className="flex justify-center">
+                    {rights?.create && <div className="flex justify-center">
                          <button onClick={handleCreateBacklog} className={submitButtonStyle + " text-base"}>створити беклог</button>
-                    </div>
+                    </div>}
                 </div>
             </div>
         
@@ -143,12 +143,12 @@ function ProjectPage () {
                         <div>дошка задач</div>
                     </Link>
                 </div>
-                <div className="flex w-full">
+                {rights?.editParticipants && <div className="flex w-full">
                     <Link to={`/rights/${project._id}`} className="flex gap-2 py-1 px-2 bg-gray-100 text-gray-600 font-semibold rounded w-full justify-center">
                         <VscOrganization size={24} strokeWidth={0.4} className="mt-0.5"/>
                         <div>права учасників</div>
                     </Link>
-                </div>
+                </div>}
                 <div className="flex flex-col gb-gray-50 border">
                     <div className="text-center text-gray-600 font-bold pt-2">
                         Власник проекту:
@@ -183,9 +183,9 @@ function ProjectPage () {
                             </div>
                         })}</div>
                     </div>
-                    <div className="flex justify-center px-2 pb-4">{rights?.addParticipants && <button type="button" className={grayButtonStyle + " text-xs"} onClick={handleAddUser}>
+                    {rights?.addParticipants && <div className="flex justify-center px-2 pb-4"><button type="button" className={grayButtonStyle + " text-xs"} onClick={handleAddUser}>
                         додати учасника
-                    </button>}</div>
+                    </button></div>}
                 </div>
                 {project.invited.length > 0 && <div className="flex flex-col gb-gray-50 border">
                         <div className="text-center text-gray-600 pt-2">

@@ -11,12 +11,13 @@ import formStore from "../forms/form-store";
 import TaskInfoForm from "./task-info-form";
 import { Link } from "react-router-dom";
 import { lightButtonStyle } from "../styles/button-syles";
+import LoadingScreen from "../misc/loading-screen";
 
 
 function BoardWindow() {
     const {projectId} = useParams();
 
-    const [tasks, setTasks] = useState<Task[]>([]);
+    const [tasks, setTasks] = useState<Task[] | null>(null);
     const [isFiltered, setIsFiltered] = useState<boolean>(false);
     const [rights, setRights] = useState<Rights>();
     const [ownerId, setOwnerId] = useState<string>();
@@ -48,12 +49,12 @@ function BoardWindow() {
     }
 
     const handleTaskClick = (taskId: string) => {
-        if(projectId) formStore.setForm(<TaskInfoForm taskId={taskId} callBack={getData} projectId={projectId}/>)
+        if(projectId && rights) formStore.setForm(<TaskInfoForm rights={rights} taskId={taskId} callBack={getData} projectId={projectId}/>)
     }
 
     useEffect(() => { getData(); getUserRights(); }, [projectId]);
 
-    return <div className="flex flex-col gap-3 p-4">
+    if(tasks) return <div className="flex flex-col gap-3 p-4">
         <div className="py-2">
             <Link to={`/project/${projectId}`} className={lightButtonStyle}>Назад до проекту</Link>
         </div>
@@ -98,9 +99,10 @@ function BoardWindow() {
         </div>
         <div className="flex gap-2 justify-end pr-4">
             <input type="checkbox" checked={isFiltered} onChange={() => setIsFiltered(!isFiltered)}/>
-            <label>тільки завдання, назначені вам</label>
+            <label>тільки задачі, назначені вам</label>
         </div>
     </div>
+    else return <LoadingScreen/>
 }
 
 export default BoardWindow;

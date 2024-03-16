@@ -10,14 +10,16 @@ import BacklogSprintsMapper from "../sprint/backlog-sprints-mapper";
 import NewSprintForm from "../sprint/new-sprint-form";
 import BacklogCard from "./backlog-card";
 import LoadingScreen from "../misc/loading-screen";
+import { Rights } from "../project/project-types";
 
 interface LocalParams {
-    projectId: string
+    projectId: string,
+    rights: Rights
 }
 
 export const BacklogContext = createContext<BacklogResponse | undefined>(undefined);
 
-function BacklogMapper ({projectId}: LocalParams) {
+function BacklogMapper ({projectId, rights}: LocalParams) {
     const [backlogs, setBackLogs] = useState<BacklogResponse[] | null>(null);
 
     const getBacklogs = async () => {
@@ -38,7 +40,8 @@ function BacklogMapper ({projectId}: LocalParams) {
     }, []);
 
     if(backlogs) return <div className="flex flex-col">
-        {backlogs.map((backlog: BacklogResponse) => <BacklogCard backlog={backlog}/>)}
+        {backlogs.length > 0 && backlogs.map((backlog: BacklogResponse) => <BacklogCard rights={rights} backlog={backlog}/> ||
+        <div className="flex justify-center p-8 text-xl font-bold text-gray-600">беклоги відсутні</div>)}
     </div>
     else return <LoadingScreen/>
 }

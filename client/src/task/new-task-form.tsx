@@ -36,7 +36,7 @@ function NewTaskForm({backlogId, callBack}: LocalParams) {
 
 
 
-    return <FormComponent formLabel="Нове Завдання">
+    return <FormComponent formLabel="Нова Задача">
         <form onSubmit={handleSubmit} className="flex flex-col gap-2 px-4">
             <div className="flex flex-col gap-2 py-2">
                 <div className="flex flex-col gap-2 px-2">

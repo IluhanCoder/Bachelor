@@ -3,6 +3,7 @@ import FormComponent from "../forms/form-component";
 import { submitButtonStyle } from "../styles/button-syles";
 import backlogService from "./backlog-service";
 import formStore from "../forms/form-store";
+import { inputStyle } from "../styles/form-styles";
 
 interface LocalParams {
     projectId: string,
@@ -26,11 +27,13 @@ function NewBacklogForm ({callBack, projectId}: LocalParams) {
     };  
 
     return <FormComponent formLabel="створення Backlog">
-        <form onSubmit={handleSubmit}>
-            <div>
-                <input type="text" name="name" onChange={handleChange}/>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 px-10">
+            <div className="flex flex-col gap-1">
+                <input type="text" className={inputStyle} name="name" onChange={handleChange}/>
             </div>
-            <button type="submit" className={submitButtonStyle}>створити</button>
+            <div className="flex justify-center">
+                <button type="submit" className={submitButtonStyle}>створити</button>
+            </div>
         </form>
     </FormComponent>
 }

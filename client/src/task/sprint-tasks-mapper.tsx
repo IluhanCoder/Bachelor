@@ -6,16 +6,19 @@ import { SprintResponse } from "../sprint/sprint-types";
 import { UserResponse } from "../user/user-types";
 import { lightButtonStyle, redButtonSyle } from "../styles/button-syles";
 import TaskStatusDisplayer from "./task-status-diplayer";
+import { Rights } from "../project/project-types";
+import TaskPriorityDisplayer from "./task-priority-displayer";
 
 interface LocalParams {
     sprint: SprintResponse,
     pullHandler: (taskId: string) => {},
     assignHandler: (task: TaskResponse) => void,
     deleteHandler: (taskId: string) => void,
-    detailsHandler: (taskId: string) => void
+    detailsHandler: (taskId: string) => void,
+    rights: Rights
 }
 
-function SprintTasksMapper ({sprint, pullHandler, deleteHandler, detailsHandler}: LocalParams) {
+function SprintTasksMapper ({sprint, pullHandler, deleteHandler, detailsHandler, rights}: LocalParams) {
     const [tasks, setTasks] = useState<TaskResponse[]>([]);
 
     const getTasks = async () => {
@@ -30,14 +33,17 @@ function SprintTasksMapper ({sprint, pullHandler, deleteHandler, detailsHandler}
             <div>
                 <TaskStatusDisplayer className="mt-1" status={task.status}/>
             </div>
+            <div>
+                <TaskPriorityDisplayer className="mt-1" priority={task.priority}/>
+            </div>
             <div className="flex gap-2">
                 <button type="button" className={lightButtonStyle} onClick={() => detailsHandler(task._id)}>деталі</button>
-                <button type="button" className={lightButtonStyle} onClick={() => pullHandler(task._id)}>прибрати</button>
-                <button type="button" className={redButtonSyle} onClick={() => deleteHandler(task._id)}>видалити</button>
+                {rights.edit && <button type="button" className={lightButtonStyle} onClick={() => pullHandler(task._id)}>прибрати</button>}
+                {rights.delete && <button type="button" className={redButtonSyle} onClick={() => deleteHandler(task._id)}>видалити</button>}
             </div>
         </div>
     )}</div>
-    else return <div className="flex justify-center font-bold pb-10">Задачі відсутні</div>
+    else return <div className="flex justify-center font-bold pb-10">задачі відсутні</div>
 }
 
 export default SprintTasksMapper;

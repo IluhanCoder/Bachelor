@@ -10,7 +10,7 @@ export default new class SprintService {
             goal: "",
             tasks: [],
             startDate: currentDate,
-            endDate: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDay() + 10)
+            endDate: new Date(currentDate.getDate() + 10)
         }
         const createdSprint = await sprintModel.create(newSprint);
         await backlogModel.findByIdAndUpdate(backlogId, {$push: {sprints: new mongoose.Types.ObjectId(createdSprint._id)}});
