@@ -20,7 +20,7 @@ import Avatar from "react-avatar";
 import { convertImage } from "./participants-window";
 import LoadingScreen from "../misc/loading-screen";
 import { Link } from "react-router-dom";
-import { VscGraphLine, VscTable } from "react-icons/vsc";
+import { VscGraphLine, VscOrganization, VscTable } from "react-icons/vsc";
 
 function ProjectPage () {
     const [project, setProject] = useState<ExtendedProjectResponse | null>(null);
@@ -141,6 +141,12 @@ function ProjectPage () {
                     <Link to={`/board/${project._id}`} className="flex gap-2 py-1 px-2 bg-gray-100 text-gray-600 font-semibold rounded w-full justify-center">
                         <VscTable size={24} strokeWidth={0.6} className="mt-0.5"/>
                         <div>дошка задач</div>
+                    </Link>
+                </div>
+                <div className="flex w-full">
+                    <Link to={`/rights/${project._id}`} className="flex gap-2 py-1 px-2 bg-gray-100 text-gray-600 font-semibold rounded w-full justify-center">
+                        <VscOrganization size={24} strokeWidth={0.4} className="mt-0.5"/>
+                        <div>права учасників</div>
                     </Link>
                 </div>
                 <div className="flex flex-col gb-gray-50 border">

@@ -2,6 +2,8 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { Participant, ParticipantResponse, Rights } from "./project-types";
 import projectService from "./project-service";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { lightButtonStyle } from "../styles/button-syles";
 
 function EditRightsPage () {
     const {projectId} = useParams();
@@ -34,11 +36,16 @@ function EditRightsPage () {
 
     useEffect(() => {getRights()},[]);
 
-    return <div>
-        <table>
-            <tr>
+    return <div className="p-2 flex flex-col">
+        <div className="flex">
+            <Link to={`/project/${projectId}`} className={lightButtonStyle}>Назад до проекту</Link>
+        </div>
+        <div className="py-4">
+        <table className="w-full">
+            <tr className="text-xs">
                 <th>користувач</th>
                 <th>додавати учасників</th>
+                <th>встановлювати статус задач</th>
                 <th>створювати задачі</th>
                 <th>видаляти задачі</th>
                 <th>редагувати задачі</th>
@@ -46,18 +53,19 @@ function EditRightsPage () {
                 <th>змінювати інформацію про проект</th>
             </tr>
             {rights.map((right: ParticipantResponse, index: number) => 
-                <tr>
+                <tr className="border">
                     <td>{right.participant.name}</td>
-                    <td><input type="checkbox" checked={formData[index].addParticipants} onChange={() => checkValue(index, "addParticipants")}/></td>
-                    <td><input type="checkbox" checked={formData[index].check} onChange={() => checkValue(index, "check")}/></td>
-                    <td><input type="checkbox" checked={formData[index].create} onChange={() => checkValue(index, "create")}/></td>
-                    <td><input type="checkbox" checked={formData[index].delete} onChange={() => checkValue(index, "delete")}/></td>
-                    <td><input type="checkbox" checked={formData[index].edit} onChange={() => checkValue(index, "edit")}/></td>
-                    <td><input type="checkbox" checked={formData[index].editParticipants} onChange={() => checkValue(index, "editParticipants")}/></td>
-                    <td><input type="checkbox" checked={formData[index].editProjectData} onChange={() => checkValue(index, "editProjectData")}/></td>
+                    <td className="text-center"><input type="checkbox" checked={formData[index].addParticipants} onChange={() => checkValue(index, "addParticipants")}/></td>
+                    <td className="text-center"><input type="checkbox" checked={formData[index].check} onChange={() => checkValue(index, "check")}/></td>
+                    <td className="text-center"><input type="checkbox" checked={formData[index].create} onChange={() => checkValue(index, "create")}/></td>
+                    <td className="text-center"><input type="checkbox" checked={formData[index].delete} onChange={() => checkValue(index, "delete")}/></td>
+                    <td className="text-center"><input type="checkbox" checked={formData[index].edit} onChange={() => checkValue(index, "edit")}/></td>
+                    <td className="text-center"><input type="checkbox" checked={formData[index].editParticipants} onChange={() => checkValue(index, "editParticipants")}/></td>
+                    <td className="text-center"><input type="checkbox" checked={formData[index].editProjectData} onChange={() => checkValue(index, "editProjectData")}/></td>
                 </tr>
             )}
         </table>
+    </div>
     </div>
 }
 
