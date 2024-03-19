@@ -30,6 +30,7 @@ function ProfilePage ({userId}: LocalParams) {
     const handleNewAvatar = async (files: FileList | null) => {
         if(files) {
             await userService.setAvatar(files[0]);
+            getUserData();
         }
     }
 

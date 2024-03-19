@@ -28,7 +28,7 @@ function SprintTasksMapper ({sprint, pullHandler, deleteHandler, detailsHandler,
 
     useEffect(() => { getTasks() }, [sprint]);
 
-    if(tasks[0] && tasks[0].name) return <div>{tasks.map((task: TaskResponse) => task.name && <div className="rounded py-2 pl-10 pr-4 gap-6 border-2 flex justify-between">
+    if(tasks[0] && tasks[0].name) return <div className="flex flex-col gap-1">{tasks.map((task: TaskResponse) => task.name && <div className="rounded py-2 pl-10 pr-4 gap-6 border-2 flex justify-between">
             <div className="text-xl font-bold mt-0.5">{task.name}</div>
             <div>
                 <TaskStatusDisplayer className="mt-1" status={task.status}/>

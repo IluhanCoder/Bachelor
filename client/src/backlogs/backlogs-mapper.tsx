@@ -39,7 +39,7 @@ function BacklogMapper ({projectId, rights}: LocalParams) {
         getBacklogs();
     }, []);
 
-    if(backlogs) return <div className="flex flex-col">
+    if(backlogs) return <div className="flex flex-col gap-3">
         {backlogs.length > 0 && backlogs.map((backlog: BacklogResponse) => <BacklogCard rights={rights} backlog={backlog}/> ||
         <div className="flex justify-center p-8 text-xl font-bold text-gray-600">беклоги відсутні</div>)}
     </div>

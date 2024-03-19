@@ -64,7 +64,7 @@ function BacklogCard({backlog, rights}: LocalParams) {
 
     useEffect(() => {getData()}, []);
 
-    return <div className="border border-1 rounded">
+    return <div className="border-2 rounded">
         <div className="text-2xl px-4 py-2">{backlog.name}</div>
         {tasks && <div className="flex flex-col px-6 pb-4 gap-2">
             <div className="font-bold text-gray-600">Задачі беклогу:</div>

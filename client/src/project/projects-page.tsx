@@ -32,7 +32,7 @@ function ProjectsPage () {
     }
 
     const handleNewProject = () => {
-        formStore.setForm(<NewProjectForm/>);
+        formStore.setForm(<NewProjectForm callBack={(fetchProjects)}/>);
     }
 
     useEffect(() => {fetchProjects()}, [user]);

@@ -9,7 +9,11 @@ import { submitButtonStyle } from "../styles/button-syles";
 import { inputStyle } from "../styles/form-styles";
 import ErrorContainer from "../errors/error-container";
 
-function NewProjectForm() {
+interface LocalParams {
+    callBack: () => void
+}
+
+function NewProjectForm({callBack}: LocalParams) {
     const [formData, setFormData] = useState<ProjectCredentials>({
         name: "",
         owner: userStore.user?._id!
@@ -28,6 +32,7 @@ function NewProjectForm() {
     
         if(result?.status === "success") { 
             formStore.dropForm();
+            callBack();
         }
     }
 

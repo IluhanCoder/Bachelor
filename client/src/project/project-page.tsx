@@ -175,7 +175,7 @@ function ProjectPage () {
                     </div>
                     <div className="flex ">
                         <div className="grow flex gap-2 py-3 px-6 flex-col">{project.participants.map((participant: ParticipantResponse) => {
-                            if(participant.participant) return <div className="flex justify-between gap-3">
+                            if(participant.participant && participant.participant._id) return <div className="flex justify-between gap-3">
                                 <div className="flex gap-2">
                                     <Avatar round size="30" name={participant.participant.nickname} src={(participant.participant.avatar) ? convertImage(participant.participant.avatar) : ""}/>
                                     <div className="text-xl">{participant.participant.nickname}</div>
