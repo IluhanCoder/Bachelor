@@ -39,15 +39,55 @@ function AssignForm({task, projectId, callBack}: LocalParams) {
     }, [])
  
     return <FormComponent formLabel="Назначити задачу">
-        {users && <div className="flex flex-col gap-2">
-            <div className="flex flex-col gap-1">
-                <UsersMapper task={task} users={users.map((participant: ParticipantResponse) => participant.participant)} selectedState={[selected, setSelected]}/>
+        {users && <div className="space-y-6">
+            <div className="space-y-3">
+                <label className="block text-sm font-medium text-gray-700">
+                    Оберіть виконавців
+                </label>
+                <div className="bg-gray-50 rounded-lg border border-gray-200 p-4 max-h-96 overflow-y-auto">
+                    <UsersMapper task={task} users={users.map((participant: ParticipantResponse) => participant.participant)} selectedState={[selected, setSelected]}/>
+                </div>
             </div>
-            <div className="flex flex-col gap-1">
-                <div className="flex">Обрані користувачі:</div>
-                <div>{selected.length > 0 && selected.map((user: UserResponse) => <div>{user.nickname}</div> || <div className="text-xs text-gray-600">жодного користувача не обрано</div>)}</div>
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <div className="text-sm font-medium text-blue-900 mb-2">Обрані користувачі:</div>
+                {selected.length > 0 ? (
+                    <div className="flex flex-wrap gap-2">
+                        {selected.map((user: UserResponse) => (
+                            <div key={user._id} className="bg-white px-4 py-2 rounded-lg shadow-sm border border-blue-200 text-blue-700 font-medium">
+                                {user.nickname}
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="text-sm text-gray-600">жодного користувача не обрано</div>
+                )}
             </div>
-            <button type="button" className={submitButtonStyle} onClick={handleSubmit}>назначити</button>
+            <div className="flex justify-end gap-3 pt-4">
+                <button 
+                    type="button"
+                    onClick={() => formStore.dropForm()}
+                    className="px-6 py-2.5 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium transition-colors"
+                >
+                    Скасувати
+                </button>
+                <button 
+                    type="button" 
+                    className={`
+                        px-6 py-2.5 rounded-lg font-medium transition-colors flex items-center gap-2
+                        ${selected.length > 0
+                            ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                            : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                        }
+                    `}
+                    onClick={handleSubmit}
+                    disabled={selected.length === 0}
+                >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                    </svg>
+                    Назначити
+                </button>
+            </div>
         </div> || <div className="w-96"><LoadingScreen/></div>}
     </FormComponent>
 }

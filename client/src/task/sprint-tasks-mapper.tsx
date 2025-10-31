@@ -8,6 +8,7 @@ import { lightButtonStyle, redButtonSyle } from "../styles/button-syles";
 import TaskStatusDisplayer from "./task-status-diplayer";
 import { Rights } from "../project/project-types";
 import TaskPriorityDisplayer from "./task-priority-displayer";
+import userStore from "../user/user-store";
 
 interface LocalParams {
     sprint: SprintResponse,
@@ -28,22 +29,84 @@ function SprintTasksMapper ({sprint, pullHandler, deleteHandler, detailsHandler,
 
     useEffect(() => { getTasks() }, [sprint]);
 
-    if(tasks[0] && tasks[0].name) return <div className="flex flex-col gap-1">{tasks.map((task: TaskResponse) => task.name && <div className="rounded py-2 pl-10 pr-4 gap-6 border-2 flex justify-between">
-            <div className="text-xl font-bold mt-0.5">{task.name}</div>
-            <div>
-                <TaskStatusDisplayer className="mt-1" status={task.status}/>
-            </div>
-            <div>
-                <TaskPriorityDisplayer className="mt-1" priority={task.priority}/>
-            </div>
-            <div className="flex gap-2">
-                <button type="button" className={lightButtonStyle} onClick={() => detailsHandler(task._id)}>деталі</button>
-                {rights.edit && <button type="button" className={lightButtonStyle} onClick={() => pullHandler(task._id)}>прибрати</button>}
-                {rights.delete && <button type="button" className={redButtonSyle} onClick={() => deleteHandler(task._id)}>видалити</button>}
-            </div>
+    // Filter out tasks without name
+    const validTasks = tasks.filter(task => task && task.name);
+
+    // Helper function to check if user is creator of the task
+    const isCreator = (task: TaskResponse) => {
+        if (!userStore.user || !task.createdBy) return false;
+        const createdById = typeof task.createdBy === 'string' 
+            ? task.createdBy 
+            : (task.createdBy as any)._id || (task.createdBy as any).toString();
+        return createdById === userStore.user._id;
+    };
+
+    if(validTasks && validTasks.length > 0) return (
+        <div className="space-y-2">
+            {validTasks.map((task: TaskResponse) => {
+                const isOwnTask = isCreator(task);
+                const canPull = rights.edit || (isOwnTask && rights.create);
+                const canDelete = rights.delete || (isOwnTask && rights.create);
+                
+                return (
+                <div 
+                    key={task._id}
+                    className="bg-white hover:bg-gray-50 border border-gray-200 rounded-lg p-3 transition-all"
+                >
+                    <div className="flex items-center justify-between gap-3">
+                        {/* Task Name */}
+                        <div className="flex-1 min-w-0">
+                            <h6 className="font-medium text-gray-900 text-sm truncate">{task.name}</h6>
+                        </div>
+
+                        {/* Status */}
+                        <div className="flex-shrink-0">
+                            <TaskStatusDisplayer status={task.status}/>
+                        </div>
+
+                        {/* Priority */}
+                        <div className="flex-shrink-0">
+                            <TaskPriorityDisplayer priority={task.priority}/>
+                        </div>
+
+                        {/* Actions */}
+                        <div className="flex gap-1.5 flex-shrink-0">
+                            <button 
+                                type="button" 
+                                className="px-2.5 py-1 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-50 transition-colors"
+                                onClick={() => detailsHandler(task._id)}
+                            >
+                                Деталі
+                            </button>
+                            {canPull && (
+                                <button 
+                                    type="button" 
+                                    className="px-2.5 py-1 text-xs font-medium text-orange-700 bg-orange-50 border border-orange-200 rounded hover:bg-orange-100 transition-colors"
+                                    onClick={() => pullHandler(task._id)}
+                                >
+                                    Прибрати
+                                </button>
+                            )}
+                            {canDelete && (
+                                <button 
+                                    type="button" 
+                                    className="px-2.5 py-1 text-xs font-medium text-red-700 bg-red-50 border border-red-200 rounded hover:bg-red-100 transition-colors"
+                                    onClick={() => deleteHandler(task._id)}
+                                >
+                                    Видалити
+                                </button>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            )})}
         </div>
-    )}</div>
-    else return <div className="flex justify-center font-bold pb-10">задачі відсутні</div>
+    );
+    else return (
+        <div className="text-center py-6">
+            <p className="text-sm text-gray-400">Задачі відсутні</p>
+        </div>
+    );
 }
 
 export default SprintTasksMapper;

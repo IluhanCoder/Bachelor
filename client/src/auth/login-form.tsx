@@ -41,7 +41,13 @@ function LoginForm () {
             return;
         }
 
-        const result = await authService.login(formData);
+        const loginData = {
+            nickname: formData.nickname || "",
+            email: formData.email || "",
+            password: formData.password || ""
+        };
+
+        const result = await authService.login(loginData);
 
         if(result?.status === "success") { 
             formStore.dropForm();
@@ -49,27 +55,55 @@ function LoginForm () {
     }
 
     return <FormComponent formLabel="Вхід в обліковий запис">
-        <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
-            <div className="flex flex-col gap-2 py-2">
-                <div className="flex flex-col gap-2 px-10">
-                    <label className="font-bold text-gray-600 text-xs">Email або логін</label>
-                    <input className={inputStyle} type="text" onChange={handleChange} name="nickname"/>
+        <form className="space-y-6" onSubmit={handleSubmit}>
+            <div className="space-y-4">
+                <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                        Email або логін <span className="text-red-500">*</span>
+                    </label>
+                    <input 
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 
+                        type="text" 
+                        onChange={handleChange} 
+                        name="nickname"
+                        placeholder="Введіть email або логін..."
+                        required
+                    />
                 </div>
-                <div className="flex flex-col gap-2 px-10">
-                    <label className="font-bold text-gray-600 text-xs">Пароль</label>
-                    <input className={inputStyle} type="password" onChange={handleChange} name="password"/>
+
+                <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                        Пароль <span className="text-red-500">*</span>
+                    </label>
+                    <input 
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 
+                        type="password" 
+                        onChange={handleChange} 
+                        name="password"
+                        placeholder="Введіть пароль..."
+                        required
+                    />
                 </div>
             </div>
-            <div className="flex justify-center">
-                <ErrorContainer/>
-            </div>
-            <div className="flex w-full mt-4 justify-between gap-10">
-                <div className="text-xs text-gray-700 mt-2">
-                    <p>Якщо у вас нема облікового запису, ви можете <Link to="/registration" className={linkStyle}>зареєструватися</Link></p>
+
+            <ErrorContainer/>
+
+            <div className="flex items-center justify-between gap-4 pt-4">
+                <div className="text-sm text-gray-600">
+                    Якщо у вас нема облікового запису, ви можете{' '}
+                    <Link to="/registration" className="text-blue-600 hover:text-blue-700 font-medium underline">
+                        зареєструватися
+                    </Link>
                 </div>
-                <div>
-                    <button type="submit" className={submitButtonStyle}>Увійти</button>
-                </div>
+                <button 
+                    type="submit" 
+                    className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors flex items-center gap-2 whitespace-nowrap"
+                >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                    </svg>
+                    Увійти
+                </button>
             </div>
         </form>
     </FormComponent>

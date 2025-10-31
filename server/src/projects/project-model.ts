@@ -31,7 +31,8 @@ const projectSchema = new mongoose.Schema({
             check: Boolean,
             editParticipants: Boolean,
             addParticipants: Boolean,
-            editProjectData: Boolean
+            editProjectData: Boolean,
+            manageSprints: Boolean
         }
       }],
       required: true,

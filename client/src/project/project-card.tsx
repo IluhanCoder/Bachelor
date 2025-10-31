@@ -16,29 +16,51 @@ function ProjectCard({project}: LocalParams) {
         navigate(`/project/${projectId}`);
     }
 
-    return <button type="button" className="flex flex-col bg-white rounded shadow-sm border-1 py-6 px-8 gap-2 hover:scale-105 transition-transform duration-300 ease-in-out" onClick={() => handleClick(project._id)}>
-            <div className="flex flex-start">
-                <div className="font-semibold text-xl">{project.name}</div>
+    return (
+        <button 
+            type="button" 
+            className="group flex flex-col bg-white rounded-xl shadow-sm hover:shadow-lg border border-gray-200 p-6 gap-4 transition-all duration-200 hover:-translate-y-1 text-left"
+            onClick={() => handleClick(project._id)}
+        >
+            {/* Header */}
+            <div className="flex items-start justify-between">
+                <h3 className="text-xl font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                    {project.name}
+                </h3>
+                <svg className="w-5 h-5 text-gray-400 group-hover:text-blue-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
             </div>
-            <div className="flex flex-col gap-2">
-                <div className="flex flex-start gap-1">
-                    <label>Створено: </label>
-                    <label className="font-light text-gray-700"><DateFormater value={project.created} dayOfWeek/></label>
+
+            {/* Details */}
+            <div className="flex flex-col gap-3 text-sm">
+                <div className="flex items-center gap-2 text-gray-600">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <span>Створено: <DateFormater value={project.created} dayOfWeek/></span>
                 </div>
-                <div className="flex flex-start gap-1">
-                    <label>Власник проекту: </label>
-                    <label>
-                        <Link className={linkStyle} to={`/profile/${project.owner._id}`}>{project.owner.nickname}</Link>
-                    </label>
+                <div className="flex items-center gap-2 text-gray-600">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                    <span>Власник: </span>
+                    <Link className="text-blue-600 hover:text-blue-700 font-medium hover:underline" to={`/profile/${project.owner._id}`}>
+                        {project.owner.nickname}
+                    </Link>
                 </div>
             </div>
-            <div className="flex flex-col gap-2 text-gray-600 text-xs">
-                <label className="flex flex-start">Учасники проекту:</label>
-                <div className="flex flex-start">
-                    <ParticipantsWindow participants={project.participants} maxDisplay={10}/>
+
+            {/* Participants */}
+            <div className="pt-3 border-t border-gray-100">
+                <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Учасники</span>
+                    <span className="text-xs text-gray-400">{project.participants.length}</span>
                 </div>
+                <ParticipantsWindow participants={project.participants} maxDisplay={8}/>
             </div>
-    </button>
+        </button>
+    );
 }
 
 export default ProjectCard;

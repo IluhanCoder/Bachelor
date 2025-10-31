@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import taskService from "./task-service";
+import { AuthenticatedRequest } from "../auth/auth-types";
 
 export default new class TaskController {
     async addTask(req: Request, res: Response) {
@@ -68,10 +69,29 @@ export default new class TaskController {
         }
     }
 
-    async setStatus(req: Request, res: Response) {
+    async setStatus(req: AuthenticatedRequest, res: Response) {
         try {
             const {taskId} = req.params;
             const {status} = req.body;
+            const currentUserId = req.user?._id;
+            
+            if (!currentUserId) {
+                return res.status(401).json({
+                    status: "fail",
+                    message: "unauthorized"
+                });
+            }
+
+            // Check if user can change status of this task
+            const canChangeStatus = await taskService.canUserChangeStatus(taskId, currentUserId);
+            
+            if (!canChangeStatus) {
+                return res.status(403).json({
+                    status: "fail",
+                    message: "You don't have permission to change status of this task"
+                });
+            }
+
             await taskService.setStatus(taskId, Number(status));
             res.status(200).json({
                 status: "success"
@@ -101,9 +121,28 @@ export default new class TaskController {
         }
     }
 
-    async deleteTask(req: Request, res: Response) {
+    async deleteTask(req: AuthenticatedRequest, res: Response) {
         try {
             const {taskId} = req.params;
+            const currentUserId = req.user?._id;
+            
+            if (!currentUserId) {
+                return res.status(401).json({
+                    status: "fail",
+                    message: "unauthorized"
+                });
+            }
+
+            // Check if user can delete this task
+            const canDelete = await taskService.canUserDeleteTask(taskId, currentUserId);
+            
+            if (!canDelete) {
+                return res.status(403).json({
+                    status: "fail",
+                    message: "You don't have permission to delete this task"
+                });
+            }
+
             await taskService.deleteTask(taskId);
             res.status(200).json({
                 status: "success"
@@ -134,10 +173,29 @@ export default new class TaskController {
         }
     }
 
-    async updateTask(req: Request, res: Response) {
+    async updateTask(req: AuthenticatedRequest, res: Response) {
         try {
             const {taskId} = req.params;
             const {task} = req.body;
+            const currentUserId = req.user?._id;
+            
+            if (!currentUserId) {
+                return res.status(401).json({
+                    status: "fail",
+                    message: "unauthorized"
+                });
+            }
+
+            // Check if user can edit this task
+            const canEdit = await taskService.canUserEditTask(taskId, currentUserId);
+            
+            if (!canEdit) {
+                return res.status(403).json({
+                    status: "fail",
+                    message: "You don't have permission to edit this task"
+                });
+            }
+
             await taskService.updateTask(taskId, task);
             res.status(200).json({
                 status: "success",

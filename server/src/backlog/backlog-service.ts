@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import backlogModel from "./backlog-model";
+import projectModel from "../projects/project-model";
 
 export default new class BacklogService {
     async getProjectBacklogs(projectId: string) {
@@ -9,6 +10,52 @@ export default new class BacklogService {
 
     async createBacklog (projectId: string, name: string) {
         await backlogModel.create({projectId: new mongoose.Types.ObjectId(projectId), name, tasks: []});
+    }
+
+    async canUserManageBacklog(projectId: string, userId: string): Promise<boolean> {
+        try {
+            const result = await projectModel.aggregate([
+                {
+                    $match: {
+                        _id: new mongoose.Types.ObjectId(projectId)
+                    }
+                },
+                {
+                    $addFields: {
+                        isOwner: {
+                            $eq: [{ $toString: "$owner" }, userId]
+                        },
+                        participant: {
+                            $arrayElemAt: [
+                                {
+                                    $filter: {
+                                        input: "$participants",
+                                        as: "p",
+                                        cond: { $eq: [{ $toString: "$$p.userId" }, userId] }
+                                    }
+                                },
+                                0
+                            ]
+                        }
+                    }
+                },
+                {
+                    $project: {
+                        hasPermission: {
+                            $or: [
+                                "$isOwner",
+                                { $eq: ["$participant.rights.manageBacklogs", true] }
+                            ]
+                        }
+                    }
+                }
+            ]);
+
+            return result.length > 0 && result[0].hasPermission;
+        } catch (error) {
+            console.error("Error checking backlog manage permission:", error);
+            return false;
+        }
     }
 
     async getBacklogTasks(backlogId: string) {
@@ -58,7 +105,11 @@ export default new class BacklogService {
             },
         ]);
         console.log(result[0]);
-        if(result.length > 0) return result[0].tasks;
+        if(result.length > 0) {
+            // Filter out empty/null tasks
+            const tasks = result[0].tasks.filter((task: any) => task && task._id);
+            return tasks;
+        }
         else return []
     }
 }

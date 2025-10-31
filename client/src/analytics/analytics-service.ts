@@ -20,4 +20,16 @@ export default new class AnalyticsService {
     async predictRatio(projectId: string, userId: string | undefined) {
         return (await $api.post("/analytics/predict-ratio", {projectId, userId})).data;
     }
+
+    async getQuickStats(projectId: string, userId: string | undefined) {
+        return (await $api.post("/analytics/quick-stats", {projectId, userId})).data;
+    }
+
+    async getVelocityData(projectId: string) {
+        return (await $api.post("/analytics/velocity", {projectId})).data;
+    }
+
+    async getTopContributors(projectId: string) {
+        return (await $api.post("/analytics/top-contributors", {projectId})).data;
+    }
 }

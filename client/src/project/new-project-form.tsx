@@ -44,16 +44,38 @@ function NewProjectForm({callBack}: LocalParams) {
     };   
 
     return <FormComponent formLabel="Новий проект">
-        <form onSubmit={handleSubmit} className="flex flex-col gap-2 px-10">
-            <div className="flex flex-col gap-1">
-                <label className="font-bold text-gray-600 text-xs">назва проекту:</label>
-                <input className={inputStyle} name="name" type="text" onChange={handleChange}/>
+        <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700">
+                    Назва проекту <span className="text-red-500">*</span>
+                </label>
+                <input 
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 
+                    name="name" 
+                    type="text" 
+                    onChange={handleChange}
+                    placeholder="Введіть назву проекту..."
+                    required
+                />
             </div>
-            <div className="flex justify-center">
-                <ErrorContainer/>
-            </div>
-            <div className="flex justify-center">
-                <button type="submit" className={submitButtonStyle}>створити</button>
+            <ErrorContainer/>
+            <div className="flex justify-end gap-3 pt-4">
+                <button 
+                    type="button"
+                    onClick={() => formStore.dropForm()}
+                    className="px-6 py-2.5 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium transition-colors"
+                >
+                    Скасувати
+                </button>
+                <button 
+                    type="submit" 
+                    className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors flex items-center gap-2"
+                >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                    </svg>
+                    Створити
+                </button>
             </div>
         </form>
     </FormComponent>

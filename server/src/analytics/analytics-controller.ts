@@ -69,4 +69,55 @@ export default new class AnalyticsController {
             throw error;
         }
     }
+
+    async getQuickStats(req: Request, res: Response) {
+        try {
+            const {projectId, userId} = req.body;
+            const result = await analyticsService.getQuickStats(projectId, userId);
+            res.status(200).json({
+                status: "success",
+                result
+            });
+        } catch (error) {
+            res.json({
+                status: "fail",
+                message: "internal server error"
+            }).status(500);
+            throw error;
+        }
+    }
+
+    async getVelocityData(req: Request, res: Response) {
+        try {
+            const {projectId} = req.body;
+            const result = await analyticsService.getVelocityData(projectId);
+            res.status(200).json({
+                status: "success",
+                result
+            });
+        } catch (error) {
+            res.json({
+                status: "fail",
+                message: "internal server error"
+            }).status(500);
+            throw error;
+        }
+    }
+
+    async getTopContributors(req: Request, res: Response) {
+        try {
+            const {projectId} = req.body;
+            const result = await analyticsService.getTopContributors(projectId);
+            res.status(200).json({
+                status: "success",
+                result
+            });
+        } catch (error) {
+            res.json({
+                status: "fail",
+                message: "internal server error"
+            }).status(500);
+            throw error;
+        }
+    }
 }

@@ -8,7 +8,9 @@ export interface Rights {
     check: boolean,
     editParticipants: boolean,
     addParticipants: boolean,
-    editProjectData: boolean
+    editProjectData: boolean,
+    manageSprints: boolean,
+    manageBacklogs: boolean
 }
 
 export interface Participant {

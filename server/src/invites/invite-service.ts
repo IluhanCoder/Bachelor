@@ -92,7 +92,8 @@ export default new class InviteService {
               check: false,
               editParticipants: false,
               addParticipants: false,
-              editProjectData: false
+              editProjectData: false,
+              manageSprints: false
             }
           }
         }})

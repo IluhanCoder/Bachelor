@@ -9,6 +9,12 @@ import { TaskDocument } from './task-types';
 export default new class TaskService {
     async addTask(newTask: TaskCredentials) {
         try {
+            // First, get the backlog to find the projectId
+            const backlog = await backlogModel.findById(newTask.backlogId);
+            if (!backlog) {
+                throw new Error("Backlog not found");
+            }
+
             const task: Partial<TaskDocument> = {
                 name: newTask.name,
                 desc: newTask.desc,
@@ -16,11 +22,11 @@ export default new class TaskService {
                 createdBy: new mongoose.Types.ObjectId(newTask.createdBy),
                 created: new Date(),
                 checkedDate: null,
-                backlogId: new mongoose.Types.ObjectId(newTask.backlogId),
+                projectId: backlog.projectId as any,
                 executors: (newTask.executors ?? []).map(e => new mongoose.Types.ObjectId(e)),
                 status: TaskStatuses[0],
-                difficulty: TaskDifficulties[1],
-                priority: TaskPriorities[1],
+                difficulty: newTask.difficulty || TaskDifficulties[1],
+                priority: newTask.priority || TaskPriorities[1],
                 requirements: newTask.requirements
             };
             const createdTask = await TaskModel.create(task);
@@ -248,6 +254,7 @@ export default new class TaskService {
           difficulty: 1,
           created: 1,
           checkedDate: 1,
+          createdBy: { $toString: "$createdBy" },
           // Other fields you want to include from the task
           executors: {
             $map: {
@@ -270,5 +277,177 @@ export default new class TaskService {
     if(newData.status === "done") newData.checkedDate = new Date();
     else newData.checkedDate = null;
     await TaskModel.findByIdAndUpdate(taskId, newData);
+  }
+
+  async canUserEditTask(taskId: string, userId: string): Promise<boolean> {
+    try {
+      const taskData = await TaskModel.aggregate([
+        {
+          $match: { _id: new mongoose.Types.ObjectId(taskId) }
+        },
+        {
+          $lookup: {
+            from: "projects",
+            localField: "projectId",
+            foreignField: "_id",
+            as: "project"
+          }
+        },
+        {
+          $unwind: "$project"
+        }
+      ]);
+
+      if (!taskData || taskData.length === 0) {
+        return false;
+      }
+
+      const task = taskData[0];
+      const project = task.project;
+
+      // Check if user is the owner
+      if (project.owner.toString() === userId) {
+        return true;
+      }
+
+      // Find user's participant entry
+      const participant = project.participants.find(
+        (p: any) => p.participant.toString() === userId
+      );
+
+      if (!participant) {
+        return false;
+      }
+
+      // User can edit if they have edit rights
+      if (participant.rights.edit) {
+        return true;
+      }
+
+      // User can edit if they created the task and have create rights
+      if (participant.rights.create && task.createdBy?.toString() === userId) {
+        return true;
+      }
+
+      return false;
+    } catch (error) {
+      console.error('Error checking task edit permission:', error);
+      return false;
+    }
+  }
+
+  async canUserDeleteTask(taskId: string, userId: string): Promise<boolean> {
+    try {
+      const taskData = await TaskModel.aggregate([
+        {
+          $match: { _id: new mongoose.Types.ObjectId(taskId) }
+        },
+        {
+          $lookup: {
+            from: "projects",
+            localField: "projectId",
+            foreignField: "_id",
+            as: "project"
+          }
+        },
+        {
+          $unwind: "$project"
+        }
+      ]);
+
+      if (!taskData || taskData.length === 0) {
+        console.log("canUserDeleteTask: Task not found");
+        return false;
+      }
+
+      const task = taskData[0];
+      const project = task.project;
+
+      // Check if user is the owner
+      if (project.owner.toString() === userId) {
+        return true;
+      }
+
+      // Find user's participant entry
+      const participant = project.participants.find(
+        (p: any) => p.participant.toString() === userId
+      );
+
+      if (!participant) {
+        return false;
+      }
+
+      // User can delete if they have delete rights
+      if (participant.rights.delete) {
+        return true;
+      }
+
+      // User can delete if they created the task and have create rights
+      if (participant.rights.create && task.createdBy?.toString() === userId) {
+        return true;
+      }
+
+      return false;
+    } catch (error) {
+      console.error('Error checking task delete permission:', error);
+      return false;
+    }
+  }
+
+  async canUserChangeStatus(taskId: string, userId: string): Promise<boolean> {
+    try {
+      const taskData = await TaskModel.aggregate([
+        {
+          $match: { _id: new mongoose.Types.ObjectId(taskId) }
+        },
+        {
+          $lookup: {
+            from: "projects",
+            localField: "projectId",
+            foreignField: "_id",
+            as: "project"
+          }
+        },
+        {
+          $unwind: "$project"
+        }
+      ]);
+
+      if (!taskData || taskData.length === 0) {
+        return false;
+      }
+
+      const task = taskData[0];
+      const project = task.project;
+
+      // Check if user is the owner
+      if (project.owner.toString() === userId) {
+        return true;
+      }
+
+      // Find user's participant entry
+      const participant = project.participants.find(
+        (p: any) => p.participant.toString() === userId
+      );
+
+      if (!participant) {
+        return false;
+      }
+
+      // User can change status if they have check rights
+      if (participant.rights.check) {
+        return true;
+      }
+
+      // User can change status if they created the task and have create rights
+      if (participant.rights.create && task.createdBy?.toString() === userId) {
+        return true;
+      }
+
+      return false;
+    } catch (error) {
+      console.error('Error checking task status change permission:', error);
+      return false;
+    }
   }
 }

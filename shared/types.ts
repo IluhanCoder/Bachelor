@@ -23,6 +23,7 @@ export interface TaskDto {
     _id: string
     name: string,
     desc: string,
+    projectId?: string,
     backlogId?: string,
     isChecked: boolean,
     createdBy: string,
@@ -39,7 +40,7 @@ export type TaskResponse = TaskDto & {
     executors: UserDto[]
 }
 
-export type TaskCredentials = Pick<TaskDto, 'name' | 'desc' | 'backlogId' | 'createdBy' | 'executors' | 'requirements'>;
+export type TaskCredentials = Pick<TaskDto, 'name' | 'desc' | 'backlogId' | 'createdBy' | 'executors' | 'requirements' | 'priority' | 'difficulty'>;
 export type UpdateTaskCredentials = Omit<TaskDto, 'createdBy' | 'created' | 'executors' | 'backlogId'>;
 
 
@@ -67,7 +68,9 @@ export interface Rights {
     check: boolean,
     editParticipants: boolean,
     addParticipants: boolean,
-    editProjectData: boolean
+    editProjectData: boolean,
+    manageSprints: boolean,
+    manageBacklogs: boolean
 }
 
 export type ProjectCredentials = Pick<ProjectDto, 'name' | 'owner'>;

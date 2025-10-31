@@ -2,8 +2,8 @@ import $api from "../axios-setup"
 import { SprintPutRequest } from "./sprint-types";
 
 export default new class SprintService {
-    async createSprint(backlogId: string, name: string) {
-        return (await $api.post("/sprint", {backlogId, name})).data;
+    async createSprint(backlogId: string, name: string, goal: string, startDate: Date, endDate: Date) {
+        return (await $api.post("/sprint", {backlogId, name, goal, startDate, endDate})).data;
     }
 
     async getSprints(backlogId: string) {

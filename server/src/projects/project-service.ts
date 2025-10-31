@@ -310,7 +310,9 @@ export default new class ProjectService {
           check: true,
           editParticipants: true,
           addParticipants: true,
-          editProjectData: true
+          editProjectData: true,
+          manageSprints: true,
+          manageBacklogs: true
         }}
         await ProjectModel.findByIdAndUpdate(projectId, { $push: {participants: newParticipant}});
       } catch (error) {

@@ -1,6 +1,13 @@
 import { Request, Response } from "express";
 import backlogService from "./backlog-service";
 
+interface AuthenticatedRequest extends Request {
+    user?: {
+        _id: string;
+        email: string;
+    };
+}
+
 export default new class BacklogController {
     async getProjectBacklogs(req: Request, res: Response) {
         try {
@@ -19,10 +26,27 @@ export default new class BacklogController {
         }        
     }
 
-    async createBacklog(req: Request, res: Response) {
+    async createBacklog(req: AuthenticatedRequest, res: Response) {
         try {
             const {projectId} = req.params;
             const {name} = req.body;
+            
+            const userId = req.user?._id;
+            if (!userId) {
+                return res.status(401).json({
+                    status: "fail",
+                    message: "Unauthorized"
+                });
+            }
+
+            const canManage = await backlogService.canUserManageBacklog(projectId, userId);
+            if (!canManage) {
+                return res.status(403).json({
+                    status: "fail",
+                    message: "You don't have permission to manage backlogs in this project"
+                });
+            }
+
             await backlogService.createBacklog(projectId, name);
             res.status(200).json({
                 status: "success",

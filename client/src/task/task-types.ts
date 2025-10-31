@@ -24,7 +24,9 @@ export interface TaskCredentials {
     projectId?: string,
     createdBy: string,
     executors?: string[],
-    requirements: string
+    requirements: string,
+    priority?: string,
+    difficulty?: string
 }
 
 export interface TaskResponse {
