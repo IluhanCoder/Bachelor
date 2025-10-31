@@ -42,8 +42,8 @@ function ProjectsPage () {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             {/* Header */}
             <div className="mb-8">
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">Мої проекти</h1>
-                <p className="text-gray-600">Керуйте своїми проєктами в одному місці</p>
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">My Projects</h1>
+                <p className="text-gray-600">Manage your projects in one place</p>
             </div>
 
             {/* Search and Create */}
@@ -55,7 +55,7 @@ function ProjectsPage () {
                     <input 
                         type="text" 
                         className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 
-                        placeholder="Пошук проєктів..."
+                        placeholder="Search projects..."
                         value={filter} 
                         onChange={(e: any) => setFilter(e.target.value)}
                     />
@@ -68,7 +68,7 @@ function ProjectsPage () {
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                     </svg>
-                    Створити проєкт
+                    Create Project
                 </button>
             </div>
 
@@ -84,8 +84,8 @@ function ProjectsPage () {
                     <svg className="mx-auto w-16 h-16 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
                     </svg>
-                    <h3 className="text-xl font-semibold text-gray-700 mb-2">Проєкти відсутні</h3>
-                    <p className="text-gray-500">Створіть свій перший проєкт, щоб почати</p>
+                    <h3 className="text-xl font-semibold text-gray-700 mb-2">No Projects</h3>
+                    <p className="text-gray-500">Create your first project to get started</p>
                 </div>
             )}
         </div>

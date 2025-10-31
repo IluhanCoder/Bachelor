@@ -33,7 +33,7 @@ const AnalyticsGraph = (params: LocalParams) => {
       <div className="flex items-center justify-center h-64 text-gray-400">
         <div className="text-center">
           <span className="text-4xl mb-2 block">📊</span>
-          <p>Немає даних для відображення</p>
+          <p>No data to display</p>
         </div>
       </div>
     );

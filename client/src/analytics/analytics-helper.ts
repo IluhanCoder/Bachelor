@@ -3,7 +3,7 @@ import { TasksAnalyticsResponse } from "./analytics-types";
 export function convertArray(inputArray: TasksAnalyticsResponse[]) {
     return inputArray.map((value: TasksAnalyticsResponse) => {
         // Format month name
-        const monthNames = ['Січ', 'Лют', 'Бер', 'Кві', 'Тра', 'Чер', 'Лип', 'Сер', 'Вер', 'Жов', 'Лис', 'Гру'];
+        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         const monthName = monthNames[value.month];
         
         // Format based on whether it's daily or monthly

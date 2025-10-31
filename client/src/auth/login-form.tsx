@@ -73,7 +73,7 @@ function LoginForm () {
 
                 <div className="space-y-2">
                     <label className="block text-sm font-medium text-gray-700">
-                        Пароль <span className="text-red-500">*</span>
+                        Password <span className="text-red-500">*</span>
                     </label>
                     <input 
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 
@@ -102,7 +102,7 @@ function LoginForm () {
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
                     </svg>
-                    Увійти
+                    Sign In
                 </button>
             </div>
         </form>

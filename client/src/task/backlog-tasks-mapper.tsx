@@ -69,7 +69,7 @@ function BacklogTasksMapper ({tasks, pushHandler, assignHandler, deleteHandler, 
                                 className="px-3 py-1.5 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
                                 onClick={() => detailsHandler(task._id)}
                             >
-                                Деталі
+                                Details
                             </button>
                             {canPush && (
                                 <button 
@@ -77,16 +77,17 @@ function BacklogTasksMapper ({tasks, pushHandler, assignHandler, deleteHandler, 
                                     className="px-3 py-1.5 text-xs font-medium text-blue-700 bg-blue-50 border border-blue-200 rounded-md hover:bg-blue-100 transition-colors"
                                     onClick={() => pushHandler(task)}
                                 >
-                                    До спрінту
+                                    To Sprint
                                 </button>
                             )}
                             {canDelete && (
                                 <button 
                                     type="button" 
-                                    className="px-3 py-1.5 text-xs font-medium text-red-700 bg-red-50 border border-red-200 rounded-md hover:bg-red-100 transition-colors"
+                                    className="px-2.5 py-1.5 text-base text-red-700 bg-red-50 border border-red-200 rounded-md hover:bg-red-100 transition-colors"
                                     onClick={() => deleteHandler(task._id)}
+                                    title="Delete"
                                 >
-                                    Видалити
+                                    🗑️
                                 </button>
                             )}
                         </div>
@@ -100,7 +101,7 @@ function BacklogTasksMapper ({tasks, pushHandler, assignHandler, deleteHandler, 
             <svg className="mx-auto w-12 h-12 text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
             </svg>
-            <p className="text-gray-500 font-medium">Задачі відсутні</p>
+            <p className="text-gray-500 font-medium">No tasks available</p>
         </div>
     );
 }

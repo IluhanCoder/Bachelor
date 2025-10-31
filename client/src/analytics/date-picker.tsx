@@ -15,7 +15,7 @@ function DatePicker ({handleStart, startDate, endDate, handleEnd, className}: Lo
           <div className="flex flex-col gap-2">
               <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
                   <span className="text-xl">📅</span>
-                  <span>Початок</span>
+                  <span>Start</span>
               </label>
               <div className="relative">
                 <ReactDatePicker
@@ -25,7 +25,7 @@ function DatePicker ({handleStart, startDate, endDate, handleEnd, className}: Lo
                   onChange={handleStart}
                   locale={"ua"}
                   minDate={new Date()}
-                  placeholderText="Виберіть дату початку..."
+                  placeholderText="Select start date..."
                   calendarClassName="custom-calendar"
                   wrapperClassName="w-full"
                 />
@@ -35,7 +35,7 @@ function DatePicker ({handleStart, startDate, endDate, handleEnd, className}: Lo
             <div className="flex flex-col gap-2">
               <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
                   <span className="text-xl">🏁</span>
-                  <span>Завершення</span>
+                  <span>End</span>
               </label>
               <div className="relative">
                 <ReactDatePicker
@@ -45,7 +45,7 @@ function DatePicker ({handleStart, startDate, endDate, handleEnd, className}: Lo
                   onChange={handleEnd}
                   locale={"ua"}
                   minDate={startDate}
-                  placeholderText="Виберіть дату завершення..."
+                  placeholderText="Select end date..."
                   calendarClassName="custom-calendar"
                   wrapperClassName="w-full"
                 />

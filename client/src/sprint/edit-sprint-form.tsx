@@ -24,8 +24,7 @@ function EditSprintForm({sprintId, callBack}: LocalParams) {
 
     const getSprintData = async () => {
         if(sprintId) {
-            const result = await sprintService.getSprintById(sprintId); 
-            console.log(result);
+            const result = await sprintService.getSprintById(sprintId);
             setSprintData({...result.sprint});
         }
     }
@@ -95,7 +94,7 @@ function EditSprintForm({sprintId, callBack}: LocalParams) {
         {formData?.name && <form className="space-y-6" onSubmit={(event: FormEvent) => {handleSubmit(event)}}>
             <div className="space-y-2">
                 <label className="block text-sm font-medium text-gray-700">
-                    Назва <span className="text-red-500">*</span>
+                    Name <span className="text-red-500">*</span>
                 </label>
                 <input 
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 

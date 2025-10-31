@@ -54,7 +54,7 @@ function ProjectCard({project}: LocalParams) {
             {/* Participants */}
             <div className="pt-3 border-t border-gray-100">
                 <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Учасники</span>
+                    <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Participants</span>
                     <span className="text-xs text-gray-400">{project.participants.length}</span>
                 </div>
                 <ParticipantsWindow participants={project.participants} maxDisplay={8}/>

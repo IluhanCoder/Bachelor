@@ -29,10 +29,10 @@ function TopContributorsTable({ contributors }: LocalParams) {
                     <thead>
                         <tr className="border-b-2 border-gray-200">
                             <th className="text-left py-3 px-4 text-sm font-semibold text-gray-600">Місце</th>
-                            <th className="text-left py-3 px-4 text-sm font-semibold text-gray-600">Учасник</th>
+                            <th className="text-left py-3 px-4 text-sm font-semibold text-gray-600">Participant</th>
                             <th className="text-center py-3 px-4 text-sm font-semibold text-gray-600">Виконано задач</th>
                             <th className="text-center py-3 px-4 text-sm font-semibold text-gray-600">Story Points</th>
-                            <th className="text-center py-3 px-4 text-sm font-semibold text-gray-600">В роботі</th>
+                            <th className="text-center py-3 px-4 text-sm font-semibold text-gray-600">In Progress</th>
                             <th className="text-center py-3 px-4 text-sm font-semibold text-gray-600">Всього</th>
                         </tr>
                     </thead>

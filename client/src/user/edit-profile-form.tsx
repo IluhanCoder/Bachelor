@@ -47,7 +47,7 @@ function EditProfileForm ({userData, callback}: LocalParams) {
 
                 <div className="space-y-2">
                     <label className="block text-sm font-medium text-gray-700">
-                        Ім'я
+                        Name
                     </label>
                     <input 
                         defaultValue={formData.name} 
@@ -61,7 +61,7 @@ function EditProfileForm ({userData, callback}: LocalParams) {
 
                 <div className="space-y-2">
                     <label className="block text-sm font-medium text-gray-700">
-                        Прізвище
+                        Surname
                     </label>
                     <input 
                         defaultValue={formData.surname} 

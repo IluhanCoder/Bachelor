@@ -51,21 +51,17 @@ function BacklogSprintsMapper({sprints, pullHandler, assignHandler, callBack, de
 
     const calculateCompletedPoints = (tasks: TaskResponse[]): number => {
         return tasks
-            .filter(task => {
-                if (!task || !task._id) return false;
-                console.log('Task:', task.name, 'Status:', task.status, 'Difficulty:', task.difficulty);
-                return task.status === 'done';
-            })
+            .filter(task => task && task._id && task.status === 'done')
             .reduce((sum, task) => sum + getStoryPoints(task.difficulty), 0);
     }
-
+    
     if (sprints.length === 0) {
         return (
             <div className="text-center py-8">
                 <svg className="mx-auto w-12 h-12 text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
-                <p className="text-gray-500 font-medium">Спрінти відсутні</p>
+                <p className="text-gray-500 font-medium">No sprints available</p>
             </div>
         );
     }
@@ -76,13 +72,6 @@ function BacklogSprintsMapper({sprints, pullHandler, assignHandler, callBack, de
                 const totalPoints = calculateTotalPoints(sprint.tasks);
                 const completedPoints = calculateCompletedPoints(sprint.tasks);
                 const progressPercentage = totalPoints > 0 ? (completedPoints / totalPoints) * 100 : 0;
-
-                // Debug logging
-                console.log('Sprint:', sprint.name);
-                console.log('Tasks:', sprint.tasks);
-                console.log('Total Points:', totalPoints);
-                console.log('Completed Points:', completedPoints);
-                console.log('Progress:', progressPercentage);
 
                 return (
                     <div 
@@ -104,7 +93,7 @@ function BacklogSprintsMapper({sprints, pullHandler, assignHandler, callBack, de
                                     <h5 className="font-semibold text-gray-900">{sprint.name}</h5>
                                     {isTerminated(sprint) && (
                                         <span className="px-2 py-0.5 text-xs font-medium text-red-700 bg-red-100 rounded-full">
-                                            Завершено
+                                            Completed
                                         </span>
                                     )}
                                 </div>
@@ -113,18 +102,20 @@ function BacklogSprintsMapper({sprints, pullHandler, assignHandler, callBack, de
                                         <button 
                                             type="button" 
                                             onClick={() => handleEdit(sprint._id)} 
-                                            className="px-3 py-1.5 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+                                            className="px-2.5 py-1.5 text-base text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+                                            title="Edit"
                                         >
-                                            Редагувати
+                                            ✏️
                                         </button>
                                     )}
                                     {rights.manageSprints && (
                                         <button 
                                             type="button" 
                                             onClick={() => handleDelete(sprint._id)} 
-                                            className="px-3 py-1.5 text-xs font-medium text-red-700 bg-red-50 border border-red-200 rounded-md hover:bg-red-100 transition-colors"
+                                            className="px-2.5 py-1.5 text-base text-red-700 bg-red-50 border border-red-200 rounded-md hover:bg-red-100 transition-colors"
+                                            title="Delete"
                                         >
-                                            Видалити
+                                            🗑️
                                         </button>
                                     )}
                                 </div>

@@ -26,18 +26,18 @@ function NewBacklogForm ({callBack, projectId}: LocalParams) {
         });
     };  
 
-    return <FormComponent formLabel="створення Backlog">
+    return <FormComponent formLabel="Create Backlog">
         <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
                 <label className="block text-sm font-medium text-gray-700">
-                    Назва беклогу <span className="text-red-500">*</span>
+                    Backlog Name <span className="text-red-500">*</span>
                 </label>
                 <input 
                     type="text" 
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 
                     name="name" 
                     onChange={handleChange}
-                    placeholder="Введіть назву беклогу..."
+                    placeholder="Enter backlog name..."
                     required
                 />
             </div>
@@ -47,7 +47,7 @@ function NewBacklogForm ({callBack, projectId}: LocalParams) {
                     onClick={() => formStore.dropForm()}
                     className="px-6 py-2.5 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium transition-colors"
                 >
-                    Скасувати
+                    Cancel
                 </button>
                 <button 
                     type="submit" 
@@ -56,7 +56,7 @@ function NewBacklogForm ({callBack, projectId}: LocalParams) {
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                     </svg>
-                    Створити
+                    Create
                 </button>
             </div>
         </form>

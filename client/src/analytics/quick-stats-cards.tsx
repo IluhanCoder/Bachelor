@@ -9,29 +9,29 @@ function QuickStatsCards({ stats }: LocalParams) {
 
     const cards = [
         {
-            title: "Всього задач",
+            title: "Total Tasks",
             value: stats.totalTasks,
             icon: "📋",
             color: "blue",
             gradient: "from-blue-500 to-blue-600"
         },
         {
-            title: "Виконано",
+            title: "Completed",
             value: stats.completedTasks,
             icon: "✅",
             color: "green",
             gradient: "from-green-500 to-green-600",
-            subtitle: `${stats.completionRate}% завершено`
+            subtitle: `${stats.completionRate}% finished`
         },
         {
-            title: "В роботі",
+            title: "In Progress",
             value: stats.inProgressTasks,
             icon: "⚡",
             color: "yellow",
             gradient: "from-yellow-500 to-yellow-600"
         },
         {
-            title: "Очікують",
+            title: "Pending",
             value: stats.todoTasks,
             icon: "📝",
             color: "gray",
@@ -43,15 +43,15 @@ function QuickStatsCards({ stats }: LocalParams) {
             icon: "🎯",
             color: "purple",
             gradient: "from-purple-500 to-purple-600",
-            subtitle: `${stats.completedStoryPoints} виконано`
+            subtitle: `${stats.completedStoryPoints} completed`
         },
         {
-            title: "Команда",
+            title: "Team",
             value: stats.teamSize,
             icon: "👥",
             color: "indigo",
             gradient: "from-indigo-500 to-indigo-600",
-            subtitle: `${stats.avgTasksPerMember} задач/особу`
+            subtitle: `${stats.avgTasksPerMember} tasks/member`
         }
     ];
 

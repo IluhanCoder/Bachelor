@@ -18,7 +18,14 @@ function UsersMapper({ users, selectedState, task }: LocalParams) {
     }, [users])
 
     const handleFilter = (filter: string) => {
-        const newUsers: UserResponse[] | undefined = users.filter((user: UserResponse) => (user.nickname.includes(filter) || user.name.includes(filter) || user.surname.includes(filter) || user.email.includes(filter) || user.organisation.includes(filter)) && !task?.executors.find((executor: UserResponse) => { console.log(executor._id); console.log(user._id); return executor._id === user._id }));
+        const newUsers: UserResponse[] | undefined = users.filter((user: UserResponse) => 
+            (user.nickname.includes(filter) || 
+             user.name.includes(filter) || 
+             user.surname.includes(filter) || 
+             user.email.includes(filter) || 
+             user.organisation.includes(filter)) && 
+            !task?.executors.find((executor: UserResponse) => executor._id === user._id)
+        );
         setFilteredUsers(newUsers || users);
     }
 
@@ -130,7 +137,7 @@ function UsersMapper({ users, selectedState, task }: LocalParams) {
                     </svg>
                 </div>
                 <p className="text-sm font-medium text-slate-700">Користувачів не знайдено</p>
-                <p className="text-xs text-slate-500 mt-1">Спробуйте змінити параметри пошуку</p>
+                <p className="text-xs text-slate-500 mt-1">Try changing search parameters</p>
             </div>
         )}
     </div>

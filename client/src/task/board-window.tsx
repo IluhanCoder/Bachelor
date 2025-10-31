@@ -86,9 +86,9 @@ function BoardWindow() {
 
     const getPriorityLabel = (priority: string) => {
         switch(priority) {
-            case 'high': return 'Високий';
-            case 'mid': return 'Середній';
-            case 'low': return 'Низький';
+            case 'high': return 'High';
+            case 'mid': return 'Medium';
+            case 'low': return 'Low';
             default: return priority;
         }
     }
@@ -140,7 +140,7 @@ function BoardWindow() {
                                         <div
                                             key={index}
                                             className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 border-2 border-white flex items-center justify-center text-white text-xs font-semibold"
-                                            title={executor.nickname || 'Виконавець'}
+                                            title={executor.nickname || 'Executor'}
                                         >
                                             {executor.nickname ? executor.nickname[0].toUpperCase() : '?'}
                                         </div>
@@ -162,14 +162,14 @@ function BoardWindow() {
                                     onClick={() => handleMove(task._id, 0)}
                                     className="flex-1 px-3 py-1.5 text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors flex items-center justify-center gap-1"
                                 >
-                                    ← Назад
+                                    ← Back
                                 </button>
                             )}
                             <button
                                 onClick={() => handleMove(task._id, task.status === "toDo" ? 1 : 2)}
                                 className="flex-1 px-3 py-1.5 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md transition-colors flex items-center justify-center gap-1"
                             >
-                                {task.status === "toDo" ? "Почати →" : "Завершити ✓"}
+                                {task.status === "toDo" ? "Start →" : "Complete ✓"}
                             </button>
                         </div>
                     )}
@@ -254,7 +254,7 @@ function BoardWindow() {
                             onChange={() => setIsFiltered(!isFiltered)}
                             className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
                         />
-                        <span className="text-sm font-medium text-gray-700">Тільки мої задачі</span>
+                        <span className="text-sm font-medium text-gray-700">My Tasks Only</span>
                     </label>
                 </div>
 
@@ -264,7 +264,7 @@ function BoardWindow() {
                         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-sm text-gray-600 font-medium">Всього SP</p>
+                                    <p className="text-sm text-gray-600 font-medium">Total SP</p>
                                     <p className="text-2xl font-bold text-gray-900 mt-1">{calculateTotalPoints()}</p>
                                 </div>
                                 <div className="w-12 h-12 bg-gradient-to-br from-purple-100 to-purple-200 rounded-full flex items-center justify-center">
@@ -276,7 +276,7 @@ function BoardWindow() {
                         <div className="bg-white rounded-lg shadow-sm border border-blue-200 p-4">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-sm text-blue-600 font-medium">Треба виконати</p>
+                                    <p className="text-sm text-blue-600 font-medium">To Do</p>
                                     <p className="text-2xl font-bold text-blue-700 mt-1">{calculatePointsByStatus('toDo')}</p>
                                 </div>
                                 <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center">
@@ -288,7 +288,7 @@ function BoardWindow() {
                         <div className="bg-white rounded-lg shadow-sm border border-yellow-200 p-4">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-sm text-yellow-600 font-medium">В процесі</p>
+                                    <p className="text-sm text-yellow-600 font-medium">In Progress</p>
                                     <p className="text-2xl font-bold text-yellow-700 mt-1">{calculatePointsByStatus('inProgress')}</p>
                                 </div>
                                 <div className="w-12 h-12 bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-full flex items-center justify-center">
@@ -300,7 +300,7 @@ function BoardWindow() {
                         <div className="bg-white rounded-lg shadow-sm border border-green-200 p-4">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-sm text-green-600 font-medium">Виконано</p>
+                                    <p className="text-sm text-green-600 font-medium">Completed</p>
                                     <p className="text-2xl font-bold text-green-700 mt-1">{calculatePointsByStatus('done')}</p>
                                 </div>
                                 <div className="w-12 h-12 bg-gradient-to-br from-green-100 to-green-200 rounded-full flex items-center justify-center">
@@ -314,19 +314,19 @@ function BoardWindow() {
                 {/* Kanban Board */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <Column 
-                        title="Треба виконати" 
+                        title="To Do" 
                         status="toDo" 
                         color="bg-gradient-to-r from-blue-50 to-blue-100 border-blue-500"
                         icon="📝"
                     />
                     <Column 
-                        title="В процесі" 
+                        title="In Progress" 
                         status="inProgress" 
                         color="bg-gradient-to-r from-yellow-50 to-yellow-100 border-yellow-500"
                         icon="⚡"
                     />
                     <Column 
-                        title="Виконано" 
+                        title="Completed" 
                         status="done" 
                         color="bg-gradient-to-r from-green-50 to-green-100 border-green-500"
                         icon="✅"

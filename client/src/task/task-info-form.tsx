@@ -96,7 +96,7 @@ function TaskInfoForm({taskId, callBack, projectId, rights}: LocalParams) {
             <div className="space-y-4">
                 <div className="space-y-2">
                     <label className="block text-sm font-medium text-gray-700">
-                        Задача
+                        Task
                     </label>
                     <input 
                         disabled={!canEdit} 
@@ -111,7 +111,7 @@ function TaskInfoForm({taskId, callBack, projectId, rights}: LocalParams) {
 
                 <div className="space-y-2">
                     <label className="block text-sm font-medium text-gray-700">
-                        Опис
+                        Description
                     </label>
                     <input 
                         disabled={!canEdit} 
@@ -144,7 +144,7 @@ function TaskInfoForm({taskId, callBack, projectId, rights}: LocalParams) {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="space-y-2">
                     <label className="block text-sm font-medium text-gray-700">
-                        Статус
+                        Status
                     </label>
                     <select 
                         disabled={!canChangeStatus} 
@@ -178,7 +178,7 @@ function TaskInfoForm({taskId, callBack, projectId, rights}: LocalParams) {
 
                 <div className="space-y-2">
                     <label className="block text-sm font-medium text-gray-700">
-                        Пріоритет
+                        Priority
                     </label>
                     <select 
                         disabled={!canEdit} 

@@ -76,7 +76,7 @@ function SprintTasksMapper ({sprint, pullHandler, deleteHandler, detailsHandler,
                                 className="px-2.5 py-1 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-50 transition-colors"
                                 onClick={() => detailsHandler(task._id)}
                             >
-                                Деталі
+                                Details
                             </button>
                             {canPull && (
                                 <button 
@@ -84,16 +84,17 @@ function SprintTasksMapper ({sprint, pullHandler, deleteHandler, detailsHandler,
                                     className="px-2.5 py-1 text-xs font-medium text-orange-700 bg-orange-50 border border-orange-200 rounded hover:bg-orange-100 transition-colors"
                                     onClick={() => pullHandler(task._id)}
                                 >
-                                    Прибрати
+                                    Remove
                                 </button>
                             )}
                             {canDelete && (
                                 <button 
                                     type="button" 
-                                    className="px-2.5 py-1 text-xs font-medium text-red-700 bg-red-50 border border-red-200 rounded hover:bg-red-100 transition-colors"
+                                    className="px-2 py-1 text-base text-red-700 bg-red-50 border border-red-200 rounded hover:bg-red-100 transition-colors"
                                     onClick={() => deleteHandler(task._id)}
+                                    title="Delete"
                                 >
-                                    Видалити
+                                    🗑️
                                 </button>
                             )}
                         </div>
@@ -104,7 +105,7 @@ function SprintTasksMapper ({sprint, pullHandler, deleteHandler, detailsHandler,
     );
     else return (
         <div className="text-center py-6">
-            <p className="text-sm text-gray-400">Задачі відсутні</p>
+            <p className="text-sm text-gray-400">No tasks available</p>
         </div>
     );
 }

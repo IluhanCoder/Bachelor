@@ -18,13 +18,11 @@ export default new class UserService {
         await UserModel.findByIdAndUpdate(userId, newData);
     }
 
-    async setAvatar(file: any, userId: string, oldAvatarId?: string) {
-      console.log(file);
-        let imageUploadObject = {
-          data: file.buffer,
-          contentType: file.mimetype
-        };
-        const result = await UserModel.findByIdAndUpdate(userId, { avatar: imageUploadObject });
-        return result;
-      }
+    async setAvatar(userId: string, file: any) {
+        const user = await UserModel.findById(userId);
+        if(user) {
+            user.image = file.buffer.toString("base64");
+            await user.save();
+        }
+    }
 }

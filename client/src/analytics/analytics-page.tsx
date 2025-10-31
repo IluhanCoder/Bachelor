@@ -115,12 +115,12 @@ function AnalyticsPage () {
                 <div>
                     <h1 className="text-4xl font-bold text-gray-800 mb-2 flex items-center gap-3">
                         <span>📊</span>
-                        Аналітика проекту
+                        Project Analytics
                     </h1>
-                    <p className="text-gray-600">Детальна статистика та метрики продуктивності</p>
+                    <p className="text-gray-600">Detailed statistics and performance metrics</p>
                 </div>
                 <Link to={`/project/${projectId}`} className={lightButtonStyle}>
-                    ← Назад до проекту
+                    ← Back to Project
                 </Link>
             </div>
 
@@ -137,7 +137,7 @@ function AnalyticsPage () {
             <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
                 <h3 className="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
                     <span>⚙️</span>
-                    Налаштування графіків
+                    Chart Settings
                 </h3>
                 <div className="flex flex-wrap gap-6 mb-6">
                     <label className="flex items-center gap-2 cursor-pointer">
@@ -147,7 +147,7 @@ function AnalyticsPage () {
                             onChange={() => setIsDaily(!isDaily)}
                             className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
                         />
-                        <span className="text-gray-700">Щоденна статистика</span>
+                        <span className="text-gray-700">Daily Statistics</span>
                     </label>
                     <label className="flex items-center gap-2 cursor-pointer">
                         <input 
@@ -156,7 +156,7 @@ function AnalyticsPage () {
                             onChange={() => setIsCurrentUser(!isCurrentUser)}
                             className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
                         />
-                        <span className="text-gray-700">Тільки мої задачі</span>
+                        <span className="text-gray-700">My Tasks Only</span>
                     </label>
                 </div>
                 
@@ -178,21 +178,21 @@ function AnalyticsPage () {
                         <div className="flex items-center gap-3">
                             <span className="text-3xl">📈</span>
                             <h3 className="text-2xl font-bold text-gray-800">
-                                Кількість створених завдань
+                                Created Tasks Count
                             </h3>
                         </div>
                         <div className="bg-green-100 text-green-700 px-4 py-2 rounded-lg font-semibold">
-                            Всього: {createdTaskData.reduce((sum, item) => sum + item.amount, 0)}
+                            Total: {createdTaskData.reduce((sum, item) => sum + item.amount, 0)}
                         </div>
                     </div>
                     <AnalyticsGraph 
                         data={convertArray(createdTaskData)} 
-                        name="кількість"
+                        name="count"
                         color="#10b981"
                         type="area"
                     />
                     <div className="mt-4 text-sm text-gray-600 text-center">
-                        Показує скільки нових задач було створено в обраний період
+                        Shows how many new tasks were created in the selected period
                     </div>
                 </div>
 
@@ -201,21 +201,21 @@ function AnalyticsPage () {
                         <div className="flex items-center gap-3">
                             <span className="text-3xl">✅</span>
                             <h3 className="text-2xl font-bold text-gray-800">
-                                Виконання задач
+                                Task Completion
                             </h3>
                         </div>
                         <div className="bg-blue-100 text-blue-700 px-4 py-2 rounded-lg font-semibold">
-                            Всього: {taskAmountData.reduce((sum, item) => sum + item.amount, 0)}
+                            Total: {taskAmountData.reduce((sum, item) => sum + item.amount, 0)}
                         </div>
                     </div>
                     <AnalyticsGraph 
                         data={convertArray(taskAmountData)} 
-                        name="кількість"
+                        name="count"
                         color="#3b82f6"
                         type="area"
                     />
                     <div className="mt-4 text-sm text-gray-600 text-center">
-                        Показує скільки задач було виконано (позначено як done) в обраний період
+                        Shows how many tasks were completed (marked as done) in the selected period
                     </div>
                 </div>
 
@@ -224,11 +224,11 @@ function AnalyticsPage () {
                         <div className="flex items-center gap-3">
                             <span className="text-3xl">📊</span>
                             <h3 className="text-2xl font-bold text-gray-800">
-                                Співвідношення виконаних і невиконаних задач
+                                Completed vs Incomplete Tasks Ratio
                             </h3>
                         </div>
                         <div className="bg-purple-100 text-purple-700 px-4 py-2 rounded-lg font-semibold">
-                            Середнє: {Math.round(tasksRatioData.reduce((sum, item) => sum + item.amount, 0) / Math.max(tasksRatioData.length, 1))}%
+                            Average: {Math.round(tasksRatioData.reduce((sum, item) => sum + item.amount, 0) / Math.max(tasksRatioData.length, 1))}%
                         </div>
                     </div>
                     <AnalyticsGraph 
@@ -238,7 +238,7 @@ function AnalyticsPage () {
                         type="area"
                     />
                     <div className="mt-4 text-sm text-gray-600 text-center">
-                        Відсоток виконаних задач від загальної кількості створених на момент часу
+                        Percentage of completed tasks out of total created at the time
                     </div>
                 </div>
 
@@ -247,11 +247,11 @@ function AnalyticsPage () {
                         <div className="flex items-center gap-3">
                             <span className="text-3xl">🔮</span>
                             <h3 className="text-2xl font-bold text-gray-800">
-                                Прогноз ефективності (лінійна регресія)
+                                Efficiency Forecast (Linear Regression)
                             </h3>
                         </div>
                         <div className="bg-orange-100 text-orange-700 px-4 py-2 rounded-lg font-semibold">
-                            Тренд: {prediction.length > 1 && prediction[prediction.length - 1].amount > prediction[0].amount ? '📈 Зростання' : '📉 Спад'}
+                            Trend: {prediction.length > 1 && prediction[prediction.length - 1].amount > prediction[0].amount ? '📈 Growing' : '📉 Declining'}
                         </div>
                     </div>
                     <AnalyticsGraph 
@@ -261,7 +261,7 @@ function AnalyticsPage () {
                         type="line"
                     />
                     <div className="mt-4 text-sm text-gray-600 text-center">
-                        Прогнозування ефективності команди на основі історичних даних
+                        Team efficiency forecasting based on historical data
                     </div>
                 </div>
             </div>

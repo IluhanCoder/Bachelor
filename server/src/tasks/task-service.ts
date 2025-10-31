@@ -356,10 +356,9 @@ export default new class TaskService {
       ]);
 
       if (!taskData || taskData.length === 0) {
-        console.log("canUserDeleteTask: Task not found");
-        return false;
-      }
-
+            return false;
+        }
+      
       const task = taskData[0];
       const project = task.project;
 

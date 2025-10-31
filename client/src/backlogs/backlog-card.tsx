@@ -106,7 +106,7 @@ function BacklogCard({backlog, rights}: LocalParams) {
                 <div className="p-6 border-b border-gray-100">
                     <div className="flex items-center justify-between mb-4">
                         <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
-                            Задачі беклогу
+                            Backlog Tasks
                         </h4>
                         <span className="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded-full">
                             {tasks.length}
@@ -131,7 +131,7 @@ function BacklogCard({backlog, rights}: LocalParams) {
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                             </svg>
-                            Створити задачу
+                            Create Task
                         </button>
                     )}
                 </div>
@@ -142,7 +142,7 @@ function BacklogCard({backlog, rights}: LocalParams) {
                 <div className="p-6">
                     <div className="flex items-center justify-between mb-4">
                         <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
-                            Спрінти
+                            Sprints
                         </h4>
                         <span className="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded-full">
                             {sprints.length}
@@ -168,7 +168,7 @@ function BacklogCard({backlog, rights}: LocalParams) {
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                             </svg>
-                            Створити спрінт
+                            Create Sprint
                         </button>
                     )}
                 </div>

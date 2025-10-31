@@ -41,15 +41,15 @@ function EditRightsPage () {
     };
 
     const rightsConfig = [
-        { key: 'addParticipants', label: 'Додавати учасників', icon: '👥', color: 'blue' },
-        { key: 'check', label: 'Статус задач', icon: '✓', color: 'green' },
-        { key: 'create', label: 'Створювати задачі', icon: '➕', color: 'indigo' },
-        { key: 'delete', label: 'Видаляти задачі', icon: '🗑️', color: 'red' },
-        { key: 'edit', label: 'Редагувати задачі', icon: '✏️', color: 'orange' },
-        { key: 'manageSprints', label: 'Керувати спрінтами', icon: '🏃', color: 'teal' },
-        { key: 'manageBacklogs', label: 'Керувати беклогами', icon: '📋', color: 'cyan' },
-        { key: 'editParticipants', label: 'Видаляти учасників', icon: '👤', color: 'purple' },
-        { key: 'editProjectData', label: 'Редагувати проєкт', icon: '⚙️', color: 'slate' },
+        { key: 'addParticipants', label: 'Add Participants', icon: '👥', color: 'blue' },
+        { key: 'check', label: 'Task Status', icon: '✓', color: 'green' },
+        { key: 'create', label: 'Create Tasks', icon: '➕', color: 'indigo' },
+        { key: 'delete', label: 'Delete Tasks', icon: '🗑️', color: 'red' },
+        { key: 'edit', label: 'Edit Tasks', icon: '✏️', color: 'orange' },
+        { key: 'manageSprints', label: 'Manage Sprints', icon: '🏃', color: 'teal' },
+        { key: 'manageBacklogs', label: 'Manage Backlogs', icon: '📋', color: 'cyan' },
+        { key: 'editParticipants', label: 'Remove Participants', icon: '👤', color: 'purple' },
+        { key: 'editProjectData', label: 'Edit Project', icon: '⚙️', color: 'slate' },
     ];
 
     useEffect(() => {getRights()},[]);
@@ -66,7 +66,7 @@ function EditRightsPage () {
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                         </svg>
-                        Назад до проєкту
+                        Back to Project
                     </Link>
                     
                     <div className="flex items-center gap-3">
@@ -76,8 +76,8 @@ function EditRightsPage () {
                             </svg>
                         </div>
                         <div>
-                            <h1 className="text-3xl font-bold text-slate-900">Керування правами</h1>
-                            <p className="text-slate-600 mt-1">Налаштування прав доступу учасників проєкту</p>
+                            <h1 className="text-3xl font-bold text-slate-900">Rights Management</h1>
+                            <p className="text-slate-600 mt-1">Configure participant access permissions</p>
                         </div>
                     </div>
                 </div>
@@ -179,7 +179,7 @@ function EditRightsPage () {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                             </svg>
                         </div>
-                        <p className="text-slate-500 font-medium">Учасники відсутні</p>
+                        <p className="text-slate-500 font-medium">No participants</p>
                     </div>
                 )}
             </div>

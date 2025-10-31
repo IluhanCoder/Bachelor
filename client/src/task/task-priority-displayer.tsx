@@ -11,7 +11,7 @@ function TaskPriorityDisplayer ({priority, className}: LocalParams) {
             case "hight":
                 return {
                     color: "bg-red-100 text-red-700 border-red-200",
-                    label: "Високий",
+                    label: "High",
                     icon: (
                         <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 2L2 22h20L12 2z"/>
@@ -21,7 +21,7 @@ function TaskPriorityDisplayer ({priority, className}: LocalParams) {
             case "mid":
                 return {
                     color: "bg-yellow-100 text-yellow-700 border-yellow-200",
-                    label: "Середній",
+                    label: "Medium",
                     icon: (
                         <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
                             <circle cx="12" cy="12" r="10"/>
@@ -31,7 +31,7 @@ function TaskPriorityDisplayer ({priority, className}: LocalParams) {
             case "low":
                 return {
                     color: "bg-blue-100 text-blue-700 border-blue-200",
-                    label: "Низький",
+                    label: "Low",
                     icon: (
                         <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 22L2 2h20L12 22z"/>

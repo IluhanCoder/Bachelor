@@ -38,19 +38,19 @@ function NewTaskForm({backlogId, callBack}: LocalParams) {
 
 
 
-    return <FormComponent formLabel="Створити нову задачу">
+    return <FormComponent formLabel="Create New Task">
         <form onSubmit={handleSubmit} className="space-y-6">
             {/* Task Name */}
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Назва задачі
+                    Task Name
                     <span className="text-red-500 ml-1">*</span>
                 </label>
                 <input 
                     type="text" 
                     name="name"
                     required
-                    placeholder="Введіть назву задачі..."
+                    placeholder="Enter task name..."
                     className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all placeholder-gray-400"
                     onChange={handleChange}
                     value={formData.name}
@@ -60,12 +60,12 @@ function NewTaskForm({backlogId, callBack}: LocalParams) {
             {/* Description */}
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Опис
+                    Description
                 </label>
                 <textarea 
                     name="desc"
                     rows={4}
-                    placeholder="Опишіть деталі задачі..."
+                    placeholder="Describe task details..."
                     className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none placeholder-gray-400"
                     onChange={handleChange}
                     value={formData.desc}
@@ -77,7 +77,7 @@ function NewTaskForm({backlogId, callBack}: LocalParams) {
                 {/* Priority */}
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Пріоритет
+                        Priority
                     </label>
                     <select
                         name="priority"
@@ -85,16 +85,16 @@ function NewTaskForm({backlogId, callBack}: LocalParams) {
                         onChange={handleChange}
                         value={formData.priority}
                     >
-                        <option value="low">🟢 Низький</option>
-                        <option value="mid">🟡 Середній</option>
-                        <option value="high">🔴 Високий</option>
+                        <option value="low">🟢 Low</option>
+                        <option value="mid">🟡 Medium</option>
+                        <option value="high">🔴 High</option>
                     </select>
                 </div>
 
                 {/* Difficulty */}
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Складність
+                        Difficulty
                     </label>
                     <select
                         name="difficulty"
@@ -102,9 +102,9 @@ function NewTaskForm({backlogId, callBack}: LocalParams) {
                         onChange={handleChange}
                         value={formData.difficulty}
                     >
-                        <option value="low">⭐ Легка</option>
-                        <option value="mid">⭐⭐ Середня</option>
-                        <option value="high">⭐⭐⭐ Висока</option>
+                        <option value="low">⭐ Easy</option>
+                        <option value="mid">⭐⭐ Medium</option>
+                        <option value="high">⭐⭐⭐ High</option>
                     </select>
                 </div>
             </div>
@@ -112,12 +112,12 @@ function NewTaskForm({backlogId, callBack}: LocalParams) {
             {/* Requirements */}
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Вимоги
+                    Requirements
                 </label>
                 <textarea 
                     name="requirements"
                     rows={4}
-                    placeholder="Технічні вимоги або критерії виконання..."
+                    placeholder="Technical requirements or completion criteria..."
                     className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none placeholder-gray-400"
                     onChange={handleChange}
                     value={formData.requirements}
@@ -131,7 +131,7 @@ function NewTaskForm({backlogId, callBack}: LocalParams) {
                     onClick={() => formStore.dropForm()}
                     className="px-6 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
                 >
-                    Скасувати
+                    Cancel
                 </button>
                 <button 
                     type="submit"
@@ -140,7 +140,7 @@ function NewTaskForm({backlogId, callBack}: LocalParams) {
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                     </svg>
-                    Створити задачу
+                    Create Task
                 </button>
             </div>
         </form>

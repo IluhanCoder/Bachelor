@@ -123,9 +123,9 @@ function ProjectPage () {
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                 </svg>
-                                <span>Власник: {project.owner.nickname}</span>
+                                <span>Owner: {project.owner.nickname}</span>
                                 <span className="mx-2">•</span>
-                                <span>{project.participants.length} учасників</span>
+                                <span>{project.participants.length} participants</span>
                             </div>
                         </div>
                         
@@ -134,7 +134,7 @@ function ProjectPage () {
                             <button 
                                 onClick={() => setShowMenu(!showMenu)}
                                 className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
-                                aria-label="Меню проекту"
+                                aria-label="Project Menu"
                             >
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
@@ -164,7 +164,7 @@ function ProjectPage () {
                                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                                                     </svg>
-                                                    Змінити власника
+                                                    Change Owner
                                                 </button>
                                                 <div className="border-t border-gray-100 my-1" />
                                                 <button 
@@ -172,7 +172,7 @@ function ProjectPage () {
                                                     className="w-full px-4 py-2.5 text-left text-sm font-medium text-red-700 hover:bg-red-50 transition-colors flex items-center gap-3"
                                                     onClick={() => {
                                                         setShowMenu(false);
-                                                        if(window.confirm('Ви впевнені, що хочете видалити проект? Цю дію неможливо скасувати.')) {
+                                                        if(window.confirm('Are you sure you want to delete this project? This action cannot be undone.')) {
                                                             handleProjectDelete();
                                                         }
                                                     }}
@@ -180,7 +180,7 @@ function ProjectPage () {
                                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                     </svg>
-                                                    Видалити проект
+                                                    Delete Project
                                                 </button>
                                             </>
                                         )}
@@ -190,7 +190,7 @@ function ProjectPage () {
                                                 className="w-full px-4 py-2.5 text-left text-sm font-medium text-red-700 hover:bg-red-50 transition-colors flex items-center gap-3"
                                                 onClick={() => {
                                                     setShowMenu(false);
-                                                    if(window.confirm('Ви впевнені, що хочете покинути проект?')) {
+                                                    if(window.confirm('Are you sure you want to leave this project?')) {
                                                         handleLeave();
                                                     }
                                                 }}
@@ -198,7 +198,7 @@ function ProjectPage () {
                                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                                                 </svg>
-                                                Покинути проект
+                                                Leave Project
                                             </button>
                                         )}
                                     </div>
@@ -213,7 +213,7 @@ function ProjectPage () {
                     <div className="lg:col-span-2">
                         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                             <div className="flex items-center justify-between mb-6">
-                                <h2 className="text-xl font-semibold text-gray-900">Беклоги</h2>
+                                <h2 className="text-xl font-semibold text-gray-900">Backlogs</h2>
                                 {rights?.manageBacklogs && (
                                     <button 
                                         onClick={handleCreateBacklog} 
@@ -222,7 +222,7 @@ function ProjectPage () {
                                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                                         </svg>
-                                        Створити беклог
+                                        Create Backlog
                                     </button>
                                 )}
                             </div>
@@ -236,13 +236,13 @@ function ProjectPage () {
                     <div className="space-y-6">
                         {/* Quick Actions */}
                         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 space-y-3">
-                            <h3 className="font-semibold text-gray-900 mb-4">Швидкі дії</h3>
+                            <h3 className="font-semibold text-gray-900 mb-4">Quick Actions</h3>
                             <Link 
                                 to={`/analytics/${project._id}`} 
                                 className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 hover:bg-gray-100 text-gray-700 hover:text-gray-900 transition-colors group"
                             >
                                 <VscGraphLine className="w-5 h-5 text-blue-600" strokeWidth={1.25}/>
-                                <span className="font-medium">Аналітика проекту</span>
+                                <span className="font-medium">Project Analytics</span>
                                 <svg className="w-4 h-4 ml-auto text-gray-400 group-hover:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                 </svg>
@@ -252,7 +252,7 @@ function ProjectPage () {
                                 className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 hover:bg-gray-100 text-gray-700 hover:text-gray-900 transition-colors group"
                             >
                                 <VscTable className="w-5 h-5 text-green-600" strokeWidth={0.6}/>
-                                <span className="font-medium">Дошка задач</span>
+                                <span className="font-medium">Task Board</span>
                                 <svg className="w-4 h-4 ml-auto text-gray-400 group-hover:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                 </svg>
@@ -263,7 +263,7 @@ function ProjectPage () {
                                     className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 hover:bg-gray-100 text-gray-700 hover:text-gray-900 transition-colors group"
                                 >
                                     <VscOrganization className="w-5 h-5 text-purple-600" strokeWidth={0.4}/>
-                                    <span className="font-medium">Права учасників</span>
+                                    <span className="font-medium">Participant Rights</span>
                                     <svg className="w-4 h-4 ml-auto text-gray-400 group-hover:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                     </svg>
@@ -273,7 +273,7 @@ function ProjectPage () {
 
                         {/* Owner Card */}
                         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                            <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4">Власник проекту</h3>
+                            <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4">Project Owner</h3>
                             <div className="flex items-center gap-3">
                                 <Avatar 
                                     round 
@@ -283,7 +283,7 @@ function ProjectPage () {
                                 />
                                 <div>
                                     <div className="font-semibold text-gray-900">{project.owner.nickname}</div>
-                                    <div className="text-sm text-gray-500">Адміністратор</div>
+                                    <div className="text-sm text-gray-500">Administrator</div>
                                 </div>
                             </div>
                         </div>
@@ -291,7 +291,7 @@ function ProjectPage () {
                         {/* Participants */}
                         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                             <div className="flex items-center justify-between mb-4">
-                                <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Учасники</h3>
+                                <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Participants</h3>
                                 <span className="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded-full">{project.participants.length}</span>
                             </div>
                             <div className="space-y-3 max-h-64 overflow-y-auto">
@@ -313,7 +313,7 @@ function ProjectPage () {
                                                     className="text-xs text-red-600 hover:text-red-700 font-medium"
                                                     onClick={() => handleDeleteParticipant(participant.participant._id)}
                                                 >
-                                                    Видалити
+                                                    Remove
                                                 </button>
                                             )}
                                         </div>
@@ -327,7 +327,7 @@ function ProjectPage () {
                                     className="w-full mt-4 px-4 py-2 text-sm font-medium text-blue-700 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 transition-colors"
                                     onClick={handleAddUser}
                                 >
-                                    + Додати учасника
+                                    + Add Participant
                                 </button>
                             )}
                         </div>
@@ -336,7 +336,7 @@ function ProjectPage () {
                         {project.invited.length > 0 && (
                             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                                 <div className="flex items-center justify-between mb-4">
-                                    <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Запрошені</h3>
+                                    <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Invited</h3>
                                     <span className="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded-full">{project.invited.length}</span>
                                 </div>
                                 <div className="space-y-3">
@@ -357,7 +357,7 @@ function ProjectPage () {
                                                     className="text-xs text-red-600 hover:text-red-700 font-medium"
                                                     onClick={() => handleCancelInvite(user._id)}
                                                 >
-                                                    Скасувати
+                                                    Cancel
                                                 </button>
                                             )}
                                         </div>
