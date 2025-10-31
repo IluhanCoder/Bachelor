@@ -21,7 +21,10 @@ export default new class UserService {
     async setAvatar(userId: string, file: any) {
         const user = await UserModel.findById(userId);
         if(user) {
-            user.image = file.buffer.toString("base64");
+            user.avatar = {
+                data: file.buffer,
+                contentType: file.mimetype
+            };
             await user.save();
         }
     }
