@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import projectService from "./project-service";
 import { AuthenticatedRequest } from "../auth/auth-types";
-import { ProjectResponse } from "./project-types";
+import { ProjectResponse } from "@shared/types";
 import inviteService from "../invites/invite-service";
 
 export default new class ProjectController {
@@ -9,6 +9,7 @@ export default new class ProjectController {
         try {
             const { name } = req.body;
             const owner = req.user;
+            if(!owner) return res.status(401).json({status: "fail", message: "unauthorized"});
             const result = await projectService.createProject({name, owner: owner._id});
             return res.json({
                 status: "success",
@@ -43,6 +44,7 @@ export default new class ProjectController {
     async getUserProjects(req: AuthenticatedRequest, res: Response) {
         try {
             const { user } = req;
+            if(!user) return res.status(401).json({status: "fail", message: "unauthorized"});
             const projects: ProjectResponse[] = await projectService.getUserProjects(user._id.toString());
             res.json({
                 status: "success",
@@ -61,6 +63,7 @@ export default new class ProjectController {
         try {
             const { projectId } = req.params;
             const { user } = req;
+            if(!user) return res.status(401).json({status: "fail", message: "unauthorized"});
             await projectService.deleteParitcipant(projectId, user._id);
             res.status(200).json({
                 status: "success"
@@ -78,6 +81,7 @@ export default new class ProjectController {
         try {
             const { projectId } = req.params;
             const { userId } = req.body;
+            if(!req.user) return res.status(401).json({status: "fail", message: "unauthorized"});
             await projectService.deleteParitcipant(projectId, userId);
             res.status(200).json({
                 status: "success"
@@ -94,6 +98,7 @@ export default new class ProjectController {
     async getParticipants(req: AuthenticatedRequest, res: Response) {
         try {
             const {projectId} = req.params;
+            if(!req.user) return res.status(401).json({status: "fail", message: "unauthorized"});
             const participants = await projectService.getParicipants(projectId);
             res.status(200).json({
                 status: "success",
@@ -112,6 +117,7 @@ export default new class ProjectController {
         try {
             const {projectId} = req.params;
             const currentUser = req.user;
+            if(!currentUser) return res.status(401).json({status: "fail", message: "unauthorized"});
             const rights = await projectService.getUserRights(currentUser._id, projectId);
             res.status(200).json({
                 status: "success",
@@ -164,6 +170,7 @@ export default new class ProjectController {
         try {
             const {projectId} = req.params;
             const {oldOwnerId, newOwnerId} = req.body;
+            if(!req.user) return res.status(401).json({status: "fail", message: "unauthorized"});
             await projectService.changeOwner(projectId, oldOwnerId, newOwnerId);
             res.status(200).json({
                 status: "success",

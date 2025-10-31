@@ -80,7 +80,8 @@ export default new class InviteService {
 
     async seeInvite(inviteId: string, accept: boolean) {
       const invite = await inviteModel.findById(inviteId);
-      if(accept)
+      if(!invite) return;
+      if(accept) {
         await ProjectModel.findByIdAndUpdate(invite.project, {$push: {
           participants: {
             participant: invite.guest,
@@ -95,6 +96,7 @@ export default new class InviteService {
             }
           }
         }})
+      }
       await inviteModel.findByIdAndDelete(inviteId);
     }
 

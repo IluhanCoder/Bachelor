@@ -1,31 +1,20 @@
-import { UserDto } from "@shared/types"
-import { Request } from "express"
+import { UserDto, RegisterCredentials as RegisterCredentialsShared, LoginCredentials as LoginCredentialsShared } from "@shared/types";
+import { Request } from "express";
 import { IncomingHttpHeaders } from 'http';
 
-export type RegCredantials = {
-    name: string,
-    surname: string,
-    nickname: string,
-    email: string,
-    organisation: string
-    password: string
-}
-
-export type LoginCredentials = {
-    nickname: string | undefined,
-    email: string | undefined,
-    password: string
-}
+// Re-export shared credential types under the local names expected by server code
+export type RegCredantials = RegisterCredentialsShared;
+export type LoginCredentials = LoginCredentialsShared;
 
 interface CustomHeaders extends IncomingHttpHeaders {
     authorization?: string;
 }
 
 export interface AuthenticatedRequest extends Request {
-    user?: UserDto,
+    user?: UserDto;
     headers: CustomHeaders;
 }
 
 export type AuthenticatedRequestWithFile = AuthenticatedRequest & {
-    file: any
+    file?: any;
 };

@@ -1,7 +1,7 @@
 export default class AuthError extends Error {
     status: number
 
-    constructor(message, status) {
+    constructor(message: string, status?: number) {
         super(message);
         this.status = status ?? 500;
     }

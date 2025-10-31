@@ -7,6 +7,7 @@ export default new class InviteController {
         try {
             const currentUser = req.user;
             const {guest, projectId} = req.body;
+            if(!currentUser) return res.status(401).json({status: "fail", message: "unauthorized"});
             await inviteService.createInvite(currentUser._id.toString(), guest, projectId);
             res.status(200).json({
                 status: "success"
@@ -42,6 +43,7 @@ export default new class InviteController {
     async getInvitesToUser(req: AuthenticatedRequest, res: Response) {
         try {
             const currentUser = req.user;
+            if(!currentUser) return res.status(401).json({status: "fail", message: "unauthorized"});
             const invites = await inviteService.getInvitesToUser(currentUser._id);
             res.status(200).json({
                 status: "success",

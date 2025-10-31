@@ -4,7 +4,8 @@ import projectController from "./projects/project-controller";
 import userController from "./user/user-controller";
 import inviteController from "./invites/invite-controller";
 import taskController from "./tasks/task-controller";
-import multer from "multer";
+// multer typings may not be installed in this workspace; use require to avoid type import errors
+const multer = require("multer");
 import backlogController from "./backlog/backlog-controller";
 import sprintController from "./sprints/sprint-controller";
 import analyticsController from "./analytics/analytics-controller";

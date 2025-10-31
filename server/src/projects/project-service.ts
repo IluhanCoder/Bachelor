@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
 import ProjectModel from "./project-model";
-import Project, { ExtendedProjectResponse, Participant, ParticipantResponse, ProjectCredentials, Rights } from "./project-types";
+import { ProjectCredentials, ProjectResponse, ParticipantResponse, Rights } from "@shared/types";
+import { Participant } from "./project-types";
 import inviteService from "../invites/invite-service";
 import backlogModel from "../backlog/backlog-model";
+import ProjectError from "./project-errors";
 
 const fullLookUp = [
   {
@@ -126,7 +128,7 @@ export default new class ProjectService {
     async createProject(credentials: ProjectCredentials) {
         try {
             const currentDate = new Date();
-            const newProject: Project = {
+      const newProject = {
                 name: credentials.name,
                 owner: new mongoose.Types.ObjectId(credentials.owner),
                 created: currentDate,
@@ -142,7 +144,7 @@ export default new class ProjectService {
 
     async getProjectById(projectId: string) {
         try {
-            const result: ExtendedProjectResponse = (await ProjectModel.aggregate([
+      const result: ProjectResponse = (await ProjectModel.aggregate([
                 {
                     $match: {
                         _id: new mongoose.Types.ObjectId(projectId)
@@ -244,6 +246,7 @@ export default new class ProjectService {
     async getUserRights (userId: string, projectId: string) {
       try {
         const project = await ProjectModel.findById(projectId);
+        if(!project) throw ProjectError.ProjectNotFound();
         const userParticipating = project.participants.find((participant: any) => (new mongoose.Types.ObjectId(userId)).equals(participant.participant));
         if (userParticipating) return userParticipating.rights;
         else return null;
@@ -315,15 +318,16 @@ export default new class ProjectService {
       }
     }
 
-    async getOwnerId (projectId) {
+    async getOwnerId (projectId: string) {
       try {
-        return (await ProjectModel.findById(projectId)).owner;
+        const project = await ProjectModel.findById(projectId);
+        return project ? project.owner : null;
       } catch (error) {
         throw error;
       }
     }
 
-    async deleteProject (projectId) {
+    async deleteProject (projectId: string) {
       try {
         await backlogModel.deleteMany({projectId: new mongoose.Types.ObjectId(projectId)});
         await ProjectModel.findByIdAndDelete(projectId);

@@ -1,7 +1,7 @@
 export default class ProjectError extends Error {
     status: number
 
-    constructor(message, status) {
+    constructor(message: string, status?: number) {
         super(message);
         this.status = status ?? 500;
     }

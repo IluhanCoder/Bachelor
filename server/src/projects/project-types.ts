@@ -1,51 +1,13 @@
-import mongoose from "mongoose";
-import User, { UserResponse } from "../user/user-type";
-import TaskResponse from "../tasks/task-types";
+import { ProjectDto, Rights } from "@shared/types";
+import { Document, Types } from "mongoose";
 
-export interface Rights {
-    create: boolean,
-    edit: boolean,
-    delete: boolean,
-    check: boolean,
-    editParticipants: boolean,
-    addParticipants: boolean,
-    editProjectData: boolean
-}
+// Participant entry in the mongoose document: contains an ObjectId reference and rights
+export type Participant = {
+	participant: Types.ObjectId | string;
+	rights: Rights;
+};
 
-export interface Participant {
-    participant: mongoose.Types.ObjectId,
-    rights: Rights
-}
-
-export interface ParticipantResponse {
-    participant: UserResponse,
-    right: Rights
-}
-
-export interface ProjectCredentials {
-    name: string,
-    owner: string
-}
-
-export interface ProjectResponse {
-    name: string,
-    created: Date,
-    lastModified: Date,
-    owner: UserResponse,
-    tasks: TaskResponse[],
-    participants: ParticipantResponse[]
-}
-
-export interface ExtendedProjectResponse extends ProjectResponse {
-    invited?: UserResponse[]
-}
-
-interface Project {
-    name: string,
-    created: Date,
-    lastModified: Date,
-    owner: mongoose.Types.ObjectId,
-    participants: Participant[]
-}
-
-export default Project;
+export type ProjectDocument = ProjectDto & {
+	owner: Types.ObjectId | string;
+	participants: Participant[];
+} & Document;

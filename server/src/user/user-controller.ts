@@ -6,6 +6,7 @@ export default new class UserController {
     async fetchUsers(req: AuthenticatedRequest, res: Response) {
         try {
             const currentUser = req.user;
+                if(!currentUser) return res.status(401).json({status: "fail", message: "unauthorized"});
             const result = await userService.fetchUsers(currentUser);
             res.status(200).json({
                 status: "success",
@@ -73,6 +74,7 @@ export default new class UserController {
     async setAvatar(req: AuthenticatedRequestWithFile, res: Response) {
         try {
           const {user, file} = req;
+                        if(!user) return res.status(401).json({status: "fail", message: "unauthorized"});
           if (req.file) await userService.setAvatar(file, user._id);
           return res.status(200).json({
             status: "success"

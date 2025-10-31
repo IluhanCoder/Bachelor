@@ -14,6 +14,7 @@ const port = 5001;
 const conn = process.env.DB_CONN;
 const clientUrl = process.env.CLIENT_URL;
 
+if (!conn) throw new Error('DB_CONN environment variable is not set');
 mongoose.connect(conn);
 
 app.use(express.json());

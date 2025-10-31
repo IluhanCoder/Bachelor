@@ -1,22 +1,23 @@
-import Task, { TaskCredentials, UpdateTaskCredentials } from "./task-types";
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 import TaskModel from "./task-model";
 import backlogModel from "../backlog/backlog-model";
 import TaskStatuses, { TaskDifficulties, TaskPriorities } from "./task-statuses";
 import ProjectModel from "../projects/project-model";
+import { TaskCredentials, UpdateTaskCredentials } from '@shared/types';
+import { TaskDocument } from './task-types';
 
 export default new class TaskService {
     async addTask(newTask: TaskCredentials) {
         try {
-            const task: Task = {
+            const task: Partial<TaskDocument> = {
                 name: newTask.name,
                 desc: newTask.desc,
                 isChecked: false,
                 createdBy: new mongoose.Types.ObjectId(newTask.createdBy),
                 created: new Date(),
-                checkedDate: undefined,
+                checkedDate: null,
                 backlogId: new mongoose.Types.ObjectId(newTask.backlogId),
-                executors: newTask.executors ?? [],
+                executors: (newTask.executors ?? []).map(e => new mongoose.Types.ObjectId(e)),
                 status: TaskStatuses[0],
                 difficulty: TaskDifficulties[1],
                 priority: TaskPriorities[1],
