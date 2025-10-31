@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import userService from "./user-service";
-import { AuthenticatedRequest } from "../auth/auth-types";
+import { AuthenticatedRequest, AuthenticatedRequestWithFile } from "../auth/auth-types";
 
 export default new class UserController {
     async fetchUsers(req: AuthenticatedRequest, res: Response) {
@@ -70,7 +70,7 @@ export default new class UserController {
         }
     }
 
-    async setAvatar(req: AuthenticatedRequest, res: Response) {
+    async setAvatar(req: AuthenticatedRequestWithFile, res: Response) {
         try {
           const {user, file} = req;
           if (req.file) await userService.setAvatar(file, user._id);

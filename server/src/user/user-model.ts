@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
+import { UserDocument } from "./user-type";
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -47,6 +48,6 @@ const userSchema = new mongoose.Schema({
     return isMatch;
   };
   
-  const UserModel = mongoose.model('User', userSchema);
+  const UserModel = mongoose.model<UserDocument>('User', userSchema);
   
 export default UserModel;

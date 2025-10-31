@@ -1,28 +1,4 @@
-type User = {
-    _id?: string,
-    name?: string,
-    surname?: string,
-    nickname: string,
-    email: string,
-    organisation: string
-    password: string,
-    avatar: {
-        data: Buffer,
-        contentType: string
-    }
-}
+import { UserDto } from '@shared/types';
+import { Document } from 'mongoose';
 
-export default User
-
-export interface UserResponse {
-    _id: string,
-    name: string,
-    surname: string,
-    nickname: string,
-    email: string,
-    organisation: string,
-    avatar: {
-        data: Buffer,
-        contentType: string
-    }
-}
+export type UserDocument = UserDto & {password: string} & Document;

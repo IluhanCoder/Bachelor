@@ -1,6 +1,6 @@
+import { UserDto } from "@shared/types"
 import { Request } from "express"
-import User from "../user/user-type"
-import { IncomingHttpHeaders } from 'http'
+import { IncomingHttpHeaders } from 'http';
 
 export type RegCredantials = {
     name: string,
@@ -22,6 +22,10 @@ interface CustomHeaders extends IncomingHttpHeaders {
 }
 
 export interface AuthenticatedRequest extends Request {
-    user?: User,
+    user?: UserDto,
     headers: CustomHeaders;
 }
+
+export type AuthenticatedRequestWithFile = AuthenticatedRequest & {
+    file: any
+};

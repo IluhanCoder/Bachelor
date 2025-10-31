@@ -1,5 +1,5 @@
 import UserModel from "../user/user-model";
-import User from "../user/user-type";
+import { UserDocument } from "../user/user-type";
 import AuthError from "./auth-errors";
 import { RegCredantials, LoginCredentials } from "./auth-types";
 import bcrypt from "bcrypt";
@@ -21,11 +21,13 @@ export default new class AuthService {
 
     async login(credentials: LoginCredentials) {
         try {
-            const user = await UserModel.findOne({ $or: [{ nickname: credentials.nickname }, { email: credentials.email }]});
+            const user: UserDocument | null = await UserModel.findOne({ $or: [{ nickname: credentials.nickname }, { email: credentials.email }]});
             if(!user) throw AuthError.UserNotFound();
             const validPassword = await bcrypt.compare(credentials.password, user.password);
             if (!validPassword) throw AuthError.WrongPassword();
-            const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
+            const secret = process.env.JWT_SECRET;
+            if(!secret) throw AuthError.VerificationFailed();
+            const token = jwt.sign({ userId: user.id }, secret);
             return token;
         } catch (error) {
             throw error;
@@ -38,9 +40,12 @@ export default new class AuthService {
         }
 
         try {
-            const {userId}: DecodedJWTPayload = jwt.verify(token, process.env.JWT_SECRET) as DecodedJWTPayload;
+            const secret = process.env.JWT_SECRET;
+            if(!secret) throw AuthError.VerificationFailed();
+            const {userId} = jwt.verify(token, secret) as DecodedJWTPayload;
             if(!userId) throw AuthError.VerificationFailed();
-            const user: User = await UserModel.findById(userId);
+            const user: UserDocument | null = await UserModel.findById(userId);
+            if(!user) throw AuthError.UserNotFound();
             return user;
         } catch (error) {
             throw error;

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import authService from "./auth-service";
 import AuthError from "./auth-errors";
+import { Error } from "mongoose";
 
 export default new class AuthController {
     async registration(req: Request, res: Response) {
@@ -11,7 +12,7 @@ export default new class AuthController {
                 status: "success",
                 user
             });
-        } catch (error) {
+        } catch (error: Error | any) {
             if (error instanceof AuthError) res.status(error.status).json({
                 message: error.message,
                 status: "bad request"
@@ -33,7 +34,7 @@ export default new class AuthController {
                 status: "success",
                 token
             });
-        } catch (error) {
+        } catch (error: Error | any) {
             if (error instanceof AuthError) res.status(error.status).json({
                 message: error.message,
                 status: "bad request"
@@ -55,7 +56,7 @@ export default new class AuthController {
                 status: "success",
                 user
             });
-        } catch (error) {
+        } catch (error: Error | any) {
             if (error instanceof AuthError) res.status(error.status).json({
                 message: error.message,
                 status: "bad request"
