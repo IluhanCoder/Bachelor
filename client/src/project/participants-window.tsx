@@ -19,10 +19,10 @@ function ParticipantsWindow({participants, maxDisplay}: LocalParams) {
         return <div className="flex gap-1 pl-1">
             {participants.slice(0,maxDisplay).map((participant: ParticipantResponse, index) => 
                 <Avatar name={participant.participant?.nickname} round size="30" textMarginRatio={.15} src={participant.participant.avatar ? convertImage(participant.participant.avatar) : ""}/>)}
-            {(maxDisplay && participants.length > maxDisplay) && <div className="mt-2 text-gray-600 font-semibold">and {participants.length - maxDisplay} more...</div>}
+            {(maxDisplay && participants.length > maxDisplay) && <div className="mt-2 text-gray-600 font-semibold">та ще {participants.length - maxDisplay} ...</div>}
         </div>
     else return <div className="text-gray-400 pl-2">
-        no participants
+        учасників нема
     </div>
 }
 

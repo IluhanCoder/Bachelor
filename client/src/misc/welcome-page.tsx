@@ -8,32 +8,32 @@ function WelcomePage() {
     return <div className="flex w-full pt-20">
         <div className="flex justify-center w-full">
             <div className="flex flex-col gap-6">
-                <h1 className="text-3xl text-gray-800 font-light">Welcome to Log Manager!</h1>
+                <h1 className="text-3xl text-gray-800 font-light">Вітаємо у Log Manager!</h1>
                     <div className="flex flex-col gap-4 text-xl px-10 font-light">
                         <div className="flex gap-4">
                             <VscRocket className="mt-1"/>
-                            <p>create projects</p>
+                            <p>створюйте проекти</p>
                         </div>
                         <div className="flex gap-4">
                             <VscOrganization className="mt-1"/>
-                            <p>build teams</p>
+                            <p>збирайте команди</p>
                         </div>
                         <div className="flex gap-4">
                             <VscArrowSwap className="mt-1"/>
-                            <p>manage process</p>
+                            <p>керуйте процесом</p>
                         </div>
                         <div className="flex gap-4">
                             <VscSymbolEvent className="mt-1"/>
-                            <p>organize sprints</p>
+                            <p>організовуйте спрінти</p>
                         </div>
                         <div className="flex gap-4">
                             <VscGraphLine className="mt-1"/>
-                            <p>analyze productivity</p>
+                            <p>аналізуйте продуктивність</p>
                         </div>
                     </div>
                     {userStore.user && 
                     <div className="flex justify-center">
-                        <Link to="/projects" className={lightButtonStyle}>your projects</Link>
+                        <Link to="/projects" className={lightButtonStyle}>ваші проекти</Link>
                     </div>}
                 </div>
         </div>

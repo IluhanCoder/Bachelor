@@ -21,7 +21,7 @@ function InviteForm ({project, callBack}: LocalParams) {
 
     const fetchUsers = async () => {
         const result = await userService.fetchUsers();
-        // Filter users: exclude self, project participants, and already invited users
+        // Фільтруємо користувачів: виключаємо себе, учасників проєкту та вже запрошених
         const participantIds = project.participants.map((participant: ParticipantResponse) => participant.participant && participant.participant._id);
         const invitedIds = project.invited.map((user: UserResponse) => user._id);
         
@@ -50,11 +50,11 @@ function InviteForm ({project, callBack}: LocalParams) {
         fetchUsers()
     }, []);
 
-    return <FormComponent formLabel={`Invite Users to Project "${project.name}"`}>
+    return <FormComponent formLabel={`Запросити користувачів до проєкту "${project.name}"`}>
         <div className="space-y-6">
             <div className="space-y-3">
                 <label className="block text-sm font-semibold text-slate-700">
-                    Select Users to Invite
+                    Оберіть користувачів для запрошення
                 </label>
                 <div className="bg-gradient-to-br from-slate-50 to-blue-50/30 rounded-xl border-2 border-slate-200 p-4 max-h-96 overflow-y-auto">
                     <UsersMapper users={users} selectedState={selectedState}/>
@@ -66,7 +66,7 @@ function InviteForm ({project, callBack}: LocalParams) {
                         <div className="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold">
                             {selected.length}
                         </div>
-                        Selected Users:
+                        Обрані користувачі:
                     </div>
                     <div className="flex flex-wrap gap-2">
                         {selected.map((user: UserResponse) => (
@@ -86,7 +86,7 @@ function InviteForm ({project, callBack}: LocalParams) {
                     onClick={() => formStore.dropForm()}
                     className="px-6 py-2.5 text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg font-medium transition-colors"
                 >
-                    Cancel
+                    Скасувати
                 </button>
                 <button 
                     onClick={handleInvite} 
@@ -103,7 +103,7 @@ function InviteForm ({project, callBack}: LocalParams) {
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                     </svg>
-                    {`Invite ${selected.length} ${selected.length > 1 ? "Users" : "User"}`}
+                    {`Запросити ${selected.length > 1 ? "користувачів" : "користувача"}`}
                 </button>
             </div>
         </div>

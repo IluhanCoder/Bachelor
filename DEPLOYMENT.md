@@ -2,8 +2,6 @@
 
 Complete checklist for deploying Backlogger to production.
 
-> **📘 Detailed Render Guide:** For step-by-step Render deployment instructions with separate root directories for client and server, see [RENDER_DEPLOYMENT.md](RENDER_DEPLOYMENT.md)
-
 ## 📋 Pre-Deployment Checklist
 
 ### Code Quality

@@ -37,7 +37,7 @@ function LoginForm () {
         errorStore.dropErrors();
 
         if((formData.nickname?.length === 0 && formData.email?.length === 0) || formData.password?.length === 0) {
-            errorStore.pushError("All fields must be filled");
+            errorStore.pushError("Всі поля мають бути заповнені");
             return;
         }
 
@@ -54,19 +54,19 @@ function LoginForm () {
         }
     }
 
-    return <FormComponent formLabel="Sign In">
+    return <FormComponent formLabel="Вхід в обліковий запис">
         <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-4">
                 <div className="space-y-2">
                     <label className="block text-sm font-medium text-gray-700">
-                        Email or Login <span className="text-red-500">*</span>
+                        Email або логін <span className="text-red-500">*</span>
                     </label>
                     <input 
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 
                         type="text" 
                         onChange={handleChange} 
                         name="nickname"
-                        placeholder="Enter email or login..."
+                        placeholder="Введіть email або логін..."
                         required
                     />
                 </div>
@@ -80,7 +80,7 @@ function LoginForm () {
                         type="password" 
                         onChange={handleChange} 
                         name="password"
-                        placeholder="Enter password..."
+                        placeholder="Введіть пароль..."
                         required
                     />
                 </div>
@@ -90,9 +90,9 @@ function LoginForm () {
 
             <div className="flex items-center justify-between gap-4 pt-4">
                 <div className="text-sm text-gray-600">
-                    Don't have an account?{' '}
+                    Якщо у вас нема облікового запису, ви можете{' '}
                     <Link to="/registration" className="text-blue-600 hover:text-blue-700 font-medium underline">
-                        Sign up
+                        зареєструватися
                     </Link>
                 </div>
                 <button 

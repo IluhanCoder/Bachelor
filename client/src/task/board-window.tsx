@@ -217,7 +217,7 @@ function BoardWindow() {
                 <div className="flex-1 bg-gray-50 rounded-b-xl p-4 space-y-3 overflow-y-auto min-h-[500px] max-h-[calc(100vh-300px)]">
                     {sortedTasks.length === 0 ? (
                         <div className="flex items-center justify-center h-32 text-gray-400 text-sm">
-                            No tasks
+                            Немає задач
                         </div>
                     ) : (
                         sortedTasks.map((task: Task) => (
@@ -242,9 +242,9 @@ function BoardWindow() {
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                             </svg>
-                            Back to Project
+                            Назад до проєкту
                         </Link>
-                        <h1 className="text-2xl font-bold text-gray-900">📋 Task Board</h1>
+                        <h1 className="text-2xl font-bold text-gray-900">📋 Дошка задач</h1>
                     </div>
                     
                     <label className="flex items-center gap-3 bg-white px-4 py-2.5 rounded-lg shadow-sm border border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors">

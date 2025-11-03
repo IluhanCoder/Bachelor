@@ -28,7 +28,7 @@ function EditProfileForm ({userData, callback}: LocalParams) {
         formStore.dropForm();
     }
 
-    return <FormComponent formLabel="Edit Profile">
+    return <FormComponent formLabel="Редагування профіля">
         <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-4">
                 <div className="space-y-2">
@@ -41,7 +41,7 @@ function EditProfileForm ({userData, callback}: LocalParams) {
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 
                         onChange={handleChange} 
                         name="nickname"
-                        placeholder="Your nickname..."
+                        placeholder="Ваш нікнейм..."
                     />
                 </div>
 
@@ -55,7 +55,7 @@ function EditProfileForm ({userData, callback}: LocalParams) {
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 
                         onChange={handleChange} 
                         name="name"
-                        placeholder="Your name..."
+                        placeholder="Ваше ім'я..."
                     />
                 </div>
 
@@ -69,13 +69,13 @@ function EditProfileForm ({userData, callback}: LocalParams) {
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 
                         onChange={handleChange} 
                         name="surname"
-                        placeholder="Your surname..."
+                        placeholder="Ваше прізвище..."
                     />
                 </div>
 
                 <div className="space-y-2">
                     <label className="block text-sm font-medium text-gray-700">
-                        Organization
+                        Організація
                     </label>
                     <input 
                         defaultValue={formData.organisation} 
@@ -83,7 +83,7 @@ function EditProfileForm ({userData, callback}: LocalParams) {
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 
                         onChange={handleChange} 
                         name="organisation"
-                        placeholder="Organization name..."
+                        placeholder="Назва організації..."
                     />
                 </div>
             </div>
@@ -94,7 +94,7 @@ function EditProfileForm ({userData, callback}: LocalParams) {
                     onClick={() => formStore.dropForm()}
                     className="px-6 py-2.5 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium transition-colors"
                 >
-                    Cancel
+                    Скасувати
                 </button>
                 <button 
                     type="submit" 
@@ -103,7 +103,7 @@ function EditProfileForm ({userData, callback}: LocalParams) {
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Confirm Changes
+                    Підтвердити зміни
                 </button>
             </div>
         </form>

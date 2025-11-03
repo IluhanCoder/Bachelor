@@ -127,18 +127,41 @@ export default new class AnalyticsService {
     }
 
     async predictRatio(projectId: string, userId: string | undefined) {
-        const tasks = await this.taskRatio(projectId, new Date(2024, 0, 0), new Date(2025, 0, 0), false, userId);
-        const months = tasks.map(entry => entry.month);
+        // Get data for the last 6 months
+        const now = new Date();
+        const sixMonthsAgo = new Date();
+        sixMonthsAgo.setMonth(now.getMonth() - 6);
+        
+        const tasks = await this.taskRatio(projectId, sixMonthsAgo, now, false, userId);
+        
+        // If not enough data, return empty predictions
+        if (tasks.length < 2) {
+            return [];
+        }
+
+        // Create sequential index for regression (0, 1, 2, 3...)
+        const indices = tasks.map((_, index) => index);
         const ratios = tasks.map(entry => entry.amount);
 
         // Fit linear regression model
-        const regression = new SimpleLinearRegression(months, ratios);
+        const regression = new SimpleLinearRegression(indices, ratios);
 
-        // Predict ratios for each month of the future year
+        // Predict ratios for next 6 months
         const predictedRatios = [];
-        for (let month = 0; month <= 11; month++) {
-            const predictedRatio = regression.predict(month);
-            predictedRatios.push({ year: 2024, month, amount: predictedRatio });
+        const startDate = new Date(now);
+        
+        for (let i = 0; i < 6; i++) {
+            const futureIndex = tasks.length + i;
+            const predictedRatio = Math.max(0, Math.min(100, regression.predict(futureIndex))); // Clamp between 0-100
+            
+            const futureDate = new Date(startDate);
+            futureDate.setMonth(startDate.getMonth() + i);
+            
+            predictedRatios.push({ 
+                year: futureDate.getFullYear(), 
+                month: futureDate.getMonth(), 
+                amount: Math.round(predictedRatio * 10) / 10 
+            });
         }
 
         return predictedRatios;

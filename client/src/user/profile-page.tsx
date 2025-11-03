@@ -9,6 +9,7 @@ import formStore from "../forms/form-store";
 import EditProfileForm from "./edit-profile-form";
 import { Buffer } from "buffer";
 import Avatar from "react-avatar";
+import AvatarCropModal from "./avatar-crop-modal";
 
 interface LocalParams {
     userId: string
@@ -17,6 +18,8 @@ interface LocalParams {
 function ProfilePage ({userId}: LocalParams) {
     const [isCurrentProfile, setIsCurrentProfile] = useState<boolean>(false);
     const [userData, setUserData] = useState<User | null>();
+    const [showCropModal, setShowCropModal] = useState(false);
+    const [selectedImage, setSelectedImage] = useState<string>("");
 
     const getUserData = async () => {
         const result = await userService.getUserById(userId);
@@ -27,11 +30,30 @@ function ProfilePage ({userId}: LocalParams) {
         if(userData) formStore.setForm(<EditProfileForm userData={userData} callback={getUserData}/>)
     }
     
-    const handleNewAvatar = async (files: FileList | null) => {
-        if(files) {
-            await userService.setAvatar(files[0]);
-            getUserData();
+    const handleFileSelect = (files: FileList | null) => {
+        if(files && files[0]) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                if(e.target?.result) {
+                    setSelectedImage(e.target.result as string);
+                    setShowCropModal(true);
+                }
+            };
+            reader.readAsDataURL(files[0]);
         }
+    }
+
+    const handleSaveCroppedAvatar = async (croppedBlob: Blob) => {
+        const file = new File([croppedBlob], "avatar.jpg", { type: "image/jpeg" });
+        await userService.setAvatar(file);
+        setShowCropModal(false);
+        setSelectedImage("");
+        getUserData();
+    }
+
+    const handleCancelCrop = () => {
+        setShowCropModal(false);
+        setSelectedImage("");
     }
 
     const convertImage = (image: any) => {
@@ -46,6 +68,13 @@ function ProfilePage ({userId}: LocalParams) {
     }, [])
 
     return <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8">
+        {showCropModal && (
+            <AvatarCropModal
+                imageSrc={selectedImage}
+                onSave={handleSaveCroppedAvatar}
+                onCancel={handleCancelCrop}
+            />
+        )}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className={`grid ${isCurrentProfile ? 'grid-cols-1 lg:grid-cols-3' : 'grid-cols-1'} gap-8`}>
                 {/* Profile Card */}
@@ -75,7 +104,7 @@ function ProfilePage ({userId}: LocalParams) {
                                     type="file" 
                                     id="files" 
                                     className="hidden" 
-                                    onChange={(e) => handleNewAvatar(e.target.files)}
+                                    onChange={(e) => handleFileSelect(e.target.files)}
                                     accept="image/*"
                                 />
                             </div>

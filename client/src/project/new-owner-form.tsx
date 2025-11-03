@@ -41,11 +41,11 @@ function NewOwnerForm({project, callBack}: LocalParams) {
         fetchUsers()
     }, []);
 
-    return <FormComponent formLabel="Search Users">
+    return <FormComponent formLabel="пошук користувачів">
         <div className="space-y-6">
             <div className="space-y-3">
                 <label className="block text-sm font-medium text-gray-700">
-                    Select New Project Owner
+                    Оберіть нового власника проекту
                 </label>
                 <div className="bg-gray-50 rounded-lg border border-gray-200 p-4 max-h-96 overflow-y-auto">
                     <UsersMapper users={users} selectedState={selectedState}/>
@@ -53,7 +53,7 @@ function NewOwnerForm({project, callBack}: LocalParams) {
             </div>
             {selected.length > 0 && (
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                    <div className="text-sm font-medium text-blue-900 mb-2">Selected User:</div>
+                    <div className="text-sm font-medium text-blue-900 mb-2">Обраний користувач:</div>
                     <div className="flex flex-wrap gap-2">
                         {selected.map((user: UserResponse) => (
                             <div key={user._id} className="bg-white px-4 py-2 rounded-lg shadow-sm border border-blue-200 text-blue-700 font-medium">
@@ -69,7 +69,7 @@ function NewOwnerForm({project, callBack}: LocalParams) {
                     onClick={() => formStore.dropForm()}
                     className="px-6 py-2.5 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium transition-colors"
                 >
-                    Cancel
+                    Скасувати
                 </button>
                 <button 
                     onClick={handleInvite} 
@@ -86,7 +86,7 @@ function NewOwnerForm({project, callBack}: LocalParams) {
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                     </svg>
-                    Transfer Project
+                    Передати проект
                 </button>
             </div>
         </div>

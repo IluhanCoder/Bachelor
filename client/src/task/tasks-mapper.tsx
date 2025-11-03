@@ -52,8 +52,8 @@ function TasksMapper ({tasks, onCheck, push, onPush, sprintId, onPull}: LocalPar
                     <input type="checkbox" checked={task.isChecked} onChange={(e) => handleCheck(e)} id={task._id}/>
                 </div>
                 <div className={(task.isChecked ? "underline" : "")}>{task.name}</div>
-                {push && <div><button type="button" onClick={() => handleSprintPush(task)} className={submitButtonStyle}>add to sprint</button></div> || 
-                    <div><button type="button" className={submitButtonStyle} onClick={() => handleSprintPull(task._id)}>remove from sprint</button></div>}
+                {push && <div><button type="button" onClick={() => handleSprintPush(task)} className={submitButtonStyle}>додати в спрінт</button></div> || 
+                    <div><button type="button" className={submitButtonStyle} onClick={() => handleSprintPull(task._id)}>прибрати зі спрінту</button></div>}
             </div>
         })}
     </div>

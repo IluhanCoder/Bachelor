@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import FormCloserProvider from './forms/form-closer-provider';
 import authService from './auth/auth-service';
 import userStore from './user/user-store';
+import 'react-image-crop/dist/ReactCrop.css';
 
 function App() {
   const {form} = formStore;

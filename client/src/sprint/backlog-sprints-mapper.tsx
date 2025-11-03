@@ -136,8 +136,8 @@ function BacklogSprintsMapper({sprints, pullHandler, assignHandler, callBack, de
                                     />
                                 </div>
                                 <div className="flex items-center justify-between text-xs text-gray-500">
-                                    <span>{sprint.tasks.length} tasks</span>
-                                    <span>{progressPercentage.toFixed(0)}% completed</span>
+                                    <span>{sprint.tasks.length} задач</span>
+                                    <span>{progressPercentage.toFixed(0)}% виконано</span>
                                 </div>
                             </div>
                         </div>
@@ -145,7 +145,7 @@ function BacklogSprintsMapper({sprints, pullHandler, assignHandler, callBack, de
                         {/* Sprint Tasks */}
                         <div className="p-4">
                             <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
-                                Sprint Tasks
+                                Задачі спрінту
                             </div>
                             <SprintTasksMapper 
                                 rights={rights} 
