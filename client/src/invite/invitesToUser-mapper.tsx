@@ -28,7 +28,7 @@ function InvitesToUserMapper () {
 
     return <div className="w-full max-w-4xl space-y-6">
         <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold text-gray-900">Запрошення до проєктів</h2>
+            <h2 className="text-2xl font-bold text-gray-900">Project Invitations</h2>
             {invites.length > 0 && (
                 <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold">
                     {invites.length}
@@ -58,7 +58,7 @@ function InvitesToUserMapper () {
                                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                                 </svg>
-                                                <span>Запрошує:</span>
+                                                <span>Invited by:</span>
                                                 <Link 
                                                     className="font-medium text-blue-600 hover:text-blue-700 hover:underline" 
                                                     to={`/profile/${invite.host._id}`}
@@ -104,8 +104,8 @@ function InvitesToUserMapper () {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-slate-700 mb-1">Запрошення відсутні</h3>
-                <p className="text-sm text-slate-500">Коли вас запросять до проєкту, ви побачите запрошення тут</p>
+                <h3 className="text-lg font-semibold text-slate-700 mb-1">No Invitations</h3>
+                <p className="text-sm text-slate-500">When you are invited to a project, you will see invitations here</p>
             </div>
         )}
     </div>

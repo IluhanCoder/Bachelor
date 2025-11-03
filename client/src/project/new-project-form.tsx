@@ -24,7 +24,7 @@ function NewProjectForm({callBack}: LocalParams) {
         errorStore.dropErrors();
     
         if(formData.name.length === 0) {
-            errorStore.pushError("Всі поля мають бути заповнені");
+            errorStore.pushError("All fields must be filled");
             return;
         }
     
@@ -43,18 +43,18 @@ function NewProjectForm({callBack}: LocalParams) {
             });
     };   
 
-    return <FormComponent formLabel="Новий проект">
+    return <FormComponent formLabel="New Project">
         <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
                 <label className="block text-sm font-medium text-gray-700">
-                    Назва проекту <span className="text-red-500">*</span>
+                    Project Name <span className="text-red-500">*</span>
                 </label>
                 <input 
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 
                     name="name" 
                     type="text" 
                     onChange={handleChange}
-                    placeholder="Введіть назву проекту..."
+                    placeholder="Enter project name..."
                     required
                 />
             </div>
@@ -65,7 +65,7 @@ function NewProjectForm({callBack}: LocalParams) {
                     onClick={() => formStore.dropForm()}
                     className="px-6 py-2.5 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium transition-colors"
                 >
-                    Скасувати
+                    Cancel
                 </button>
                 <button 
                     type="submit" 

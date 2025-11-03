@@ -79,20 +79,20 @@ function TaskInfoForm({taskId, callBack, projectId, rights}: LocalParams) {
         }
     }
 
-    return <FormComponent formLabel="Інформація про задачу">
+    return <FormComponent formLabel="Task Information">
         <form className="space-y-6" onSubmit={handleSubmit}>
-            {/* Дата створення */}
+            {/* Date Created */}
             <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
                 <div className="flex items-center gap-2 text-sm text-gray-600">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    <span className="font-medium">Створено:</span>
+                    <span className="font-medium">Created:</span>
                     <DateFormater value={formData?.created} dayOfWeek/>
                 </div>
             </div>
 
-            {/* Основні поля */}
+            {/* Main Fields */}
             <div className="space-y-4">
                 <div className="space-y-2">
                     <label className="block text-sm font-medium text-gray-700">
@@ -105,7 +105,7 @@ function TaskInfoForm({taskId, callBack, projectId, rights}: LocalParams) {
                         type="text" 
                         onChange={handleChange} 
                         name="name"
-                        placeholder="Назва задачі..."
+                        placeholder="Task name..."
                     />
                 </div>
 
@@ -120,13 +120,13 @@ function TaskInfoForm({taskId, callBack, projectId, rights}: LocalParams) {
                         type="text" 
                         onChange={handleChange} 
                         name="desc"
-                        placeholder="Опис задачі..."
+                        placeholder="Task description..."
                     />
                 </div>
 
                 <div className="space-y-2">
                     <label className="block text-sm font-medium text-gray-700">
-                        Вимоги
+                        Requirements
                     </label>
                     <textarea 
                         disabled={!canEdit} 
@@ -135,12 +135,12 @@ function TaskInfoForm({taskId, callBack, projectId, rights}: LocalParams) {
                         onChange={handleChange} 
                         name="requirements"
                         rows={4}
-                        placeholder="Вимоги до виконання..."
+                        placeholder="Requirements for completion..."
                     />
                 </div>
             </div>
 
-            {/* Статус, складність, пріоритет */}
+            {/* Status, Difficulty, Priority */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="space-y-2">
                     <label className="block text-sm font-medium text-gray-700">
@@ -153,9 +153,9 @@ function TaskInfoForm({taskId, callBack, projectId, rights}: LocalParams) {
                         onChange={handleChange} 
                         name="status"
                     >
-                        <option value="toDo">треба виконати</option>
-                        <option value="inProgress">в процесі</option>
-                        <option value="done">виконано</option>
+                        <option value="toDo">to do</option>
+                        <option value="inProgress">in progress</option>
+                        <option value="done">done</option>
                     </select>
                 </div>
 

@@ -13,7 +13,7 @@ export interface UserDto {
     }
 }
 
-export type RegisterCredentials = Pick<UserDto, 'nickname' | 'email' | 'organisation' > & { password: string };
+export type RegisterCredentials = Pick<UserDto, 'name' | 'surname' | 'nickname' | 'email' | 'organisation' > & { password: string, pswSubmit?: string };
 export type LoginCredentials = Pick<UserDto, 'nickname' | 'email'> & { password: string };
 
 

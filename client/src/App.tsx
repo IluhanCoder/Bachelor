@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import FormCloserProvider from './forms/form-closer-provider';
 import authService from './auth/auth-service';
 import userStore from './user/user-store';
+import ToastContainer from './misc/toast-container';
 import 'react-image-crop/dist/ReactCrop.css';
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
             </Routes>
           </div>
           {form && <div>{form}</div>}
+          <ToastContainer />
         </FormCloserProvider>
       </BrowserRouter>
     </div>

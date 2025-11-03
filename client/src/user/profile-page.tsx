@@ -136,7 +136,7 @@ function ProfilePage ({userId}: LocalParams) {
                                         </svg>
                                     </div>
                                     <div className="flex-1">
-                                        <div className="text-xs text-gray-500 uppercase tracking-wide">Організація</div>
+                                        <div className="text-xs text-gray-500 uppercase tracking-wide">Organization</div>
                                         <div className="text-gray-900 font-medium">{userData.organisation}</div>
                                     </div>
                                 </div>

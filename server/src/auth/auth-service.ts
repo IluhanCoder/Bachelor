@@ -8,6 +8,26 @@ import jwt from "jsonwebtoken";
 export default new class AuthService {
     async registrate(credentials: RegCredantials) {
         try {
+            // Validation
+            if (!credentials.name?.trim()) {
+                throw AuthError.BadRequest("Name is required");
+            }
+            if (!credentials.surname?.trim()) {
+                throw AuthError.BadRequest("Surname is required");
+            }
+            if (!credentials.nickname?.trim()) {
+                throw AuthError.BadRequest("Username is required");
+            }
+            if (!credentials.email?.trim()) {
+                throw AuthError.BadRequest("Email is required");
+            }
+            if (!credentials.password) {
+                throw AuthError.BadRequest("Password is required");
+            }
+            if (credentials.password.length < 6) {
+                throw AuthError.BadRequest("Password must be at least 6 characters");
+            }
+
             const existingUser = await UserModel.findOne({ $or: [{ nickname: credentials.nickname }, { email: credentials.email }]});
             if(existingUser) throw AuthError.UserExists();
             const salt = await bcrypt.genSalt(10);

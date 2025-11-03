@@ -40,7 +40,7 @@ function UsersMapper({ users, selectedState, task }: LocalParams) {
     }
 
     return <div className="space-y-4">
-        {/* Пошук */}
+        {/* Search */}
         <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <svg className="h-5 w-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -51,11 +51,11 @@ function UsersMapper({ users, selectedState, task }: LocalParams) {
                 className="w-full pl-10 pr-4 py-3 border-2 border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-all bg-white placeholder-slate-400 text-slate-800" 
                 type="search" 
                 onChange={(e) => handleFilter(e.target.value)}
-                placeholder="Пошук за ім'ям, прізвищем, email або організацією..."
+                placeholder="Search by name, surname, email or organization..."
             />
         </div>
 
-        {/* Список користувачів */}
+        {/* User List */}
         {filteredUsers.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {filteredUsers.map((user: UserResponse) => {
@@ -73,7 +73,7 @@ function UsersMapper({ users, selectedState, task }: LocalParams) {
                             `}
                             onClick={() => (isSelected) ? handleDeselect(user) : handleSelect(user)}
                         >
-                            {/* Чекмарк */}
+                            {/* Checkmark */}
                             {isSelected && (
                                 <div className="absolute top-3 right-3">
                                     <div className="bg-blue-600 rounded-full p-1">
@@ -136,7 +136,7 @@ function UsersMapper({ users, selectedState, task }: LocalParams) {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                 </div>
-                <p className="text-sm font-medium text-slate-700">Користувачів не знайдено</p>
+                <p className="text-sm font-medium text-slate-700">No users found</p>
                 <p className="text-xs text-slate-500 mt-1">Try changing search parameters</p>
             </div>
         )}

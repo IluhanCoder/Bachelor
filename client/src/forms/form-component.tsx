@@ -15,10 +15,10 @@ export default function FormComponent({formLabel,children}: LocalParams) {
         }
     }
 
-    // Визначаємо ширину модального вікна на основі заголовка
-    const isWideForm = formLabel.toLowerCase().includes('користувач') || 
-                       formLabel.toLowerCase().includes('запрос') ||
-                       formLabel.toLowerCase().includes('пошук');
+    // Determine modal width based on title
+    const isWideForm = formLabel.toLowerCase().includes('user') || 
+                       formLabel.toLowerCase().includes('invitation') ||
+                       formLabel.toLowerCase().includes('search');
     
     const maxWidth = isWideForm ? 'max-w-5xl' : 'max-w-2xl';
 
@@ -34,7 +34,7 @@ export default function FormComponent({formLabel,children}: LocalParams) {
                     <button 
                         onClick={() => formStore.dropForm()}
                         className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
-                        aria-label="Закрити"
+                        aria-label="Close"
                     >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
