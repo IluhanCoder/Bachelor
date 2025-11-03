@@ -79,7 +79,7 @@ function TaskInfoForm({taskId, callBack, projectId, rights}: LocalParams) {
         }
     }
 
-    return <FormComponent formLabel="Інформація про задачу">
+    return <FormComponent formLabel="Task Information">
         <form className="space-y-6" onSubmit={handleSubmit}>
             {/* Дата створення */}
             <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
@@ -87,7 +87,7 @@ function TaskInfoForm({taskId, callBack, projectId, rights}: LocalParams) {
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    <span className="font-medium">Створено:</span>
+                    <span className="font-medium">Created:</span>
                     <DateFormater value={formData?.created} dayOfWeek/>
                 </div>
             </div>
@@ -105,7 +105,7 @@ function TaskInfoForm({taskId, callBack, projectId, rights}: LocalParams) {
                         type="text" 
                         onChange={handleChange} 
                         name="name"
-                        placeholder="Назва задачі..."
+                        placeholder="Task name..."
                     />
                 </div>
 
@@ -120,7 +120,7 @@ function TaskInfoForm({taskId, callBack, projectId, rights}: LocalParams) {
                         type="text" 
                         onChange={handleChange} 
                         name="desc"
-                        placeholder="Опис задачі..."
+                        placeholder="Task description..."
                     />
                 </div>
 
@@ -244,7 +244,7 @@ function TaskInfoForm({taskId, callBack, projectId, rights}: LocalParams) {
                         onClick={() => formStore.dropForm()}
                         className="px-6 py-2.5 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium transition-colors"
                     >
-                        Скасувати
+                        Cancel
                     </button>
                     <button 
                         type="submit" 
@@ -253,7 +253,7 @@ function TaskInfoForm({taskId, callBack, projectId, rights}: LocalParams) {
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
-                        Зберегти зміни
+                        Save Changes
                     </button>
                 </div>
             )}

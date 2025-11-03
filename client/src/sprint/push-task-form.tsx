@@ -27,11 +27,11 @@ function PushTaskForm({task, sprints, callBack}: LocalParams) {
         }
     }
 
-    return <FormComponent formLabel={`Додати "${task.name}" до спрінту`}>
+    return <FormComponent formLabel={`Add "${task.name}" to Sprint`}>
         <div className="space-y-6">
             <div className="space-y-3">
                 <label className="block text-sm font-medium text-gray-700">
-                    Оберіть спрінт
+                    Select Sprint
                 </label>
                 <div className="grid grid-cols-2 gap-3">
                     {sprints.map((sprint: SprintResponse) => (
@@ -63,7 +63,7 @@ function PushTaskForm({task, sprints, callBack}: LocalParams) {
                     onClick={() => formStore.dropForm()}
                     className="px-6 py-2.5 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium transition-colors"
                 >
-                    Скасувати
+                    Cancel
                 </button>
                 <button 
                     type="button" 

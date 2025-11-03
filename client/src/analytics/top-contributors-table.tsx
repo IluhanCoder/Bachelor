@@ -9,7 +9,7 @@ function TopContributorsTable({ contributors }: LocalParams) {
         return (
             <div className="bg-white rounded-xl shadow-lg p-8 text-center text-gray-500">
                 <span className="text-4xl mb-4 block">👥</span>
-                Немає даних про учасників
+                No participant data available
             </div>
         );
     }
@@ -20,20 +20,20 @@ function TopContributorsTable({ contributors }: LocalParams) {
         <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
             <div className="flex items-center gap-3 mb-6">
                 <span className="text-3xl">🏆</span>
-                <h2 className="text-2xl font-bold text-gray-800">Топ учасників</h2>
-                <span className="text-sm text-gray-500 ml-auto">За виконаними Story Points</span>
+                <h2 className="text-2xl font-bold text-gray-800">Top Contributors</h2>
+                <span className="text-sm text-gray-500 ml-auto">By Completed Story Points</span>
             </div>
 
             <div className="overflow-x-auto">
                 <table className="w-full">
                     <thead>
                         <tr className="border-b-2 border-gray-200">
-                            <th className="text-left py-3 px-4 text-sm font-semibold text-gray-600">Місце</th>
+                            <th className="text-left py-3 px-4 text-sm font-semibold text-gray-600">Rank</th>
                             <th className="text-left py-3 px-4 text-sm font-semibold text-gray-600">Participant</th>
-                            <th className="text-center py-3 px-4 text-sm font-semibold text-gray-600">Виконано задач</th>
+                            <th className="text-center py-3 px-4 text-sm font-semibold text-gray-600">Completed Tasks</th>
                             <th className="text-center py-3 px-4 text-sm font-semibold text-gray-600">Story Points</th>
                             <th className="text-center py-3 px-4 text-sm font-semibold text-gray-600">In Progress</th>
-                            <th className="text-center py-3 px-4 text-sm font-semibold text-gray-600">Всього</th>
+                            <th className="text-center py-3 px-4 text-sm font-semibold text-gray-600">Total</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -90,10 +90,10 @@ function TopContributorsTable({ contributors }: LocalParams) {
                         <span className="text-3xl">💪</span>
                         <div>
                             <div className="font-semibold text-gray-800">
-                                Лідер команди: {contributors[0].userName}
+                                Team Leader: {contributors[0].userName}
                             </div>
                             <div className="text-sm text-gray-600">
-                                {contributors[0].completedStoryPoints} Story Points · {contributors[0].completedTasks} виконаних задач
+                                {contributors[0].completedStoryPoints} Story Points · {contributors[0].completedTasks} completed tasks
                             </div>
                         </div>
                     </div>

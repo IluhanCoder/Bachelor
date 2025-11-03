@@ -8,32 +8,32 @@ function WelcomePage() {
     return <div className="flex w-full pt-20">
         <div className="flex justify-center w-full">
             <div className="flex flex-col gap-6">
-                <h1 className="text-3xl text-gray-800 font-light">Вітаємо у Log Manager!</h1>
+                <h1 className="text-3xl text-gray-800 font-light">Welcome to Log Manager!</h1>
                     <div className="flex flex-col gap-4 text-xl px-10 font-light">
                         <div className="flex gap-4">
                             <VscRocket className="mt-1"/>
-                            <p>створюйте проекти</p>
+                            <p>create projects</p>
                         </div>
                         <div className="flex gap-4">
                             <VscOrganization className="mt-1"/>
-                            <p>збирайте команди</p>
+                            <p>build teams</p>
                         </div>
                         <div className="flex gap-4">
                             <VscArrowSwap className="mt-1"/>
-                            <p>керуйте процесом</p>
+                            <p>manage process</p>
                         </div>
                         <div className="flex gap-4">
                             <VscSymbolEvent className="mt-1"/>
-                            <p>організовуйте спрінти</p>
+                            <p>organize sprints</p>
                         </div>
                         <div className="flex gap-4">
                             <VscGraphLine className="mt-1"/>
-                            <p>аналізуйте продуктивність</p>
+                            <p>analyze productivity</p>
                         </div>
                     </div>
                     {userStore.user && 
                     <div className="flex justify-center">
-                        <Link to="/projects" className={lightButtonStyle}>ваші проекти</Link>
+                        <Link to="/projects" className={lightButtonStyle}>your projects</Link>
                     </div>}
                 </div>
         </div>

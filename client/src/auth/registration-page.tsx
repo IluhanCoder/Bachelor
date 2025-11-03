@@ -34,7 +34,7 @@ function RegistationPage() {
         errorStore.dropErrors();
 
         if(formData.password !== formData.pswSubmit) {
-            errorStore.pushError("Пароль та підтвердження паролю мають співпадати");
+            errorStore.pushError("Password and password confirmation must match");
             return;
         }
 
@@ -42,7 +42,7 @@ function RegistationPage() {
             const result = await authService.registrate(formData);
 
             if(result?.status === "success") { 
-                alert("Користувача було успішно зареєстровано");
+                alert("User was successfully registered");
                 await authService.login(formData);
                 navigate("/");
             }
@@ -56,15 +56,15 @@ function RegistationPage() {
             <div className="bg-white rounded-2xl shadow-xl p-8 animate-fadeIn">
                 {/* Header */}
                 <div className="text-center mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-2">Створення облікового запису</h1>
-                    <p className="text-gray-600">Заповніть форму для реєстрації в системі</p>
+                    <h1 className="text-3xl font-bold text-gray-900 mb-2">Create Account</h1>
+                    <p className="text-gray-600">Fill in the form to register in the system</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Основна інформація */}
                     <div className="space-y-4">
                         <h2 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2">
-                            Особиста інформація
+                            Personal Information
                         </h2>
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -77,7 +77,7 @@ function RegistationPage() {
                                     type="text" 
                                     name="name" 
                                     onChange={handleChange}
-                                    placeholder="Введіть ваше ім'я..."
+                                    placeholder="Enter your name..."
                                     required
                                 />
                             </div>
@@ -91,7 +91,7 @@ function RegistationPage() {
                                     type="text" 
                                     onChange={handleChange} 
                                     name="surname"
-                                    placeholder="Введіть ваше прізвище..."
+                                    placeholder="Enter your surname..."
                                     required
                                 />
                             </div>
@@ -99,14 +99,14 @@ function RegistationPage() {
 
                         <div className="space-y-2">
                             <label className="block text-sm font-medium text-gray-700">
-                                Організація
+                                Organization
                             </label>
                             <input 
                                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 
                                 type="text" 
                                 onChange={handleChange} 
                                 name="organisation"
-                                placeholder="Назва організації (необов'язково)..."
+                                placeholder="Organization name (optional)..."
                             />
                         </div>
                     </div>
@@ -114,26 +114,26 @@ function RegistationPage() {
                     {/* Облікові дані */}
                     <div className="space-y-4">
                         <h2 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2">
-                            Облікові дані
+                            Account Credentials
                         </h2>
 
                         <div className="space-y-2">
                             <label className="block text-sm font-medium text-gray-700">
-                                Логін користувача <span className="text-red-500">*</span>
+                                Username <span className="text-red-500">*</span>
                             </label>
                             <input 
                                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 
                                 type="text" 
                                 onChange={handleChange} 
                                 name="nickname"
-                                placeholder="Оберіть унікальний логін..."
+                                placeholder="Choose a unique username..."
                                 required
                             />
                         </div>
 
                         <div className="space-y-2">
                             <label className="block text-sm font-medium text-gray-700">
-                                Електронна пошта <span className="text-red-500">*</span>
+                                Email <span className="text-red-500">*</span>
                             </label>
                             <input 
                                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 
@@ -149,7 +149,7 @@ function RegistationPage() {
                     {/* Пароль */}
                     <div className="space-y-4">
                         <h2 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2">
-                            Безпека
+                            Security
                         </h2>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -162,7 +162,7 @@ function RegistationPage() {
                                     type="password" 
                                     onChange={handleChange} 
                                     name="password"
-                                    placeholder="Мінімум 6 символів..."
+                                    placeholder="Minimum 6 characters..."
                                     required
                                     minLength={6}
                                 />
@@ -170,14 +170,14 @@ function RegistationPage() {
                             
                             <div className="space-y-2">
                                 <label className="block text-sm font-medium text-gray-700">
-                                    Підтвердження паролю <span className="text-red-500">*</span>
+                                    Confirm Password <span className="text-red-500">*</span>
                                 </label>
                                 <input 
                                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 
                                     type="password" 
                                     onChange={handleChange} 
                                     name="pswSubmit"
-                                    placeholder="Повторіть пароль..."
+                                    placeholder="Repeat password..."
                                     required
                                 />
                             </div>
@@ -193,7 +193,7 @@ function RegistationPage() {
                             onClick={() => navigate("/login")}
                             className="flex-1 px-6 py-3 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium transition-colors"
                         >
-                            Вже є обліковий запис
+                            Already have an account
                         </button>
                         <button 
                             type="submit" 
