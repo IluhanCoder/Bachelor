@@ -44,29 +44,31 @@ function Header() {
                             </span>
                         </Link>
 
-                        {/* Navigation Links */}
-                        <nav className="flex items-center gap-1">
-                            <Link 
-                                to="/projects" 
-                                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
-                                    pathname.startsWith('/project') 
-                                        ? 'bg-blue-50 text-blue-700' 
-                                        : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-                                }`}
-                            >
-                                Projects
-                            </Link>
-                            <Link 
-                                to="/profile" 
-                                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
-                                    pathname === '/profile' 
-                                        ? 'bg-blue-50 text-blue-700' 
-                                        : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-                                }`}
-                            >
-                                Profile
-                            </Link>
-                        </nav>
+                        {/* Navigation Links - Only show when logged in */}
+                        {userStore.user && (
+                            <nav className="flex items-center gap-1">
+                                <Link 
+                                    to="/projects" 
+                                    className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                                        pathname.startsWith('/project') 
+                                            ? 'bg-blue-50 text-blue-700' 
+                                            : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                                    }`}
+                                >
+                                    Projects
+                                </Link>
+                                <Link 
+                                    to="/profile" 
+                                    className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                                        pathname === '/profile' 
+                                            ? 'bg-blue-50 text-blue-700' 
+                                            : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                                    }`}
+                                >
+                                    Profile
+                                </Link>
+                            </nav>
+                        )}
                     </div>
 
                     {/* User Menu */}
