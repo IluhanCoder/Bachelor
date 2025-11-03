@@ -16,6 +16,15 @@ const router = Router();
 
 const upload = multer();
 
+// Health check endpoint for monitoring
+router.get("/health", (req, res) => {
+  res.status(200).json({ 
+    status: "ok", 
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime()
+  });
+});
+
 router.post("/project", projectController.newProject);
 router.get("/user-projects", projectController.getUserProjects);
 router.get("/project/:id", projectController.getProjectById);
